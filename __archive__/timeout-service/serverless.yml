@@ -1,0 +1,120 @@
+service:
+  name: "timeout-service"
+
+plugins:
+  - "serverless-plugin-typescript"
+  - "serverless-pseudo-parameters"
+  - "serverless-offline"
+
+provider:
+  name: "aws"
+  environment:
+    TABLE_TIMEOUTS: "${self:service.name}-${opt:stage}-timeouts"
+    TABLE_TIMEOUT_RESOURCES: "${self:service.name}-${opt:stage}-timeout-resources"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:DeleteItem"
+        - "dynamodb:PutItem"
+        - "dynamodb:Query"
+      Resource:
+        - { "Fn::GetAtt": ["DynamoDBTableTimeouts", "Arn"] }
+        # NOTE: permissions are needed for secondary indexes
+        - { "Fn::Join": ["/", [ { "Fn::GetAtt": ["DynamoDBTableTimeouts", "Arn"] }, "*" ] ] }
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:Scan"
+      Resource:
+        - { "Fn::GetAtt": ["DynamoDBTableTimeoutResources", "Arn"] }
+    - Effect: "Allow"
+      Action:
+        - "sns:Publish"
+      Resource:
+        - "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:service.name}-${opt:stage}-delete-timeout"
+        - "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:service.name}-${opt:stage}-put-timeout"
+        # NOTE: all resources below are consumers which are used by other services
+        - "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:github-service-${opt:stage}-consumer-*"
+    - Effect: "Allow"
+      Action:
+        - "cloudwatch:PutMetricData"
+      Resource: "*"
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SECURITY_GROUP_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID_1}
+      - ${env:AWS_SUBNET_ID_2}
+
+functions:
+  deleteTimeout:
+    name: "${self:service.name}-${opt:stage}-delete-timeout"
+    description: "Deletes a timeout"
+    events:
+      - sns: "${self:service.name}-${opt:stage}-delete-timeout"
+    handler: "handler.deleteTimeout"
+    runtime: "nodejs8.10"
+  jobTimeoutsProcessExpired:
+    name: "${self:service.name}-${opt:stage}-job-timeouts-process-expired"
+    description: "Processes expired timeouts"
+    events:
+      - schedule:
+          name: "${self:service.name}-${opt:stage}-schedule-timeouts-process-expired"
+          rate: "rate(1 minute)"
+    handler: "handler.jobTimeoutsProcessExpired"
+    runtime: "nodejs8.10"
+  putTimeout:
+    name: "${self:service.name}-${opt:stage}-put-timeout"
+    description: "Puts a timeout"
+    events:
+      - sns: "${self:service.name}-${opt:stage}-put-timeout"
+    handler: "handler.putTimeout"
+    runtime: "nodejs8.10"
+
+resources:
+  Resources:
+    DynamoDBTableTimeouts:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: "${self:service.name}-${opt:stage}-timeouts"
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+          - AttributeName: "bucket"
+            AttributeType: "S"
+          - AttributeName: "expiration"
+            AttributeType: "S"
+        GlobalSecondaryIndexes:
+          - IndexName: "BucketIndex"
+            KeySchema:
+              - AttributeName: "bucket"
+                KeyType: "HASH"
+              - AttributeName: "expiration"
+                KeyType: "RANGE"
+            Projection:
+              ProjectionType: "ALL"
+            ProvisionedThroughput:
+              ReadCapacityUnits: "1"
+              WriteCapacityUnits: "1"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: "1"
+          WriteCapacityUnits: "1"
+    DynamoDBTableTimeoutResources:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: "${self:service.name}-${opt:stage}-timeout-resources"
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: "1"
+          WriteCapacityUnits: "1"
+
+custom:
+  serverless-offline:
+    port: 4000

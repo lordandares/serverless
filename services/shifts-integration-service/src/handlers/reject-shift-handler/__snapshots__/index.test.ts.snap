@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handlers:reject-shift-handler helpers :: formatShiftErrors should format error messages 1`] = `
+Array [
+  Object {
+    "attemptedValue": "invalid@email",
+    "errorMessage": "Invalid Email Address",
+    "errorType": "ValidationError",
+    "field": "email",
+  },
+  Object {
+    "attemptedValue": "password",
+    "errorMessage": "Invalid Password",
+    "errorType": "ValidationError",
+    "field": "password",
+  },
+]
+`;
+
+exports[`handlers:reject-shift-handler should end a shift and set the status to rejected 1`] = `
+Object {
+  "errors": Array [
+    Object {
+      "AttemptedValue": "invalid@email",
+      "ErrorMessage": "Invalid Email Address",
+      "ErrorType": "ValidationError",
+      "FieldName": "email",
+    },
+  ],
+  "shift": Object {
+    "_id": "5d1eb8a4fc13ae1f85000000",
+    "end": Object {
+      "time": 2018-06-15T14:00:00.000Z,
+    },
+    "status": "rejected",
+    "user": "1234",
+  },
+  "user": Object {
+    "_id": "5d1eb8a4fc13ae1f85000001",
+  },
+}
+`;
+
+exports[`handlers:reject-shift-handler should error if the \`shiftId\` is missing 1`] = `"The Resource \\"shift\\" with ID of \\"Unknown\\" could not be found"`;

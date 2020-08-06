@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`returns no results when schedule has no occurrences 1`] = `
+Array [
+  Array [
+    Object {
+      "ExpressionAttributeNames": Object {
+        "#groupType": "groupType",
+        "#scheduleId": "scheduleId",
+        "#status": "status",
+      },
+      "ExpressionAttributeValues": Object {
+        ":groupType": "occurrence",
+        ":scheduleId": "schedule1",
+        ":status": "pending",
+      },
+      "FilterExpression": "#groupType = :groupType AND #status = :status",
+      "IndexName": "ScheduleIdIndex",
+      "KeyConditionExpression": "#scheduleId = :scheduleId",
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns removed results when schedule has occurrences 1`] = `
+Array [
+  Array [
+    Object {
+      "ExpressionAttributeNames": Object {
+        "#groupType": "groupType",
+        "#scheduleId": "scheduleId",
+        "#status": "status",
+      },
+      "ExpressionAttributeValues": Object {
+        ":groupType": "occurrence",
+        ":scheduleId": "schedule1",
+        ":status": "pending",
+      },
+      "FilterExpression": "#groupType = :groupType AND #status = :status",
+      "IndexName": "ScheduleIdIndex",
+      "KeyConditionExpression": "#scheduleId = :scheduleId",
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns removed results when schedule has occurrences 2`] = `
+Array [
+  Array [
+    Object {
+      "TransactItems": Array [
+        Object {
+          "Delete": Object {
+            "Key": Object {
+              "pk": "application1-occurrence",
+              "sk": "2019-01-01T00:00-occurrence1",
+            },
+            "TableName": "table-schedules",
+          },
+        },
+      ],
+    },
+    [Function],
+  ],
+]
+`;

@@ -1,0 +1,53 @@
+service: 
+  name: winteam-sync-subscriber
+
+provider:
+  name: azure
+  location: Central US
+  resourceGroup: rg-lightning-cus-${opt:stage, self:provider.stage}
+  runtime: nodejs10.x
+  stage: dev
+  prefix: fa
+  environment:
+    TENANT_BASE_URL: "${env:TENANT_BASE_URL}"
+    WINTEAM_BASE_URL: "${env:WINTEAM_BASE_URL}"
+    EMPLOYEES_ENDPOINT: "${env:EMPLOYEES_ENDPOINT}"
+    JOBS_ENDPOINT: "${env:JOBS_ENDPOINT}"
+    LIGHTHOUSE_BASE_URL: "${env:LIGHTHOUSE_BASE_URL}"
+    PLATFORM: "${env:PLATFORM}"
+    AZURE_KEY_VAULT: "${env:AZURE_KEY_VAULT}"
+    MONGODB_SECRET_ID: "${env:AZURE_KEY_VAULT}"
+    LIGHTHOUSE_API_SECRET: "${env:LIGHTHOUSE_API_SECRET}"
+    TENANT_CODE: "${env:TENANT_CODE}"
+    AZURE_TENANT_ID: "${env:AZURE_TENANT_ID}"
+    AZURE_CLIENT_ID: "${env:AZURE_CLIENT_ID}"
+    AZURE_CLIENT_SECRET: "${env:AZURE_CLIENT_SECRET}"
+    AZURE_SUBSCRIPTION_ID: "${env:AZURE_SUBSCRIPTION_ID}"
+    STAGE: "${opt:stage, self:provider.stage}"
+    SLS_DEBUG: "*"
+    
+plugins:
+  - serverless-webpack
+  - serverless-azure-functions
+  - azure-event-grid-subscriptions
+
+functions:
+  winteamEventSubscriber:
+    handler: src/handlers/winteamEvents/subscriber.run
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+           - post
+          route: events
+          authLevel: anonymous
+    eventGrid:
+      resourceGroup: rg-wt-data-cus-${opt:stage, self:provider.stage}
+      topicName: eg-winteam-sync-cus-${opt:stage, self:provider.stage}
+      subscriptionName: eg-sub-winteam-sync-cus-${opt:stage, self:provider.stage}
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: false
+    packager: yarn

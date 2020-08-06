@@ -1,0 +1,68 @@
+service:
+  name: "pdf-generator"
+
+plugins:
+  - "@lighthouse/serverless-plugin-typescript"
+  - "serverless-offline"
+  - "serverless-prune-plugin"
+
+provider:
+  name: "aws"
+  runtime: "nodejs12.x"
+  environment:
+    AWS_SECRET_ID: "${self:custom.secretsManager.${opt:region, self:provider.region}.${opt:stage, self:provider.stage}.mongodb.id}"
+    CLOUDINARY_BASE_URL: "${env:CLOUDINARY_BASE_URL}"
+    S3_BASE_URL: "${env:S3_BASE_URL}"
+    S3_BUCKET_PDF_DATA: "${env:S3_BUCKET_PDF_DATA}"
+    S3_BUCKET_UPLOADS: "${env:S3_BUCKET_UPLOADS}"
+    PLATFORM: ${env:PLATFORM}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "secretsmanager:GetSecretValue"
+      Resource:
+        - "${self:custom.secretsManager.${opt:region, self:provider.region}.${opt:stage, self:provider.stage}.mongodb.arn}"
+    - Effect: "Allow"
+      Action:
+        - "s3:GetObject"
+        - "s3:HeadObject"
+        - "s3:PutObject"
+      Resource:
+        - "arn:aws:s3:::${env:S3_BUCKET_UPLOADS}/*"
+        - "arn:aws:s3:::${env:S3_BUCKET_PDF_DATA}/*"
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SECURITY_GROUP_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID_1}
+      - ${env:AWS_SUBNET_ID_2}
+
+custom:
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 3
+  secretsManager: "${file(secretsManager.yml)}"
+  serverless-offline:
+    port: 4000
+
+functions:
+  generatePdf:
+    name: "${self:service.name}-${opt:stage}-generate-pdf"
+    description: "Builds PDF from S3 json file"
+    handler: "handler.generatePdf"
+    memorySize: 2048
+    timeout: 30
+    events:
+      - http:
+          path: generate-pdf
+          method: POST
+          private: true
+  getPdfS3Paths:
+    name: "${self:service.name}-${opt:stage}-get-pdf-s3-paths"
+    description: "Get S3 image paths from pdf"
+    handler: "handler.getPdfS3Paths"
+  verifyS3Resources:
+    name: "${self:service.name}-${opt:stage}-verify-s3-resources"
+    description: "Verifies S3 image resources"
+    handler: "handler.verifyS3Resources"

@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`valid 1`] = `
+Object {
+  "_id": "5b480b46fbef0ba17da8f426",
+  "flags": Object {
+    "debug": true,
+  },
+  "name": "Default App 1",
+  "plugins": Object {
+    "loops": Object {
+      "enabled": true,
+    },
+    "serviceNow": Object {
+      "enabled": true,
+    },
+    "slack": Object {
+      "enabled": false,
+    },
+    "winteam": Object {
+      "enabled": true,
+      "options": Object {
+        "anotherConfigSetting": 2,
+        "configSetting": 1,
+      },
+      "secrets": Object {
+        "awsSecretId": "lio/serverless/winteam-service/test/default-app-1",
+      },
+    },
+  },
+  "settings": Object {
+    "duressTypes": Array [
+      "Fire",
+      "Intruder",
+      "Injury",
+    ],
+    "gps": Object {
+      "accuracy": 10,
+    },
+    "location": Object {
+      "adhoc": Object {
+        "enabled": true,
+        "options": Object {
+          "timeout": 20,
+        },
+      },
+      "passive": Object {
+        "enabled": true,
+        "options": Object {
+          "distanceFilter": 50,
+          "preventSuspend": true,
+        },
+      },
+    },
+    "uuids": Array [
+      "AAAAAAAA-AAAA-4AAA-AAAA-AAAAAAAAAAAA",
+      "C7DC932D-A1A7-4DCB-931A-8FCA647A7E01",
+    ],
+  },
+  "theme": Object {
+    "logos": Object {
+      "pdf": "https://s3.amazonaws.com/assets-lighthouse-io/img/logo-medium.png",
+    },
+  },
+  "timezone": "Australia/Melbourne",
+}
+`;

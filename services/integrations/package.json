@@ -1,0 +1,29 @@
+{
+  "name": "@lighthouse/serverless-integrations",
+  "private": true,
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf dist; tsc",
+    "prepare": "yarn build",
+    "test": "TZ=UTC jest",
+    "test:ci": "TZ=UTC jest --coverage",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lighthouse/serverless-common": "^1.0.0",
+    "lodash": "^4.17.10",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.11.7",
+    "aws-sdk": "^2.298.0",
+    "aws-sdk-mock": "^4.2.0",
+    "aws-xray-sdk": "^2.3.6",
+    "jest": "^23.x.x",
+    "typescript": "^3.6.4"
+  }
+}

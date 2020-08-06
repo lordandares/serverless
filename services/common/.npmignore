@@ -1,0 +1,8 @@
+__mocks__
+.gitignore
+junit.xml
+jest.config.js
+coverage
+src
+test
+tsconfig.json

@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers:buildEmail it returns email data 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-location-reports",
+  "TemplateData": "{\\"activeLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"name\\":\\"Active Location\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Friday 31st December\\",\\"hasNoLocations\\":false,\\"inactiveLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a3\\",\\"name\\":\\"Inactive Location\\",\\"link\\":null}],\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"sendInactive\\":true,\\"shortDate\\":\\"December 31\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildEmail it returns email data with configuration set when the environment var is set 1`] = `
+Object {
+  "ConfigurationSetName": "ses-configuration-set",
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-location-reports",
+  "TemplateData": "{\\"activeLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"name\\":\\"Active Location\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Friday 31st December\\",\\"hasNoLocations\\":false,\\"inactiveLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a3\\",\\"name\\":\\"Inactive Location\\",\\"link\\":null}],\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"sendInactive\\":true,\\"shortDate\\":\\"December 31\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildEmail it returns email data with formSubmissions 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-location-reports",
+  "TemplateData": "{\\"activeLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"name\\":\\"Active Location\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Friday 31st December\\",\\"hasNoLocations\\":false,\\"inactiveLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a3\\",\\"name\\":\\"Inactive Location\\",\\"link\\":null}],\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"sendInactive\\":true,\\"shortDate\\":\\"December 31\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildEmail it returns email data without formSubmissions 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-location-reports",
+  "TemplateData": "{\\"activeLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"name\\":\\"Active Location\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Friday 31st December\\",\\"hasNoLocations\\":false,\\"inactiveLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a3\\",\\"name\\":\\"Inactive Location\\",\\"link\\":null}],\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"sendInactive\\":true,\\"shortDate\\":\\"December 31\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildEmail skipNoActivity Tests it returns email data with skipNoActivity set to true 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-location-reports",
+  "TemplateData": "{\\"activeLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"name\\":\\"Active Location\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Friday 31st December\\",\\"hasNoLocations\\":false,\\"inactiveLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a3\\",\\"name\\":\\"Inactive Location\\",\\"link\\":null}],\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"sendInactive\\":false,\\"shortDate\\":\\"December 31\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildEmail when no active or inactive locations it returns email data with hasNoLocations set to true 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-location-reports",
+  "TemplateData": "{\\"activeLocations\\":[],\\"date\\":\\"Friday 31st December\\",\\"hasNoLocations\\":true,\\"inactiveLocations\\":[],\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"sendInactive\\":true,\\"shortDate\\":\\"December 31\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildEmail when not running in production it sets isProduction as false, adds stage to subject line and uses test template 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-location-reports-test",
+  "TemplateData": "{\\"activeLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"name\\":\\"Active Location\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Friday 31st December\\",\\"hasNoLocations\\":false,\\"inactiveLocations\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a3\\",\\"name\\":\\"Inactive Location\\",\\"link\\":null}],\\"isProduction\\":false,\\"name\\":\\"Steve\\",\\"sendInactive\\":true,\\"shortDate\\":\\"December 31\\",\\"stage\\":\\"TESTING\\"}",
+}
+`;

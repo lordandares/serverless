@@ -1,0 +1,307 @@
+service:
+  name: shifts-integration-service
+  stepFn:
+    endBreak: ${self:service.name}-${opt:stage}-end-break
+    endShift: ${self:service.name}-${opt:stage}-end-shift
+    startBreak: ${self:service.name}-${opt:stage}-start-break
+    startShift: ${self:service.name}-${opt:stage}-start-shift
+
+plugins:
+  - "@lighthouse/serverless-plugin-typescript"
+  - serverless-offline
+  - serverless-plugin-vpc-eni-cleanup
+  - serverless-pseudo-parameters
+  - serverless-step-functions
+  - serverless-prune-plugin
+
+provider:
+  environment:
+    AWS_SNS_ANDROID_ARN: ${env:AWS_SNS_ANDROID_ARN}
+    AWS_SNS_ANDROID_SERVICE: ${env:AWS_SNS_ANDROID_SERVICE}
+    AWS_SNS_API_VERSION: ${env:AWS_SNS_API_VERSION}
+    AWS_SNS_IOS_ARN: ${env:AWS_SNS_IOS_ARN}
+    AWS_SNS_IOS_SERVICE: ${env:AWS_SNS_IOS_SERVICE}
+    MONGODB_SECRET_ID: "lio/global/mongodb/${opt:stage, self:provider.stage}"
+    STAGE: "${opt:stage, self:provider.stage}"
+    WINTEAM_SECRET_ID: lio/serverless/winteam-service/${opt:stage, self:provider.stage}
+    PLATFORM: ${env:PLATFORM}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "secretsmanager:GetSecretValue"
+      Resource:
+        - "arn:aws:secretsmanager:#{AWS::Region}:#{AWS::AccountId}:secret:lio/global/mongodb/${opt:stage}*"
+        - "arn:aws:secretsmanager:#{AWS::Region}:#{AWS::AccountId}:secret:lio/serverless/winteam-service/${opt:stage}*"
+    - Effect: "Allow"
+      Action: "states:StartExecution"
+      Resource:
+        - "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.stepFn.endBreak}"
+        - "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.stepFn.endShift}"
+        - "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.stepFn.startBreak}"
+        - "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.stepFn.startShift}"
+    - Effect: "Allow"
+      Action:
+        - sns:CreatePlatformEndpoint
+        - sns:GetEndpointAttributes
+        - sns:Publish
+        - sns:SetEndpointAttributes
+      Resource:
+        - ${env:AWS_SNS_ANDROID_ARN}
+        - ${env:AWS_SNS_IOS_ARN}
+  memorySize: 256
+  name: aws
+  runtime: nodejs12.x
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SECURITY_GROUP_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID_1}
+      - ${env:AWS_SUBNET_ID_2}
+
+custom:
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 3
+  serverless-offline:
+    port: 4000
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: false
+    packager: npm
+
+functions:
+  end-break-handler:
+    environment:
+      INTEGRATION_STATE_MACHINE_ARN: arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.stepFn.endBreak}
+    handler: handlers.shiftHandler
+    events:
+      - sns: ${self:service.stepFn.endBreak}
+    timeout: 60
+  end-shift-handler:
+    environment:
+      INTEGRATION_STATE_MACHINE_ARN: arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.stepFn.endShift}
+    handler: handlers.shiftHandler
+    events:
+      - sns: ${self:service.stepFn.endShift}
+    timeout: 60
+  reject-shift-handler:
+    handler: handlers.rejectShiftHandler
+    timeout: 60
+  resolve-shift-handler:
+    handler: handlers.resolveShiftHandler
+    timeout: 60
+  start-break-handler:
+    environment:
+      INTEGRATION_STATE_MACHINE_ARN: arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.stepFn.startBreak}
+    handler: handlers.shiftHandler
+    events:
+      - sns: ${self:service.stepFn.startBreak}
+    timeout: 60
+  start-shift-handler:
+    environment:
+      INTEGRATION_STATE_MACHINE_ARN: arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.stepFn.startShift}
+    handler: handlers.shiftHandler
+    events:
+      - sns: ${self:service.stepFn.startShift}
+    timeout: 60
+  winteam-message-handler:
+    handler: handlers.messageHandler
+    events:
+      - sns: ${self:service.name}-${opt:stage}-message
+    timeout: 60
+  winteam-shift-handler:
+    handler: handlers.winteamShiftHandler
+    timeout: 60
+
+stepFunctions:
+  stateMachines:
+    EndBreak:
+      name: ${self:service.stepFn.endBreak}
+      definition:
+        Comment: Lighthouse.io Integrations - End Break processor
+        StartAt: Integrations Processor
+        States:
+          Integrations Processor:
+            Branches:
+              - StartAt: WinTeam Choice
+                States:
+                  WinTeam Choice:
+                    Type: Choice
+                    Choices:
+                      - Variable: $.plugins.winteamEnabled
+                        BooleanEquals: false
+                        Next: Resolve
+                      - Variable: $.plugins.winteamEnabled
+                        BooleanEquals: true
+                        Next: Process TimePunch
+                    Default: Resolve
+                  Process TimePunch:
+                    Type: Task
+                    Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-winteam-shift-handler
+                    Retry:
+                      - ErrorEquals:
+                          - "States.Timeout"
+                        MaxAttempts: 3
+                        BackoffRate: 1.5
+                    Catch:
+                      - ErrorEquals: ["States.ALL"]
+                        Next: Resolve
+                    Next: Resolve
+                  Resolve:
+                    Type: Pass
+                    End: true
+            Catch:
+              - ErrorEquals: ["States.ALL"]
+                Next: Finalize
+            Next: Finalize
+            Type: Parallel
+          Finalize:
+            Type: Pass
+            End: true
+    EndShift:
+      name: ${self:service.stepFn.endShift}
+      definition:
+        Comment: Lighthouse.io Integrations - End Shift processor
+        StartAt: Integrations Processor
+        States:
+          Integrations Processor:
+            Branches:
+              - StartAt: WinTeam Choice
+                States:
+                  WinTeam Choice:
+                    Type: Choice
+                    Choices:
+                      - Variable: $.plugins.winteamEnabled
+                        BooleanEquals: false
+                        Next: Resolve
+                      - Variable: $.plugins.winteamEnabled
+                        BooleanEquals: true
+                        Next: Process TimePunch
+                    Default: Resolve
+                  Process TimePunch:
+                    Type: Task
+                    Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-winteam-shift-handler
+                    Retry:
+                      - ErrorEquals:
+                        - "States.Timeout"
+                        MaxAttempts: 3
+                        BackoffRate: 1.5
+                    Catch:
+                      - ErrorEquals: ["States.ALL"]
+                        Next: Resolve
+                    Next: Resolve
+                  Resolve:
+                    Type: Pass
+                    End: true
+            Catch:
+              - ErrorEquals: ["States.ALL"]
+                Next: Finalize
+            Next: Finalize
+            Type: Parallel
+          Finalize:
+            Type: Pass
+            End: true
+    StartBreak:
+      name: ${self:service.stepFn.startBreak}
+      definition:
+        Comment: Lighthouse.io Integrations - Start Break processor
+        StartAt: Integrations Processor
+        States:
+          Integrations Processor:
+            Branches:
+              - StartAt: WinTeam Choice
+                States:
+                  WinTeam Choice:
+                    Type: Choice
+                    Choices:
+                      - Variable: $.plugins.winteamEnabled
+                        BooleanEquals: false
+                        Next: Resolve
+                      - Variable: $.plugins.winteamEnabled
+                        BooleanEquals: true
+                        Next: Process TimePunch
+                    Default: Resolve
+                  Process TimePunch:
+                    Type: Task
+                    Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-winteam-shift-handler
+                    Retry:
+                      - ErrorEquals:
+                          - "States.Timeout"
+                        MaxAttempts: 3
+                        BackoffRate: 1.5
+                    Catch:
+                      - ErrorEquals: ["States.ALL"]
+                        Next: Resolve
+                    Next: Resolve
+                  Resolve:
+                    Type: Pass
+                    End: true
+            Catch:
+              - ErrorEquals: ["States.ALL"]
+                Next: Finalize
+            Next: Finalize
+            Type: Parallel
+          Finalize:
+            Type: Pass
+            End: true
+    StartShift:
+      name: ${self:service.stepFn.startShift}
+      definition:
+        Comment: Lighthouse.io Integrations - Start Shift processor
+        StartAt: Integrations Processor
+        States:
+          Integrations Processor:
+            Branches:
+              - StartAt: WinTeam Choice
+                States:
+                  WinTeam Choice:
+                    Type: Choice
+                    Choices:
+                      - Variable: $.plugins.winteamEnabled
+                        BooleanEquals: false
+                        Next: Skip
+                      - Variable: $.plugins.winteamEnabled
+                        BooleanEquals: true
+                        Next: Process TimePunch
+                      - Variable: $.Error
+                        StringEquals: 'Error'
+                        Next: Reject
+                    Default: Resolve
+                  Process TimePunch:
+                    Type: Task
+                    Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-winteam-shift-handler
+                    Retry:
+                      - ErrorEquals:
+                        - "States.Timeout"
+                        MaxAttempts: 3
+                        BackoffRate: 1.5
+                    Catch:
+                      - ErrorEquals: ["States.ALL"]
+                        Next: Resolve Shift Choice
+                    Next: Resolve Shift Choice
+                  Resolve Shift Choice:
+                    Type: Choice
+                    Choices:
+                      - Variable: $.hasErrors
+                        BooleanEquals: true
+                        Next: Reject
+                    Default: Resolve
+                  Reject:
+                    Type: Task
+                    Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-reject-shift-handler
+                    End: true
+                  Resolve:
+                    Type: Task
+                    Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-resolve-shift-handler
+                    End: true
+                  Skip:
+                    End: true
+                    Type: Pass
+            Catch:
+              - ErrorEquals: ["States.ALL"]
+                Next: Finalize
+            Next: Finalize
+            Type: Parallel
+          Finalize:
+            Type: Pass
+            End: true

@@ -1,0 +1,477 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generates occurrences for schedule when no areas 1`] = `
+Array [
+  Array [
+    Object {
+      "ExpressionAttributeNames": Object {
+        "#groupType": "groupType",
+        "#scheduleId": "scheduleId",
+      },
+      "ExpressionAttributeValues": Object {
+        ":occurrenceGroupType": "occurrence",
+        ":scheduleGroupType": "schedule",
+        ":scheduleId": "schedule1",
+      },
+      "FilterExpression": "#groupType = :occurrenceGroupType OR #groupType = :scheduleGroupType",
+      "IndexName": "ScheduleIdIndex",
+      "KeyConditionExpression": "#scheduleId = :scheduleId",
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`generates occurrences for schedule when no areas 2`] = `
+Array [
+  Array [
+    Object {
+      "Key": Object {
+        "pk": "application1-location",
+        "sk": "location1",
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`generates occurrences for schedule when no areas 3`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1571011200000,
+            1571012099999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1571011200000,
+            1571058000000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-10-14T00:14:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "location1",
+        "location_endAt_occurrenceId": "location1-2019-10-14T00:14:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-10-14T00:00:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`generates occurrences for schedule when no overriding service hours 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1571011200000,
+            1571012099999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1571011200000,
+            1571058000000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-10-14T00:14:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "area1",
+        "location_endAt_occurrenceId": "area1-2019-10-14T00:14:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-10-14T00:00:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`generates occurrences for schedule when no schedule end 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1571011200000,
+            1571012099999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1571011200000,
+            1571058000000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-10-14T00:14:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "area1",
+        "location_endAt_occurrenceId": "area1-2019-10-14T00:14:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-10-14T00:00:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`generates occurrences for schedule when overriding service hours 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1571011200000,
+            1571012099999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1571011200000,
+            1571058000000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-10-14T00:14:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "area1",
+        "location_endAt_occurrenceId": "area1-2019-10-14T00:14:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-10-14T00:00:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`generates occurrences for schedule with multiple areas 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1575244800000,
+            1575245699999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1575244800000,
+            1575291600000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-12-02T00:14:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "area1",
+        "location_endAt_occurrenceId": "area1-2019-12-02T00:14:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-12-02T00:00:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1575244800000,
+            1575245699999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1575244800000,
+            1575291600000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-12-02T00:14:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "area2",
+        "location_endAt_occurrenceId": "area2-2019-12-02T00:14:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-12-02T00:00:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1575244800000,
+            1575245699999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1575244800000,
+            1575291600000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-12-02T00:14:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "area3",
+        "location_endAt_occurrenceId": "area3-2019-12-02T00:14:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-12-02T00:00:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`generates occurrences for schedule with startAt time if in future 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1575244800000,
+            1575245699999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1575244800000,
+            1575291600000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-12-02T00:14:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "area1",
+        "location_endAt_occurrenceId": "area1-2019-12-02T00:14:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-12-02T00:00:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`generates occurrences using latest occurrence from database 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-14T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "occurrenceInterval": Array [
+            1549844100000,
+            1549844999999,
+          ],
+          "scheduleName": "Schedule One",
+          "serviceInterval": Array [
+            1549844099999,
+            1549890000000,
+          ],
+          "timezone": "Australia/Melbourne",
+        },
+        "endAt": "2019-02-11T00:29:59.999Z",
+        "groupType": "occurrence",
+        "locationId": "area1",
+        "location_endAt_occurrenceId": "area1-2019-02-11T00:29:59.999Z-1111-2222-3333-4444",
+        "occurrenceId": "1111-2222-3333-4444",
+        "pk": "application1-occurrence",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-14T00:00:00.000Z-1111-2222-3333-4444",
+        "startAt": "2019-02-11T00:15:00.000Z",
+        "status": "pending",
+        "updatedAt": "2019-10-14T00:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`handles error when occurrence document fails to save 1`] = `
+Array [
+  Array [
+    "GenerateOccurrencesHandler: no pending occurrence for area1 so will generate next occurrence from now",
+  ],
+  Array [
+    "GenerateOccurrencesHandler: failed to create occurrence for location",
+    Object {
+      "error": [Error: Failed to save!],
+      "locationId": "area1",
+      "newOccurrenceDocument": "{\\"applicationId\\":\\"application1\\",\\"createdAt\\":\\"2019-10-14T00:00:00.000Z\\",\\"createdBy\\":{\\"id\\":\\"awsRequestId\\",\\"label\\":\\"invokedFunctionArn\\",\\"type\\":\\"system\\"},\\"data\\":{\\"occurrenceInterval\\":[1571011200000,1571012099999],\\"scheduleName\\":\\"Schedule One\\",\\"serviceInterval\\":[1571011200000,1571058000000],\\"timezone\\":\\"Australia/Melbourne\\"},\\"endAt\\":\\"2019-10-14T00:14:59.999Z\\",\\"groupType\\":\\"occurrence\\",\\"locationId\\":\\"area1\\",\\"location_endAt_occurrenceId\\":\\"area1-2019-10-14T00:14:59.999Z-1111-2222-3333-4444\\",\\"occurrenceId\\":\\"1111-2222-3333-4444\\",\\"pk\\":\\"application1-occurrence\\",\\"scheduleId\\":\\"schedule1\\",\\"sk\\":\\"2019-10-14T00:00:00.000Z-1111-2222-3333-4444\\",\\"startAt\\":\\"2019-10-14T00:00:00.000Z\\",\\"status\\":\\"pending\\",\\"updatedAt\\":\\"2019-10-14T00:00:00.000Z\\",\\"updatedBy\\":{\\"id\\":\\"awsRequestId\\",\\"label\\":\\"invokedFunctionArn\\",\\"type\\":\\"system\\"}}",
+    },
+  ],
+]
+`;

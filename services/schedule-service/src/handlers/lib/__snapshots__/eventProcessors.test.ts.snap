@@ -1,0 +1,696 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`process location event processes rule pattern and handles errors when resolving match 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": undefined,
+          "sk": undefined,
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event processes rule pattern and handles errors when resolving match 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Message": "{\\"id\\":\\"1f745559-fd6b-43cc-ad94-8f95beb791eb\\"}",
+        "TopicArn": "occurrence-resolved",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event processes rule pattern and handles errors when resolving match 3`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "TransactItems": Array [
+          Object {
+            "Update": Object {
+              "ConditionExpression": "#updatedAt = :updatedAt",
+              "ExpressionAttributeNames": Object {
+                "#matches": "matches",
+                "#updatedAt": "updatedAt",
+              },
+              "ExpressionAttributeValues": Object {
+                ":nextMatches": Object {},
+                ":nextUpdatedAt": "2020-01-01T12:00:00.000Z",
+                ":updatedAt": "2020-02-04T04:46:55.582Z",
+              },
+              "Key": Object {
+                "pk": "rule-pattern-application1-location1",
+                "sk": "visit",
+              },
+              "TableName": "table-schedules",
+              "UpdateExpression": "SET #matches = :nextMatches, #updatedAt = :nextUpdatedAt",
+            },
+          },
+        ],
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event processes rule pattern when multiple matches 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": undefined,
+          "sk": undefined,
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": undefined,
+          "sk": undefined,
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": undefined,
+          "sk": undefined,
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event processes rule pattern when multiple matches 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Message": "{\\"id\\":\\"1f745559-fd6b-43cc-ad94-8f95beb791eb\\"}",
+        "TopicArn": "occurrence-resolved",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Message": "{\\"id\\":\\"1f745559-fd6b-43cc-ad94-8f95beb791ec\\"}",
+        "TopicArn": "occurrence-resolved",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Message": "{\\"id\\":\\"1f745559-fd6b-43cc-ad94-8f95beb791ed\\"}",
+        "TopicArn": "occurrence-resolved",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event processes rule pattern when multiple matches 3`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "TransactItems": Array [
+          Object {
+            "Update": Object {
+              "ConditionExpression": "#updatedAt = :updatedAt",
+              "ExpressionAttributeNames": Object {
+                "#matches": "matches",
+                "#updatedAt": "updatedAt",
+              },
+              "ExpressionAttributeValues": Object {
+                ":nextMatches": Object {},
+                ":nextUpdatedAt": "2020-01-01T12:00:00.000Z",
+                ":updatedAt": "2020-02-04T04:46:55.582Z",
+              },
+              "Key": Object {
+                "pk": "rule-pattern-application1-location1",
+                "sk": "visit",
+              },
+              "TableName": "table-schedules",
+              "UpdateExpression": "SET #matches = :nextMatches, #updatedAt = :nextUpdatedAt",
+            },
+          },
+        ],
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event processes rule pattern when single match 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": undefined,
+          "sk": undefined,
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event processes rule pattern when single match 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Message": "{\\"id\\":\\"1f745559-fd6b-43cc-ad94-8f95beb791eb\\"}",
+        "TopicArn": "occurrence-resolved",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event processes rule pattern when single match 3`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "TransactItems": Array [
+          Object {
+            "Update": Object {
+              "ConditionExpression": "#updatedAt = :updatedAt",
+              "ExpressionAttributeNames": Object {
+                "#matches": "matches",
+                "#updatedAt": "updatedAt",
+              },
+              "ExpressionAttributeValues": Object {
+                ":nextMatches": Object {},
+                ":nextUpdatedAt": "2020-01-01T12:00:00.000Z",
+                ":updatedAt": "2020-02-04T04:46:55.582Z",
+              },
+              "Key": Object {
+                "pk": "rule-pattern-application1-location1",
+                "sk": "visit",
+              },
+              "TableName": "table-schedules",
+              "UpdateExpression": "SET #matches = :nextMatches, #updatedAt = :nextUpdatedAt",
+            },
+          },
+        ],
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event queries dynamo db with correct pattern queries 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-building1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-floor1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-room1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-point1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event skips processing if rule pattern match document has expired 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": undefined,
+          "sk": undefined,
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event skips processing if rule pattern match document has expired 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "TransactItems": Array [
+          Object {
+            "Update": Object {
+              "ConditionExpression": "#updatedAt = :updatedAt",
+              "ExpressionAttributeNames": Object {
+                "#matches": "matches",
+                "#updatedAt": "updatedAt",
+              },
+              "ExpressionAttributeValues": Object {
+                ":nextMatches": Object {},
+                ":nextUpdatedAt": "2020-01-01T12:00:00.000Z",
+                ":updatedAt": "2020-02-04T04:46:55.582Z",
+              },
+              "Key": Object {
+                "pk": "rule-pattern-application1-location1",
+                "sk": "visit",
+              },
+              "TableName": "table-schedules",
+              "UpdateExpression": "SET #matches = :nextMatches, #updatedAt = :nextUpdatedAt",
+            },
+          },
+        ],
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event skips processing if rule pattern match document is in the future 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": undefined,
+          "sk": undefined,
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event skips processing if rule pattern match document is in the future 2`] = `[MockFunction]`;
+
+exports[`process location event skips processing if rule pattern match document is missing 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+    Array [
+      Object {
+        "Key": Object {
+          "pk": undefined,
+          "sk": undefined,
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event skips processing if rule pattern match document is missing 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "TransactItems": Array [
+          Object {
+            "Update": Object {
+              "ConditionExpression": "#updatedAt = :updatedAt",
+              "ExpressionAttributeNames": Object {
+                "#matches": "matches",
+                "#updatedAt": "updatedAt",
+              },
+              "ExpressionAttributeValues": Object {
+                ":nextMatches": Object {},
+                ":nextUpdatedAt": "2020-01-01T12:00:00.000Z",
+                ":updatedAt": "2020-02-04T04:46:55.582Z",
+              },
+              "Key": Object {
+                "pk": "rule-pattern-application1-location1",
+                "sk": "visit",
+              },
+              "TableName": "table-schedules",
+              "UpdateExpression": "SET #matches = :nextMatches, #updatedAt = :nextUpdatedAt",
+            },
+          },
+        ],
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event skips processing if rule pattern matches does not match location and user on event 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event skips processing when rule pattern does not have any matches and removes rule pattern 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "Key": Object {
+          "pk": "rule-pattern-application1-location1",
+          "sk": "visit",
+        },
+        "TableName": "table-schedules",
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`process location event skips processing when rule pattern does not have any matches and removes rule pattern 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "TransactItems": Array [
+          Object {
+            "Delete": Object {
+              "ConditionExpression": "#updatedAt = :updatedAt",
+              "ExpressionAttributeNames": Object {
+                "#updatedAt": "updatedAt",
+              },
+              "ExpressionAttributeValues": Object {
+                ":updatedAt": "2020-02-04T04:46:55.582Z",
+              },
+              "Key": Object {
+                "pk": "rule-pattern-application1-location1",
+                "sk": "visit",
+              },
+              "TableName": "table-schedules",
+            },
+          },
+        ],
+      },
+      [Function],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;

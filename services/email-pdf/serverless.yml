@@ -1,0 +1,115 @@
+service:
+  name: email-pdf-service
+
+plugins:
+  - "@lighthouse/serverless-plugin-typescript"
+  - serverless-offline
+  - serverless-step-functions
+  - serverless-pseudo-parameters
+  - serverless-prune-plugin
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  apiKeys:
+    - SERVICE_EMAIL_PDF_API_KEY_${opt:stage}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ses:SendEmail"
+        - "ses:SendRawEmail"
+      Resource:
+        - "*"
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SECURITY_GROUP_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID_1}
+      - ${env:AWS_SUBNET_ID_2}
+
+custom:
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 3
+  serverless-offline:
+    port: 4000
+
+functions:
+  sendEmail:
+    name: "${self:service.name}-${opt:stage}-send-email"
+    description: "Sends email with pdf attachments"
+    handler: handler.run
+    timeout: 30
+    events:
+      - sns: send-email-${opt:stage}
+      - http:
+          path: send-email
+          method: POST
+          private: true
+
+stepFunctions:
+  stateMachines:
+    EmailPdfProcessor:
+      name: EmailPdfProcessor-${opt:stage}
+      events:
+        - http:
+            path: email-pdf
+            method: POST
+            private: true
+      definition:
+        Comment: "A state machine to send pdf emails"
+        StartAt: GetPdfS3Paths
+        States:
+          GetPdfS3Paths:
+            Type: Task
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:pdf-generator-${opt:stage}-get-pdf-s3-paths"
+            InputPath: "$.pdf"
+            ResultPath: "$.s3Paths"
+            Next: ChoiceHasPdfS3Paths
+          ChoiceHasPdfS3Paths:
+            Type: Choice
+            Choices:
+              -
+                NumericGreaterThan: 0
+                Next: VerifyS3Resources
+                Variable: "$.s3Paths.count"
+            Default: GeneratePdf
+          VerifyS3Resources:
+            Type: Task
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:pdf-generator-${opt:stage}-verify-s3-resources"
+            InputPath: "$.s3Paths.values"
+            ResultPath: "$.s3Paths.results"
+            TimeoutSeconds: 45
+            # NOTE retry logic is to account for s3 images not yet available
+            Retry:
+              - ErrorEquals:
+                - "MissingS3Resource"
+                IntervalSeconds: 10
+                MaxAttempts: 4
+                BackoffRate: 1.5
+            # NOTE catch logic is to account for s3 images which are unavailable
+            Catch:
+              - ErrorEquals:
+                - "MissingS3Resource"
+                # NOTE must return error otherwise overwrites original input
+                ResultPath: "$.error"
+                Next: GeneratePdf
+            Next: GeneratePdf
+          GeneratePdf:
+            Type: Task
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:pdf-generator-${opt:stage}-generate-pdf"
+            InputPath: "$.pdf"
+            ResultPath: "$.attachment"
+            TimeoutSeconds: 45
+            Next: SendEmail
+          SendEmail:
+            Type: Task
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-send-email"
+            TimeoutSeconds: 45
+            Retry:
+              - ErrorEquals:
+                - "States.Timeout"
+                MaxAttempts: 3
+                BackoffRate: 1.5
+            End: true

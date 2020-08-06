@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sets occurrence to resolved and invokes ensure occurrences step function 1`] = `
+Array [
+  Array [
+    Object {
+      "Key": Object {
+        "pk": "application1-occurrence",
+        "sk": "2019-01-01T00:00-occurrence1",
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`sets occurrence to resolved and invokes ensure occurrences step function 2`] = `
+Array [
+  Array [
+    Object {
+      "AttributeUpdates": Object {
+        "status": Object {
+          "Action": "PUT",
+          "Value": "resolved",
+        },
+        "updatedAt": Object {
+          "Action": "PUT",
+          "Value": "2019-01-01T01:00:00.000Z",
+        },
+        "updatedBy": Object {
+          "Action": "PUT",
+          "Value": Object {
+            "id": "aws-request-id",
+            "label": "invoked-function-arn",
+            "type": "system",
+          },
+        },
+      },
+      "Key": Object {
+        "pk": "application1-occurrence",
+        "sk": "2019-01-01T00:00-occurrence1",
+      },
+      "ReturnValues": "ALL_NEW",
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`sets occurrence to resolved and invokes ensure occurrences step function 3`] = `
+Array [
+  Array [
+    Object {
+      "input": "{\\"scheduleId\\":\\"schedule1\\"}",
+      "name": "application1-schedule1-1546304400000",
+      "stateMachineArn": "ensure-occurrences-step-function",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`skips occurrence if status is not active 1`] = `
+Array [
+  Array [
+    Object {
+      "Key": Object {
+        "pk": "application1-occurrence",
+        "sk": "2019-01-01T00:00-occurrence1",
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;

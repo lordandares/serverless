@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Returns 200 for existing document 1`] = `
+Array [
+  Array [
+    Object {
+      "ExpressionAttributeNames": Object {
+        "#groupType": "groupType",
+        "#scheduleId": "scheduleId",
+      },
+      "ExpressionAttributeValues": Object {
+        ":groupType": "schedule",
+        ":scheduleId": "schedule1",
+      },
+      "FilterExpression": "#groupType = :groupType",
+      "IndexName": "ScheduleIdIndex",
+      "KeyConditionExpression": "#scheduleId = :scheduleId",
+      "Limit": 1,
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`Returns 200 for existing document 2`] = `
+Object {
+  "body": "{\\"areas\\":[\\"area1\\"],\\"createdAt\\":\\"2019-10-13T00:00:00.000Z\\",\\"createdBy\\":{\\"id\\":\\"user1\\",\\"label\\":\\"Unknown User\\",\\"type\\":\\"user\\"},\\"enabled\\":true,\\"endAt\\":\\"2019-10-1500:00:00.000Z\\",\\"id\\":\\"schedule1\\",\\"included\\":{},\\"locations\\":[\\"location1\\"],\\"name\\":\\"Schedule One\\",\\"serviceHours\\":{\\"hours\\":[{\\"description\\":\\"MON 11:00 - TUE 00:00\\",\\"end\\":86400000,\\"start\\":39600000,\\"type\\":\\"DEFAULT\\"}],\\"timezone\\":\\"Australia/Melbourne\\"},\\"startAt\\":\\"2019-10-1400:00:00.000Z\\",\\"strategy\\":{\\"options\\":{\\"duration\\":{\\"unit\\":\\"minute\\",\\"value\\":15},\\"frequency\\":{\\"unit\\":\\"minute\\",\\"value\\":15}},\\"type\\":\\"stopwatch\\"},\\"type\\":\\"visit\\",\\"updatedAt\\":\\"2019-10-13T01:00:00.000Z\\",\\"updatedBy\\":{\\"id\\":\\"user1\\",\\"label\\":\\"Unknown User\\",\\"type\\":\\"user\\"}}",
+  "statusCode": 200,
+}
+`;

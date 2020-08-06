@@ -1,0 +1,64 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid:830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/handler.ts",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Jest",
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": [
+                "deleteScheduleHandler",
+                "--config",
+                "${workspaceFolder}/jest.config.js"
+            ],
+            "env": {
+                "TZ":"UTC",
+            },
+            //"disableOptimisticBPs": true,
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Serverless Offline",
+            "env": {
+                "AWS_REGION":"us-east-1",
+                "REGION":"localhost",
+                "CLOUDINARY_BASE_URL":"https://res.cloudinary.com/lighthouseio/image/fetch",
+                "S3_BASE_URL":"https://uploads-develop-us-lighthouse-io.s3.amazonaws.com",
+                "S3_BUCKET_PDF_DATA":"pdf-develop-data-lighthouse-io",
+                "S3_BUCKET_UPLOADS":"uploads-develop-us-lighthouse-io",
+                "SLACK_WEBHOOK_URL_EXAMPLE_SERVICE":"http://slack.test.com",
+                "SES_CONFIGURATION_SET_NAME":"LighthouseOutboundEmailStatus",
+                "TZ":"UTC",
+                "AWS_ACCESS_KEY_ID":"ASIAZOH7VE4HFUULAB3R",
+                "AWS_SECRET_ACCESS_KEY":"w0Loh8nIwAdOQ60q8Xc+xilQ++KHgcBQuimuN6A4",
+                "AWS_SESSION_TOKEN":"AgoJb3JpZ2luX2VjEO7//////////wEaCXVzLWVhc3QtMSJHMEUCIEl+UPNXWnCcsYQzws2sCb2P5xgzdKXF9oD6lqXX/WqXAiEArHkJ7wd3VAG9eM7n+TYSnNLtHjE4jUy93omjg7Z6V98q3QIIdxAAGgw2NDkwNzYyMjE3MTAiDMyIMq9D52J+NJumNCq6AtnGS62X3s/eMNFLQjmigfaBbdqGRSExfpl4geuwDHZmhYZGPKoNsMZsBOyQku3MJjnvhtI4BOU5MXS/p6e0EUUtKXdn2hbdYv0P6zQ3Yo93zmFJnJ+OpbGaJznopbNze5QNUqF+HfeM9Vf4y401S+p8Qd5RKYtvObQXw2fnNzcb6sQLjZ/L5V3pacgLuXNPnBzb65mX5qayzcrSaxWO3VpzGEsyTH/l+nbab85WsyZI5Xokdk0UEnu4lzM4LyPpSMDgN7fhgYQDkAy4AsKm5VmkkZuaJUCo+pov/xhCUjfOJJTrdm75J+EQcNLwDLqz3MnVmBLTiDppeEVhKLqhPBZvfwUqhsSEAip5+byRMhtwdmB4p+b/ahvYv1fORnirdpuIJGgPDyFcjSuv06Uc/Czf69kX3K/zfLEiMIzSsOoFOrQBkWCcWWujFF5TcppyCI2FOwPkwHUrnkRLRWKMxDOhkUWEL8s3H19KyASL8HM1pSoXQyeiSSp5pgRQfLhA2uwo0rW+9g5Zt1SODaEzU7atD35JeMPyzYkHAxfiQK3To1YI+1D8u2WjgrQIe1vcaTZqTtlWgk4cRRAdRIPnkIgCVHybzGNWY6Mn50i++WdxDKqGrt7xktkPM0vrZa7J1B7PoiNLwMnGmOtXZh0FMD/3dAavdmHN",
+                "AWS_SECURITY_GROUP_ID":"sg-0923c17af2a07930a",
+                "AWS_SUBNET_ID_1":"subnet-0e89192ad228ecf23",
+                "AWS_SUBNET_ID_2":"subnet-058cf1392f68b7306",
+                "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_ARN":"resolve-exception",
+                "SCHEDULE_SERVICE_CREATE_EXCEPTION_ARN":"create-exception",
+                //"SLS_DEBUG":"*",
+            },
+            "program": "${workspaceRoot}/../../node_modules/serverless/bin/serverless",
+            "args": [
+                "offline",
+                "start",
+                "--stage",
+                "dev",
+            ]
+        }
+    ]
+}

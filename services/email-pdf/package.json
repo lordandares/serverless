@@ -1,0 +1,27 @@
+{
+  "name": "@lighthouse/serverless-email-pdf",
+  "private": true,
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "main": "handler.js",
+  "scripts": {
+    "deploy": "sls deploy",
+    "start": "SLS_DEBUG=* sls offline start --stage dev",
+    "test": "TZ=UTC jest",
+    "test:ci": "TZ=UTC jest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lighthouse/serverless-plugin-typescript": "1.1.10-beta-1",
+    "nodemailer": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.11.7",
+    "aws-sdk": "^2.559.0",
+    "aws-xray-sdk": "^2.4.0",
+    "jest": "^23.x.x",
+    "source-map-support": "^0.5.0",
+    "typescript": "^3.6.4"
+  }
+}

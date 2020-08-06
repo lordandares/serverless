@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sets occurrence to expired and invokes ensure occurrences step function 1`] = `undefined`;
+
+exports[`sets occurrence to expired and invokes ensure occurrences step function 2`] = `
+Array [
+  Array [
+    Object {
+      "Message": "{\\"applicationId\\":\\"application1\\",\\"createdAt\\":\\"2019-01-01T00:00:00.000Z\\",\\"createdBy\\":{\\"id\\":\\"user1\\",\\"label\\":\\"Unknown User\\",\\"type\\":\\"user\\"},\\"data\\":{\\"occurrenceInterval\\":[1,2],\\"scheduleName\\":\\"Schedule 1\\",\\"serviceInterval\\":[1,2],\\"timezone\\":\\"Australia/Melbourne\\",\\"type\\":\\"visit\\"},\\"endAt\\":\\"2019-02-01T23:59:59.999Z\\",\\"groupType\\":\\"occurrence\\",\\"locationId\\":\\"5d163137b8b3b7000127edd1\\",\\"location_endAt_occurrenceId\\":\\"location1-2019-02-02T00:00:00.000Z-occurrence1\\",\\"occurrenceId\\":\\"occurrence1\\",\\"pk\\":\\"application1-occurrence\\",\\"scheduleId\\":\\"schedule1\\",\\"sk\\":\\"2019-01-01T00:00-occurrence1\\",\\"startAt\\":\\"2019-02-01T00:00:00.000Z\\",\\"status\\":\\"pending\\",\\"updatedBy\\":{\\"id\\":\\"user1\\",\\"label\\":\\"Unknown User\\",\\"type\\":\\"user\\"}}",
+      "TopicArn": "create-exception",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`sets occurrence to expired and invokes ensure occurrences step function 3`] = `
+Array [
+  Array [
+    Object {
+      "input": "{\\"scheduleId\\":\\"schedule1\\"}",
+      "name": "application1-schedule1-1546304400000",
+      "stateMachineArn": "ensure-occurrences-step-function",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`skips occurrence if status is not active 1`] = `
+Array [
+  Array [
+    Object {
+      "Key": Object {
+        "pk": "application1-occurrence",
+        "sk": "2019-01-01T00:00-occurrence1",
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;

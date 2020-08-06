@@ -1,0 +1,1206 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "EndDashbreakDashhandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shifts-integration-service-dev-end-break-handler"
+      }
+    },
+    "EndDashshiftDashhandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shifts-integration-service-dev-end-shift-handler"
+      }
+    },
+    "RejectDashshiftDashhandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shifts-integration-service-dev-reject-shift-handler"
+      }
+    },
+    "ResolveDashshiftDashhandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shifts-integration-service-dev-resolve-shift-handler"
+      }
+    },
+    "StartDashbreakDashhandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shifts-integration-service-dev-start-break-handler"
+      }
+    },
+    "StartDashshiftDashhandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shifts-integration-service-dev-start-shift-handler"
+      }
+    },
+    "WinteamDashmessageDashhandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shifts-integration-service-dev-winteam-message-handler"
+      }
+    },
+    "WinteamDashshiftDashhandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/shifts-integration-service-dev-winteam-shift-handler"
+      }
+    },
+    "IamRoleLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "dev",
+                  "shifts-integration-service",
+                  "lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/shifts-integration-service-dev*:*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/shifts-integration-service-dev*:*:*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "secretsmanager:GetSecretValue",
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:lio/global/mongodb/dev*"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:lio/serverless/winteam-service/dev*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "states:StartExecution",
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:shifts-integration-service-dev-end-break"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:shifts-integration-service-dev-end-shift"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:shifts-integration-service-dev-start-break"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:shifts-integration-service-dev-start-shift"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "sns:CreatePlatformEndpoint",
+                    "sns:GetEndpointAttributes",
+                    "sns:Publish",
+                    "sns:SetEndpointAttributes"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/",
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "shifts-integration-service",
+              "dev",
+              {
+                "Ref": "AWS::Region"
+              },
+              "lambdaRole"
+            ]
+          ]
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "EndDashbreakDashhandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shifts-integration-service/dev/1578944409704-2020-01-13T19:40:09.704Z/shifts-integration-service.zip"
+        },
+        "FunctionName": "shifts-integration-service-dev-end-break-handler",
+        "Handler": "handlers.shiftHandler",
+        "MemorySize": 256,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "AWS_SNS_ANDROID_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+            },
+            "AWS_SNS_ANDROID_SERVICE": "GCM",
+            "AWS_SNS_API_VERSION": "2010-03-31",
+            "AWS_SNS_IOS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+            },
+            "AWS_SNS_IOS_SERVICE": "APNS_SANDBOX",
+            "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+            "STAGE": "dev",
+            "WINTEAM_SECRET_ID": "lio/serverless/winteam-service/dev",
+            "PLATFORM": "AWS",
+            "INTEGRATION_STATE_MACHINE_ARN": {
+              "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:shifts-integration-service-dev-end-break"
+            }
+          }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-000fc99138cfee8e6"
+          ],
+          "SubnetIds": [
+            "subnet-0fb567fb4579052a3",
+            "subnet-048597f36602bc712"
+          ]
+        }
+      },
+      "DependsOn": [
+        "EndDashbreakDashhandlerLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "EndDashbreakDashhandlerLambdaVersionUhq4qeLdX9QTL65jLiLqUoxldbx2YJrGD3WMdHFn7Q": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "EndDashbreakDashhandlerLambdaFunction"
+        },
+        "CodeSha256": "aogdVRq5m3IAPPLVV4UBc1fXXAd5BJ00zWJ4DYUwWXQ="
+      }
+    },
+    "EndDashshiftDashhandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shifts-integration-service/dev/1578944409704-2020-01-13T19:40:09.704Z/shifts-integration-service.zip"
+        },
+        "FunctionName": "shifts-integration-service-dev-end-shift-handler",
+        "Handler": "handlers.shiftHandler",
+        "MemorySize": 256,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "AWS_SNS_ANDROID_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+            },
+            "AWS_SNS_ANDROID_SERVICE": "GCM",
+            "AWS_SNS_API_VERSION": "2010-03-31",
+            "AWS_SNS_IOS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+            },
+            "AWS_SNS_IOS_SERVICE": "APNS_SANDBOX",
+            "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+            "STAGE": "dev",
+            "WINTEAM_SECRET_ID": "lio/serverless/winteam-service/dev",
+            "PLATFORM": "AWS",
+            "INTEGRATION_STATE_MACHINE_ARN": {
+              "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:shifts-integration-service-dev-end-shift"
+            }
+          }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-000fc99138cfee8e6"
+          ],
+          "SubnetIds": [
+            "subnet-0fb567fb4579052a3",
+            "subnet-048597f36602bc712"
+          ]
+        }
+      },
+      "DependsOn": [
+        "EndDashshiftDashhandlerLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "EndDashshiftDashhandlerLambdaVersion4WSEfrLHJvbQYHkmXhTJtaAVjrPSnpSGdJIJ6UOwT8": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "EndDashshiftDashhandlerLambdaFunction"
+        },
+        "CodeSha256": "aogdVRq5m3IAPPLVV4UBc1fXXAd5BJ00zWJ4DYUwWXQ="
+      }
+    },
+    "RejectDashshiftDashhandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shifts-integration-service/dev/1578944409704-2020-01-13T19:40:09.704Z/shifts-integration-service.zip"
+        },
+        "FunctionName": "shifts-integration-service-dev-reject-shift-handler",
+        "Handler": "handlers.rejectShiftHandler",
+        "MemorySize": 256,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "AWS_SNS_ANDROID_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+            },
+            "AWS_SNS_ANDROID_SERVICE": "GCM",
+            "AWS_SNS_API_VERSION": "2010-03-31",
+            "AWS_SNS_IOS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+            },
+            "AWS_SNS_IOS_SERVICE": "APNS_SANDBOX",
+            "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+            "STAGE": "dev",
+            "WINTEAM_SECRET_ID": "lio/serverless/winteam-service/dev",
+            "PLATFORM": "AWS"
+          }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-000fc99138cfee8e6"
+          ],
+          "SubnetIds": [
+            "subnet-0fb567fb4579052a3",
+            "subnet-048597f36602bc712"
+          ]
+        }
+      },
+      "DependsOn": [
+        "RejectDashshiftDashhandlerLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "RejectDashshiftDashhandlerLambdaVersionP3KdZppogxfdu48q8xePYN6LbILUGknV4hoqSh7oGU": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "RejectDashshiftDashhandlerLambdaFunction"
+        },
+        "CodeSha256": "aogdVRq5m3IAPPLVV4UBc1fXXAd5BJ00zWJ4DYUwWXQ="
+      }
+    },
+    "ResolveDashshiftDashhandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shifts-integration-service/dev/1578944409704-2020-01-13T19:40:09.704Z/shifts-integration-service.zip"
+        },
+        "FunctionName": "shifts-integration-service-dev-resolve-shift-handler",
+        "Handler": "handlers.resolveShiftHandler",
+        "MemorySize": 256,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "AWS_SNS_ANDROID_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+            },
+            "AWS_SNS_ANDROID_SERVICE": "GCM",
+            "AWS_SNS_API_VERSION": "2010-03-31",
+            "AWS_SNS_IOS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+            },
+            "AWS_SNS_IOS_SERVICE": "APNS_SANDBOX",
+            "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+            "STAGE": "dev",
+            "WINTEAM_SECRET_ID": "lio/serverless/winteam-service/dev",
+            "PLATFORM": "AWS"
+          }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-000fc99138cfee8e6"
+          ],
+          "SubnetIds": [
+            "subnet-0fb567fb4579052a3",
+            "subnet-048597f36602bc712"
+          ]
+        }
+      },
+      "DependsOn": [
+        "ResolveDashshiftDashhandlerLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "ResolveDashshiftDashhandlerLambdaVersion1DeOYomoE53eDAETHB2YIrSM9C2zPjvx8pRrGcNzs": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ResolveDashshiftDashhandlerLambdaFunction"
+        },
+        "CodeSha256": "aogdVRq5m3IAPPLVV4UBc1fXXAd5BJ00zWJ4DYUwWXQ="
+      }
+    },
+    "StartDashbreakDashhandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shifts-integration-service/dev/1578944409704-2020-01-13T19:40:09.704Z/shifts-integration-service.zip"
+        },
+        "FunctionName": "shifts-integration-service-dev-start-break-handler",
+        "Handler": "handlers.shiftHandler",
+        "MemorySize": 256,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "AWS_SNS_ANDROID_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+            },
+            "AWS_SNS_ANDROID_SERVICE": "GCM",
+            "AWS_SNS_API_VERSION": "2010-03-31",
+            "AWS_SNS_IOS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+            },
+            "AWS_SNS_IOS_SERVICE": "APNS_SANDBOX",
+            "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+            "STAGE": "dev",
+            "WINTEAM_SECRET_ID": "lio/serverless/winteam-service/dev",
+            "PLATFORM": "AWS",
+            "INTEGRATION_STATE_MACHINE_ARN": {
+              "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:shifts-integration-service-dev-start-break"
+            }
+          }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-000fc99138cfee8e6"
+          ],
+          "SubnetIds": [
+            "subnet-0fb567fb4579052a3",
+            "subnet-048597f36602bc712"
+          ]
+        }
+      },
+      "DependsOn": [
+        "StartDashbreakDashhandlerLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "StartDashbreakDashhandlerLambdaVersionPQIIikrP0ViJBo7i0LDnH6ENgMLiET7Q1wRSrdgww": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "StartDashbreakDashhandlerLambdaFunction"
+        },
+        "CodeSha256": "aogdVRq5m3IAPPLVV4UBc1fXXAd5BJ00zWJ4DYUwWXQ="
+      }
+    },
+    "StartDashshiftDashhandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shifts-integration-service/dev/1578944409704-2020-01-13T19:40:09.704Z/shifts-integration-service.zip"
+        },
+        "FunctionName": "shifts-integration-service-dev-start-shift-handler",
+        "Handler": "handlers.shiftHandler",
+        "MemorySize": 256,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "AWS_SNS_ANDROID_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+            },
+            "AWS_SNS_ANDROID_SERVICE": "GCM",
+            "AWS_SNS_API_VERSION": "2010-03-31",
+            "AWS_SNS_IOS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+            },
+            "AWS_SNS_IOS_SERVICE": "APNS_SANDBOX",
+            "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+            "STAGE": "dev",
+            "WINTEAM_SECRET_ID": "lio/serverless/winteam-service/dev",
+            "PLATFORM": "AWS",
+            "INTEGRATION_STATE_MACHINE_ARN": {
+              "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:shifts-integration-service-dev-start-shift"
+            }
+          }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-000fc99138cfee8e6"
+          ],
+          "SubnetIds": [
+            "subnet-0fb567fb4579052a3",
+            "subnet-048597f36602bc712"
+          ]
+        }
+      },
+      "DependsOn": [
+        "StartDashshiftDashhandlerLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "StartDashshiftDashhandlerLambdaVersionNSDweGgocIY1S3RLCM4ggYZDtDwKz03clxDTBBKvZk": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "StartDashshiftDashhandlerLambdaFunction"
+        },
+        "CodeSha256": "aogdVRq5m3IAPPLVV4UBc1fXXAd5BJ00zWJ4DYUwWXQ="
+      }
+    },
+    "WinteamDashmessageDashhandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shifts-integration-service/dev/1578944409704-2020-01-13T19:40:09.704Z/shifts-integration-service.zip"
+        },
+        "FunctionName": "shifts-integration-service-dev-winteam-message-handler",
+        "Handler": "handlers.messageHandler",
+        "MemorySize": 256,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "AWS_SNS_ANDROID_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+            },
+            "AWS_SNS_ANDROID_SERVICE": "GCM",
+            "AWS_SNS_API_VERSION": "2010-03-31",
+            "AWS_SNS_IOS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+            },
+            "AWS_SNS_IOS_SERVICE": "APNS_SANDBOX",
+            "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+            "STAGE": "dev",
+            "WINTEAM_SECRET_ID": "lio/serverless/winteam-service/dev",
+            "PLATFORM": "AWS"
+          }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-000fc99138cfee8e6"
+          ],
+          "SubnetIds": [
+            "subnet-0fb567fb4579052a3",
+            "subnet-048597f36602bc712"
+          ]
+        }
+      },
+      "DependsOn": [
+        "WinteamDashmessageDashhandlerLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "WinteamDashmessageDashhandlerLambdaVersionGCSFGyaoorI8GqQJfP6LkkpUdEz2GQMoLo8qFIEm8": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "WinteamDashmessageDashhandlerLambdaFunction"
+        },
+        "CodeSha256": "aogdVRq5m3IAPPLVV4UBc1fXXAd5BJ00zWJ4DYUwWXQ="
+      }
+    },
+    "WinteamDashshiftDashhandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/shifts-integration-service/dev/1578944409704-2020-01-13T19:40:09.704Z/shifts-integration-service.zip"
+        },
+        "FunctionName": "shifts-integration-service-dev-winteam-shift-handler",
+        "Handler": "handlers.winteamShiftHandler",
+        "MemorySize": 256,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs8.10",
+        "Timeout": 60,
+        "Environment": {
+          "Variables": {
+            "AWS_SNS_ANDROID_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/GCM/lighthouse-gcm-test"
+            },
+            "AWS_SNS_ANDROID_SERVICE": "GCM",
+            "AWS_SNS_API_VERSION": "2010-03-31",
+            "AWS_SNS_IOS_ARN": {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:047871223545:app/APNS_SANDBOX/lighthouse-ios-test"
+            },
+            "AWS_SNS_IOS_SERVICE": "APNS_SANDBOX",
+            "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+            "STAGE": "dev",
+            "WINTEAM_SECRET_ID": "lio/serverless/winteam-service/dev",
+            "PLATFORM": "AWS"
+          }
+        },
+        "VpcConfig": {
+          "SecurityGroupIds": [
+            "sg-000fc99138cfee8e6"
+          ],
+          "SubnetIds": [
+            "subnet-0fb567fb4579052a3",
+            "subnet-048597f36602bc712"
+          ]
+        }
+      },
+      "DependsOn": [
+        "WinteamDashshiftDashhandlerLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "WinteamDashshiftDashhandlerLambdaVersiondJCG8I6stP4JSsqv7Itdkqa5kkh2oDWjuveSJQbQI": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "WinteamDashshiftDashhandlerLambdaFunction"
+        },
+        "CodeSha256": "aogdVRq5m3IAPPLVV4UBc1fXXAd5BJ00zWJ4DYUwWXQ="
+      }
+    },
+    "IamRoleStateMachineExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": {
+                  "Fn::Sub": "states.${AWS::Region}.amazonaws.com"
+                }
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Sub": "dev-${AWS::Region}-shifts-integration-service-statemachine"
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "lambda:InvokeFunction"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-winteam-shift-handler"
+                    },
+                    {
+                      "Fn::Sub": [
+                        "${functionArn}:*",
+                        {
+                          "functionArn": {
+                            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-winteam-shift-handler"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-reject-shift-handler"
+                    },
+                    {
+                      "Fn::Sub": [
+                        "${functionArn}:*",
+                        {
+                          "functionArn": {
+                            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-reject-shift-handler"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-resolve-shift-handler"
+                    },
+                    {
+                      "Fn::Sub": [
+                        "${functionArn}:*",
+                        {
+                          "functionArn": {
+                            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-resolve-shift-handler"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ShiftsDashintegrationDashserviceDashdevDashendDashbreak": {
+      "Type": "AWS::StepFunctions::StateMachine",
+      "Properties": {
+        "DefinitionString": {
+          "Fn::Sub": "{\n  \"Comment\": \"Lighthouse.io Integrations - End Break processor\",\n  \"StartAt\": \"Integrations Processor\",\n  \"States\": {\n    \"Integrations Processor\": {\n      \"Branches\": [\n        {\n          \"StartAt\": \"WinTeam Choice\",\n          \"States\": {\n            \"WinTeam Choice\": {\n              \"Type\": \"Choice\",\n              \"Choices\": [\n                {\n                  \"Variable\": \"$.plugins.winteamEnabled\",\n                  \"BooleanEquals\": false,\n                  \"Next\": \"Resolve\"\n                },\n                {\n                  \"Variable\": \"$.plugins.winteamEnabled\",\n                  \"BooleanEquals\": true,\n                  \"Next\": \"Process TimePunch\"\n                }\n              ],\n              \"Default\": \"Resolve\"\n            },\n            \"Process TimePunch\": {\n              \"Type\": \"Task\",\n              \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-winteam-shift-handler\",\n              \"Retry\": [\n                {\n                  \"ErrorEquals\": [\n                    \"States.Timeout\"\n                  ],\n                  \"MaxAttempts\": 3,\n                  \"BackoffRate\": 1.5\n                }\n              ],\n              \"Catch\": [\n                {\n                  \"ErrorEquals\": [\n                    \"States.ALL\"\n                  ],\n                  \"Next\": \"Resolve\"\n                }\n              ],\n              \"Next\": \"Resolve\"\n            },\n            \"Resolve\": {\n              \"Type\": \"Pass\",\n              \"End\": true\n            }\n          }\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\n            \"States.ALL\"\n          ],\n          \"Next\": \"Finalize\"\n        }\n      ],\n      \"Next\": \"Finalize\",\n      \"Type\": \"Parallel\"\n    },\n    \"Finalize\": {\n      \"Type\": \"Pass\",\n      \"End\": true\n    }\n  }\n}"
+        },
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "IamRoleStateMachineExecution",
+            "Arn"
+          ]
+        },
+        "Tags": [],
+        "StateMachineName": "shifts-integration-service-dev-end-break"
+      },
+      "DependsOn": [
+        "IamRoleStateMachineExecution"
+      ]
+    },
+    "ShiftsDashintegrationDashserviceDashdevDashendDashshift": {
+      "Type": "AWS::StepFunctions::StateMachine",
+      "Properties": {
+        "DefinitionString": {
+          "Fn::Sub": "{\n  \"Comment\": \"Lighthouse.io Integrations - End Shift processor\",\n  \"StartAt\": \"Integrations Processor\",\n  \"States\": {\n    \"Integrations Processor\": {\n      \"Branches\": [\n        {\n          \"StartAt\": \"WinTeam Choice\",\n          \"States\": {\n            \"WinTeam Choice\": {\n              \"Type\": \"Choice\",\n              \"Choices\": [\n                {\n                  \"Variable\": \"$.plugins.winteamEnabled\",\n                  \"BooleanEquals\": false,\n                  \"Next\": \"Resolve\"\n                },\n                {\n                  \"Variable\": \"$.plugins.winteamEnabled\",\n                  \"BooleanEquals\": true,\n                  \"Next\": \"Process TimePunch\"\n                }\n              ],\n              \"Default\": \"Resolve\"\n            },\n            \"Process TimePunch\": {\n              \"Type\": \"Task\",\n              \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-winteam-shift-handler\",\n              \"Retry\": [\n                {\n                  \"ErrorEquals\": [\n                    \"States.Timeout\"\n                  ],\n                  \"MaxAttempts\": 3,\n                  \"BackoffRate\": 1.5\n                }\n              ],\n              \"Catch\": [\n                {\n                  \"ErrorEquals\": [\n                    \"States.ALL\"\n                  ],\n                  \"Next\": \"Resolve\"\n                }\n              ],\n              \"Next\": \"Resolve\"\n            },\n            \"Resolve\": {\n              \"Type\": \"Pass\",\n              \"End\": true\n            }\n          }\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\n            \"States.ALL\"\n          ],\n          \"Next\": \"Finalize\"\n        }\n      ],\n      \"Next\": \"Finalize\",\n      \"Type\": \"Parallel\"\n    },\n    \"Finalize\": {\n      \"Type\": \"Pass\",\n      \"End\": true\n    }\n  }\n}"
+        },
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "IamRoleStateMachineExecution",
+            "Arn"
+          ]
+        },
+        "Tags": [],
+        "StateMachineName": "shifts-integration-service-dev-end-shift"
+      },
+      "DependsOn": [
+        "IamRoleStateMachineExecution"
+      ]
+    },
+    "ShiftsDashintegrationDashserviceDashdevDashstartDashbreak": {
+      "Type": "AWS::StepFunctions::StateMachine",
+      "Properties": {
+        "DefinitionString": {
+          "Fn::Sub": "{\n  \"Comment\": \"Lighthouse.io Integrations - Start Break processor\",\n  \"StartAt\": \"Integrations Processor\",\n  \"States\": {\n    \"Integrations Processor\": {\n      \"Branches\": [\n        {\n          \"StartAt\": \"WinTeam Choice\",\n          \"States\": {\n            \"WinTeam Choice\": {\n              \"Type\": \"Choice\",\n              \"Choices\": [\n                {\n                  \"Variable\": \"$.plugins.winteamEnabled\",\n                  \"BooleanEquals\": false,\n                  \"Next\": \"Resolve\"\n                },\n                {\n                  \"Variable\": \"$.plugins.winteamEnabled\",\n                  \"BooleanEquals\": true,\n                  \"Next\": \"Process TimePunch\"\n                }\n              ],\n              \"Default\": \"Resolve\"\n            },\n            \"Process TimePunch\": {\n              \"Type\": \"Task\",\n              \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-winteam-shift-handler\",\n              \"Retry\": [\n                {\n                  \"ErrorEquals\": [\n                    \"States.Timeout\"\n                  ],\n                  \"MaxAttempts\": 3,\n                  \"BackoffRate\": 1.5\n                }\n              ],\n              \"Catch\": [\n                {\n                  \"ErrorEquals\": [\n                    \"States.ALL\"\n                  ],\n                  \"Next\": \"Resolve\"\n                }\n              ],\n              \"Next\": \"Resolve\"\n            },\n            \"Resolve\": {\n              \"Type\": \"Pass\",\n              \"End\": true\n            }\n          }\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\n            \"States.ALL\"\n          ],\n          \"Next\": \"Finalize\"\n        }\n      ],\n      \"Next\": \"Finalize\",\n      \"Type\": \"Parallel\"\n    },\n    \"Finalize\": {\n      \"Type\": \"Pass\",\n      \"End\": true\n    }\n  }\n}"
+        },
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "IamRoleStateMachineExecution",
+            "Arn"
+          ]
+        },
+        "Tags": [],
+        "StateMachineName": "shifts-integration-service-dev-start-break"
+      },
+      "DependsOn": [
+        "IamRoleStateMachineExecution"
+      ]
+    },
+    "ShiftsDashintegrationDashserviceDashdevDashstartDashshift": {
+      "Type": "AWS::StepFunctions::StateMachine",
+      "Properties": {
+        "DefinitionString": {
+          "Fn::Sub": "{\n  \"Comment\": \"Lighthouse.io Integrations - Start Shift processor\",\n  \"StartAt\": \"Integrations Processor\",\n  \"States\": {\n    \"Integrations Processor\": {\n      \"Branches\": [\n        {\n          \"StartAt\": \"WinTeam Choice\",\n          \"States\": {\n            \"WinTeam Choice\": {\n              \"Type\": \"Choice\",\n              \"Choices\": [\n                {\n                  \"Variable\": \"$.plugins.winteamEnabled\",\n                  \"BooleanEquals\": false,\n                  \"Next\": \"Skip\"\n                },\n                {\n                  \"Variable\": \"$.plugins.winteamEnabled\",\n                  \"BooleanEquals\": true,\n                  \"Next\": \"Process TimePunch\"\n                },\n                {\n                  \"Variable\": \"$.Error\",\n                  \"StringEquals\": \"Error\",\n                  \"Next\": \"Reject\"\n                }\n              ],\n              \"Default\": \"Resolve\"\n            },\n            \"Process TimePunch\": {\n              \"Type\": \"Task\",\n              \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-winteam-shift-handler\",\n              \"Retry\": [\n                {\n                  \"ErrorEquals\": [\n                    \"States.Timeout\"\n                  ],\n                  \"MaxAttempts\": 3,\n                  \"BackoffRate\": 1.5\n                }\n              ],\n              \"Catch\": [\n                {\n                  \"ErrorEquals\": [\n                    \"States.ALL\"\n                  ],\n                  \"Next\": \"Resolve Shift Choice\"\n                }\n              ],\n              \"Next\": \"Resolve Shift Choice\"\n            },\n            \"Resolve Shift Choice\": {\n              \"Type\": \"Choice\",\n              \"Choices\": [\n                {\n                  \"Variable\": \"$.hasErrors\",\n                  \"BooleanEquals\": true,\n                  \"Next\": \"Reject\"\n                }\n              ],\n              \"Default\": \"Resolve\"\n            },\n            \"Reject\": {\n              \"Type\": \"Task\",\n              \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-reject-shift-handler\",\n              \"End\": true\n            },\n            \"Resolve\": {\n              \"Type\": \"Task\",\n              \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:shifts-integration-service-dev-resolve-shift-handler\",\n              \"End\": true\n            },\n            \"Skip\": {\n              \"End\": true,\n              \"Type\": \"Pass\"\n            }\n          }\n        }\n      ],\n      \"Catch\": [\n        {\n          \"ErrorEquals\": [\n            \"States.ALL\"\n          ],\n          \"Next\": \"Finalize\"\n        }\n      ],\n      \"Next\": \"Finalize\",\n      \"Type\": \"Parallel\"\n    },\n    \"Finalize\": {\n      \"Type\": \"Pass\",\n      \"End\": true\n    }\n  }\n}"
+        },
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "IamRoleStateMachineExecution",
+            "Arn"
+          ]
+        },
+        "Tags": [],
+        "StateMachineName": "shifts-integration-service-dev-start-shift"
+      },
+      "DependsOn": [
+        "IamRoleStateMachineExecution"
+      ]
+    },
+    "SNSTopicShiftsintegrationservicedevendbreak": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "shifts-integration-service-dev-end-break",
+        "DisplayName": "",
+        "Subscription": [
+          {
+            "Endpoint": {
+              "Fn::GetAtt": [
+                "EndDashbreakDashhandlerLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Protocol": "lambda"
+          }
+        ]
+      }
+    },
+    "EndDashbreakDashhandlerLambdaPermissionShiftsintegrationservicedevendbreakSNS": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "EndDashbreakDashhandlerLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "sns.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":sns:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "shifts-integration-service-dev-end-break"
+            ]
+          ]
+        }
+      }
+    },
+    "SNSTopicShiftsintegrationservicedevendshift": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "shifts-integration-service-dev-end-shift",
+        "DisplayName": "",
+        "Subscription": [
+          {
+            "Endpoint": {
+              "Fn::GetAtt": [
+                "EndDashshiftDashhandlerLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Protocol": "lambda"
+          }
+        ]
+      }
+    },
+    "EndDashshiftDashhandlerLambdaPermissionShiftsintegrationservicedevendshiftSNS": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "EndDashshiftDashhandlerLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "sns.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":sns:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "shifts-integration-service-dev-end-shift"
+            ]
+          ]
+        }
+      }
+    },
+    "SNSTopicShiftsintegrationservicedevstartbreak": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "shifts-integration-service-dev-start-break",
+        "DisplayName": "",
+        "Subscription": [
+          {
+            "Endpoint": {
+              "Fn::GetAtt": [
+                "StartDashbreakDashhandlerLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Protocol": "lambda"
+          }
+        ]
+      }
+    },
+    "StartDashbreakDashhandlerLambdaPermissionShiftsintegrationservicedevstartbreakSNS": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "StartDashbreakDashhandlerLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "sns.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":sns:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "shifts-integration-service-dev-start-break"
+            ]
+          ]
+        }
+      }
+    },
+    "SNSTopicShiftsintegrationservicedevstartshift": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "shifts-integration-service-dev-start-shift",
+        "DisplayName": "",
+        "Subscription": [
+          {
+            "Endpoint": {
+              "Fn::GetAtt": [
+                "StartDashshiftDashhandlerLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Protocol": "lambda"
+          }
+        ]
+      }
+    },
+    "StartDashshiftDashhandlerLambdaPermissionShiftsintegrationservicedevstartshiftSNS": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "StartDashshiftDashhandlerLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "sns.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":sns:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "shifts-integration-service-dev-start-shift"
+            ]
+          ]
+        }
+      }
+    },
+    "SNSTopicShiftsintegrationservicedevmessage": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "shifts-integration-service-dev-message",
+        "DisplayName": "",
+        "Subscription": [
+          {
+            "Endpoint": {
+              "Fn::GetAtt": [
+                "WinteamDashmessageDashhandlerLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Protocol": "lambda"
+          }
+        ]
+      }
+    },
+    "WinteamDashmessageDashhandlerLambdaPermissionShiftsintegrationservicedevmessageSNS": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WinteamDashmessageDashhandlerLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "sns.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":sns:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              "shifts-integration-service-dev-message"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      }
+    },
+    "EndDashbreakDashhandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "EndDashbreakDashhandlerLambdaVersionUhq4qeLdX9QTL65jLiLqUoxldbx2YJrGD3WMdHFn7Q"
+      }
+    },
+    "EndDashshiftDashhandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "EndDashshiftDashhandlerLambdaVersion4WSEfrLHJvbQYHkmXhTJtaAVjrPSnpSGdJIJ6UOwT8"
+      }
+    },
+    "RejectDashshiftDashhandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "RejectDashshiftDashhandlerLambdaVersionP3KdZppogxfdu48q8xePYN6LbILUGknV4hoqSh7oGU"
+      }
+    },
+    "ResolveDashshiftDashhandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "ResolveDashshiftDashhandlerLambdaVersion1DeOYomoE53eDAETHB2YIrSM9C2zPjvx8pRrGcNzs"
+      }
+    },
+    "StartDashbreakDashhandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "StartDashbreakDashhandlerLambdaVersionPQIIikrP0ViJBo7i0LDnH6ENgMLiET7Q1wRSrdgww"
+      }
+    },
+    "StartDashshiftDashhandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "StartDashshiftDashhandlerLambdaVersionNSDweGgocIY1S3RLCM4ggYZDtDwKz03clxDTBBKvZk"
+      }
+    },
+    "WinteamDashmessageDashhandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "WinteamDashmessageDashhandlerLambdaVersionGCSFGyaoorI8GqQJfP6LkkpUdEz2GQMoLo8qFIEm8"
+      }
+    },
+    "WinteamDashshiftDashhandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "WinteamDashshiftDashhandlerLambdaVersiondJCG8I6stP4JSsqv7Itdkqa5kkh2oDWjuveSJQbQI"
+      }
+    },
+    "ShiftsDashintegrationDashserviceDashdevDashendDashbreakArn": {
+      "Description": "Current StateMachine Arn",
+      "Value": {
+        "Ref": "ShiftsDashintegrationDashserviceDashdevDashendDashbreak"
+      }
+    },
+    "ShiftsDashintegrationDashserviceDashdevDashendDashshiftArn": {
+      "Description": "Current StateMachine Arn",
+      "Value": {
+        "Ref": "ShiftsDashintegrationDashserviceDashdevDashendDashshift"
+      }
+    },
+    "ShiftsDashintegrationDashserviceDashdevDashstartDashbreakArn": {
+      "Description": "Current StateMachine Arn",
+      "Value": {
+        "Ref": "ShiftsDashintegrationDashserviceDashdevDashstartDashbreak"
+      }
+    },
+    "ShiftsDashintegrationDashserviceDashdevDashstartDashshiftArn": {
+      "Description": "Current StateMachine Arn",
+      "Value": {
+        "Ref": "ShiftsDashintegrationDashserviceDashdevDashstartDashshift"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+import { InferType } from 'yup';
+export declare const shiftEventSchema: any;
+export declare const shiftMessageSchema: any;
+export declare const shiftBreakSchema: any;
+export declare const shiftSchema: any;
+export declare type ShiftEventSchema = InferType<typeof shiftEventSchema>;
+export declare type ShiftMessageSchema = InferType<typeof shiftMessageSchema>;
+export declare type ShiftBreakSchema = InferType<typeof shiftBreakSchema>;
+export declare type ShiftSchema = InferType<typeof shiftSchema>;
+export default shiftSchema;

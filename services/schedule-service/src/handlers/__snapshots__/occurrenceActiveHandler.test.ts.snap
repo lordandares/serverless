@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`returns successfully when a new rule pattern document 1`] = `
+Array [
+  Array [
+    Object {
+      "Key": Object {
+        "pk": "application1-occurrence",
+        "sk": "2019-01-01T00:00-occurrence1",
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+  Array [
+    Object {
+      "Key": Object {
+        "pk": "rule-pattern-application1-5d163137b8b3b7000127edd1",
+        "sk": "visit",
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns successfully when a new rule pattern document 2`] = `
+Array [
+  Array [
+    Object {
+      "TransactItems": Array [
+        Object {
+          "Put": Object {
+            "Item": Object {
+              "createdAt": "2019-01-01T01:00:00.000Z",
+              "createdBy": Object {
+                "id": "aws-request-id",
+                "label": "invoked-function-arn",
+                "type": "system",
+              },
+              "groupType": "rule-pattern",
+              "matches": Object {
+                "occurrence1": Object {
+                  "pk": "application1-occurrence",
+                  "sk": "2019-01-01T00:00-occurrence1",
+                },
+              },
+              "pk": "rule-pattern-application1-5d163137b8b3b7000127edd1",
+              "sk": "visit",
+              "updatedAt": "2019-01-01T01:00:00.000Z",
+              "updatedBy": Object {
+                "id": "aws-request-id",
+                "label": "invoked-function-arn",
+                "type": "system",
+              },
+            },
+            "TableName": "table-schedules",
+          },
+        },
+        Object {
+          "Update": Object {
+            "ConditionExpression": "#updatedAt = :expectedUpdatedAt",
+            "ExpressionAttributeNames": Object {
+              "#status": "status",
+              "#updatedAt": "updatedAt",
+              "#updatedBy": "updatedBy",
+            },
+            "ExpressionAttributeValues": Object {
+              ":expectedUpdatedAt": undefined,
+              ":nextUpdatedAt": "2019-01-01T01:00:00.000Z",
+              ":status": "active",
+              ":updatedBy": Object {
+                "id": "aws-request-id",
+                "label": "invoked-function-arn",
+                "type": "system",
+              },
+            },
+            "Key": Object {
+              "pk": "application1-occurrence",
+              "sk": "2019-01-01T00:00-occurrence1",
+            },
+            "TableName": "table-schedules",
+            "UpdateExpression": "SET #status = :status, #updatedAt = :nextUpdatedAt, #updatedBy = :updatedBy",
+          },
+        },
+      ],
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns successfully when a new rule pattern document 3`] = `Object {}`;
+
+exports[`returns successfully when updating rule pattern document 1`] = `
+Array [
+  Array [
+    Object {
+      "Key": Object {
+        "pk": "application1-occurrence",
+        "sk": "2019-01-01T00:00-occurrence1",
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+  Array [
+    Object {
+      "Key": Object {
+        "pk": "rule-pattern-application1-5d163137b8b3b7000127edd1",
+        "sk": "visit",
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns successfully when updating rule pattern document 2`] = `
+Array [
+  Array [
+    Object {
+      "TransactItems": Array [
+        Object {
+          "Update": Object {
+            "ConditionExpression": "#updatedAt = :expectedUpdatedAt",
+            "ExpressionAttributeNames": Object {
+              "#matches": "matches",
+              "#updatedAt": "updatedAt",
+              "#updatedBy": "updatedBy",
+            },
+            "ExpressionAttributeValues": Object {
+              ":expectedUpdatedAt": "2019-06-02T00:00:00.000Z",
+              ":matches": Object {
+                "occurrence1": Object {
+                  "pk": "application1-occurrence",
+                  "sk": "2019-01-01T00:00-occurrence1",
+                },
+              },
+              ":nextUpdatedAt": "2019-01-01T01:00:00.000Z",
+              ":updatedBy": Object {
+                "id": "aws-request-id",
+                "label": "invoked-function-arn",
+                "type": "system",
+              },
+            },
+            "Key": Object {
+              "pk": "rule-pattern-application1-5d163137b8b3b7000127edd1",
+              "sk": "visit",
+            },
+            "TableName": "table-schedules",
+            "UpdateExpression": "SET #matches = :matches, #updatedAt = :nextUpdatedAt, #updatedBy = :updatedBy",
+          },
+        },
+        Object {
+          "Update": Object {
+            "ConditionExpression": "#updatedAt = :expectedUpdatedAt",
+            "ExpressionAttributeNames": Object {
+              "#status": "status",
+              "#updatedAt": "updatedAt",
+              "#updatedBy": "updatedBy",
+            },
+            "ExpressionAttributeValues": Object {
+              ":expectedUpdatedAt": undefined,
+              ":nextUpdatedAt": "2019-01-01T01:00:00.000Z",
+              ":status": "active",
+              ":updatedBy": Object {
+                "id": "aws-request-id",
+                "label": "invoked-function-arn",
+                "type": "system",
+              },
+            },
+            "Key": Object {
+              "pk": "application1-occurrence",
+              "sk": "2019-01-01T00:00-occurrence1",
+            },
+            "TableName": "table-schedules",
+            "UpdateExpression": "SET #status = :status, #updatedAt = :nextUpdatedAt, #updatedBy = :updatedBy",
+          },
+        },
+      ],
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns successfully when updating rule pattern document 3`] = `Object {}`;

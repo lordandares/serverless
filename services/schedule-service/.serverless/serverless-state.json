@@ -1,0 +1,2861 @@
+{
+  "service": {
+    "service": "schedule-service",
+    "serviceObject": {
+      "name": "schedule-service"
+    },
+    "provider": {
+      "stage": "dev",
+      "variableSyntax": "\\${([ ~:a-zA-Z0-9._@'\",\\-\\/\\(\\)*]+?)}",
+      "name": "aws",
+      "runtime": "nodejs10.x",
+      "tracing": "true",
+      "apiGateway": {
+        "restApiId": {
+          "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+        },
+        "restApiRootResourceId": {
+          "Fn::ImportValue": "lighthouse-api-gateway-dev-root-resource-id"
+        }
+      },
+      "endpointType": "REGIONAL",
+      "environment": {
+        "CREATE_SCHEDULE_STEP_FUNCTION": "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function",
+        "LOOP_EXCEPTIONS_QUEUE_URL": "https://sqs.#{AWS::Region}.amazonaws.com/#{AWS::AccountId}/loop-exceptions-queue-dev",
+        "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+        "PLATFORM": "AWS",
+        "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:schedule-service-dev-occurrenceExpired",
+        "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+        "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+        "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+        "UPDATE_SCHEDULE_STEP_FUNCTION": "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+      },
+      "iamRoleStatements": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:DeleteItem",
+            "dynamodb:GetItem",
+            "dynamodb:PutItem",
+            "dynamodb:Query",
+            "dynamodb:UpdateItem"
+          ],
+          "Resource": [
+            {
+              "Fn::GetAtt": [
+                "DynamoDBTableSchedules",
+                "Arn"
+              ]
+            },
+            {
+              "Fn::Join": [
+                "/",
+                [
+                  {
+                    "Fn::GetAtt": [
+                      "DynamoDBTableSchedules",
+                      "Arn"
+                    ]
+                  },
+                  "*"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "cloudwatch:PutMetricData"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "sns:Publish"
+          ],
+          "Resource": [
+            {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:schedule-service-dev-upsert-location"
+            }
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": "secretsmanager:GetSecretValue",
+          "Resource": [
+            {
+              "Fn::Sub": "arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:lio/global/mongodb/dev*"
+            }
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "states:StartExecution"
+          ],
+          "Resource": [
+            {
+              "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+            },
+            {
+              "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+            }
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "xray:PutTraceSegments",
+            "xray:PutTelemetryRecords"
+          ],
+          "Resource": [
+            "*"
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "sns:Publish"
+          ],
+          "Resource": [
+            {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:schedule-service-dev-generate-occurrence"
+            }
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "*"
+          ],
+          "Resource": [
+            {
+              "Fn::Sub": "arn:aws:events:${AWS::Region}:${AWS::AccountId}:rule/*"
+            }
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "*"
+          ],
+          "Resource": [
+            {
+              "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+            }
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "sns:Publish"
+          ],
+          "Resource": [
+            {
+              "Fn::Sub": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:schedule-service-dev-delete-occurrence"
+            }
+          ]
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "states:StartExecution"
+          ],
+          "Resource": [
+            {
+              "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-occurrence"
+            }
+          ]
+        }
+      ],
+      "vpc": {
+        "securityGroupIds": [
+          "sg-000fc99138cfee8e6"
+        ],
+        "subnetIds": [
+          "subnet-0fb567fb4579052a3",
+          "subnet-048597f36602bc712"
+        ]
+      },
+      "region": "us-east-1",
+      "versionFunctions": true,
+      "remoteFunctionData": null,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "CreateRuleLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-createRule"
+            }
+          },
+          "CreateScheduleLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-createSchedule"
+            }
+          },
+          "DeleteOccurrencesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-deleteOccurrences"
+            }
+          },
+          "DeleteRuleLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-deleteRule"
+            }
+          },
+          "GenerateOccurrencesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-generateOccurrences"
+            }
+          },
+          "GetScheduleLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-getSchedule"
+            }
+          },
+          "ListSchedulesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-listSchedules"
+            }
+          },
+          "UpdateScheduleLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-updateSchedule"
+            }
+          },
+          "UpsertLocationsLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-upsertLocations"
+            }
+          },
+          "OccurrenceExpiredLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-occurrenceExpired"
+            }
+          },
+          "CreateExceptionLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/schedule-service-dev-createException"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "dev",
+                        "schedule-service",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/schedule-service-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/schedule-service-dev*:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][1]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][2]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][3]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][4]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][5]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][6]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][7]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][8]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][9]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][10]"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "schedule-service",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              },
+              "ManagedPolicyArns": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          "CreateRuleLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-createRule",
+              "Handler": "handlers.createRule",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Creates a rule for a schedule occurrence",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "CreateRuleLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "CreateRuleLambdaVersion2TyKJj0vqCJyBJv9NDchQdSh080271addzu6X8yltys": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CreateRuleLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Creates a rule for a schedule occurrence"
+            }
+          },
+          "CreateScheduleLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-createSchedule",
+              "Handler": "handlers.createSchedule",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Creates a new schedule",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "CreateScheduleLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "CreateScheduleLambdaVersionmM6wJeKWFs4EJ01PDJOPjFBtI0FZrEHWGTfpJtLoI": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CreateScheduleLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Creates a new schedule"
+            }
+          },
+          "DeleteOccurrencesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-deleteOccurrences",
+              "Handler": "handlers.deleteOccurrences",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Deletes all schedule occurrences",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "DeleteOccurrencesLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "DeleteOccurrencesLambdaVersionUQ5bq85c1SZVihxMuifhvwhFX0bJgkI9L25zWGE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteOccurrencesLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Deletes all schedule occurrences"
+            }
+          },
+          "DeleteRuleLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-deleteRule",
+              "Handler": "handlers.deleteRule",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Deletes a schedule occurrence rule",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "DeleteRuleLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "DeleteRuleLambdaVersionZoicSsjI2N5Oq1aN3COygQRNPFFKkbGQO5TL1yGBuf4": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteRuleLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Deletes a schedule occurrence rule"
+            }
+          },
+          "GenerateOccurrencesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-generateOccurrences",
+              "Handler": "handlers.generateOccurrences",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Creates schedule occurrences",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "GenerateOccurrencesLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "GenerateOccurrencesLambdaVersionNQN9B1StE9cIIZNMMWRjXswUkbWXoWrfq1IxqGVs7U": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GenerateOccurrencesLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Creates schedule occurrences"
+            }
+          },
+          "GetScheduleLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-getSchedule",
+              "Handler": "handlers.getSchedule",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Gets an existing schedule",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "GetScheduleLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "GetScheduleLambdaVersion7YGnLJRA71Z0YIe1bprB0ULvnXS4epgLfFGNbEU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetScheduleLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Gets an existing schedule"
+            }
+          },
+          "ListSchedulesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-listSchedules",
+              "Handler": "handlers.listSchedules",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Gets all existing schedules",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "ListSchedulesLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "ListSchedulesLambdaVersionu5OfYicofvEFJ0MsofJJjxsuAr1obmEdeDaMslIjp8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ListSchedulesLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Gets all existing schedules"
+            }
+          },
+          "UpdateScheduleLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-updateSchedule",
+              "Handler": "handlers.updateSchedule",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Updates an existing schedule",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "UpdateScheduleLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "UpdateScheduleLambdaVersionsLu66dOcwwPrUNA5bV0XxdKBUnHNBGtcjqs6bDGy7Tg": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateScheduleLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Updates an existing schedule"
+            }
+          },
+          "UpsertLocationsLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-upsertLocations",
+              "Handler": "handlers.upsertLocations",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Description": "Upserts a schedule location",
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "UpsertLocationsLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "UpsertLocationsLambdaVersionGcifov4MCfV91sWX6Mf2fSdEhj3R7HGLmBBPPI7X4Y": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpsertLocationsLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY=",
+              "Description": "Upserts a schedule location"
+            }
+          },
+          "OccurrenceExpiredLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-occurrenceExpired",
+              "Handler": "handlers.occurrenceExpired",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "OccurrenceExpiredLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "OccurrenceExpiredLambdaVersionPETqHQw6gKUBXNW0abrSky9X3wZ8c6AXCae1YC8snU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "OccurrenceExpiredLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY="
+            }
+          },
+          "CreateExceptionLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z/schedule-service.zip"
+              },
+              "FunctionName": "schedule-service-dev-createException",
+              "Handler": "handlers.createException",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "CREATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-create-schedule-step-function"
+                  },
+                  "LOOP_EXCEPTIONS_QUEUE_URL": {
+                    "Fn::Sub": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/loop-exceptions-queue-dev"
+                  },
+                  "MONGODB_SECRET_ID": "lio/global/mongodb/dev",
+                  "PLATFORM": "AWS",
+                  "SCHEDULE_SERVICE_OCCURRENCE_EXPIRED_ARN": {
+                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-occurrenceExpired"
+                  },
+                  "SCHEDULE_SERVICE_CREATE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-create-exception",
+                  "SCHEDULE_SERVICE_RESOLVE_EXCEPTION_TOPIC_NAME": "schedule-service-schedules-dev-resolve-exception",
+                  "TABLE_SCHEDULES": "schedule-service-schedules-dev",
+                  "UPDATE_SCHEDULE_STEP_FUNCTION": {
+                    "Fn::Sub": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:schedule-service-dev-update-schedule-step-function"
+                  }
+                }
+              },
+              "VpcConfig": {
+                "SecurityGroupIds": [
+                  "sg-000fc99138cfee8e6"
+                ],
+                "SubnetIds": [
+                  "subnet-0fb567fb4579052a3",
+                  "subnet-048597f36602bc712"
+                ]
+              },
+              "TracingConfig": {
+                "Mode": "Active"
+              }
+            },
+            "DependsOn": [
+              "CreateExceptionLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "CreateExceptionLambdaVersionORQuSIG8KwE7ts94lZrWCFaJCyefG0ogJltpZN2ki5U": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CreateExceptionLambdaFunction"
+              },
+              "CodeSha256": "wjVYvap+ekMA4iDmvkHdbUtIp8w9sdg7ikFx3ANorwY="
+            }
+          },
+          "IamRoleStateMachineExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": {
+                        "Fn::Sub": "states.${AWS::Region}.amazonaws.com"
+                      }
+                    },
+                    "Action": "sts:AssumeRole"
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Sub": "dev-${AWS::Region}-schedule-service-statemachine"
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "lambda:InvokeFunction"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-upsertLocations"
+                          },
+                          {
+                            "Fn::Sub": [
+                              "${functionArn}:*",
+                              {
+                                "functionArn": {
+                                  "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-upsertLocations"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-generateOccurrences"
+                          },
+                          {
+                            "Fn::Sub": [
+                              "${functionArn}:*",
+                              {
+                                "functionArn": {
+                                  "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-generateOccurrences"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-deleteOccurrences"
+                          },
+                          {
+                            "Fn::Sub": [
+                              "${functionArn}:*",
+                              {
+                                "functionArn": {
+                                  "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-deleteOccurrences"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "ScheduleDashserviceDashdevDashcreateDashscheduleDashstepDashfunction": {
+            "Type": "AWS::StepFunctions::StateMachine",
+            "Properties": {
+              "DefinitionString": {
+                "Fn::Sub": "{\n  \"Comment\": \"A state machine to handle post actions of a creating a schedule\",\n  \"StartAt\": \"UpsertLocations\",\n  \"States\": {\n    \"UpsertLocations\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-upsertLocations\",\n      \"ResultPath\": null,\n      \"TimeoutSeconds\": 90,\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.TaskFailed\"\n          ],\n          \"MaxAttempts\": 3\n        }\n      ],\n      \"Next\": \"GenerateOccurrences\"\n    },\n    \"GenerateOccurrences\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-generateOccurrences\",\n      \"ResultPath\": null,\n      \"TimeoutSeconds\": 90,\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.TaskFailed\"\n          ],\n          \"MaxAttempts\": 3\n        }\n      ],\n      \"Next\": \"Done\"\n    },\n    \"Done\": {\n      \"Type\": \"Pass\",\n      \"End\": true\n    }\n  }\n}"
+              },
+              "RoleArn": {
+                "Fn::GetAtt": [
+                  "IamRoleStateMachineExecution",
+                  "Arn"
+                ]
+              },
+              "Tags": [],
+              "StateMachineName": "schedule-service-dev-create-schedule-step-function"
+            },
+            "DependsOn": [
+              "IamRoleStateMachineExecution"
+            ]
+          },
+          "ScheduleDashserviceDashdevDashupdateDashscheduleDashstepDashfunction": {
+            "Type": "AWS::StepFunctions::StateMachine",
+            "Properties": {
+              "DefinitionString": {
+                "Fn::Sub": "{\n  \"Comment\": \"A state machine to handle post actions of a updating a schedule\",\n  \"StartAt\": \"UpsertLocations\",\n  \"States\": {\n    \"UpsertLocations\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-upsertLocations\",\n      \"ResultPath\": null,\n      \"TimeoutSeconds\": 90,\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.TaskFailed\"\n          ],\n          \"MaxAttempts\": 3\n        }\n      ],\n      \"Next\": \"DeleteOccurrences\"\n    },\n    \"DeleteOccurrences\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-deleteOccurrences\",\n      \"ResultPath\": null,\n      \"TimeoutSeconds\": 90,\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.TaskFailed\"\n          ],\n          \"MaxAttempts\": 3\n        }\n      ],\n      \"Next\": \"GenerateOccurrences\"\n    },\n    \"GenerateOccurrences\": {\n      \"Type\": \"Task\",\n      \"Resource\": \"arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:schedule-service-dev-generateOccurrences\",\n      \"ResultPath\": null,\n      \"TimeoutSeconds\": 90,\n      \"Retry\": [\n        {\n          \"ErrorEquals\": [\n            \"States.TaskFailed\"\n          ],\n          \"MaxAttempts\": 3\n        }\n      ],\n      \"Next\": \"Done\"\n    },\n    \"Done\": {\n      \"Type\": \"Pass\",\n      \"End\": true\n    }\n  }\n}"
+              },
+              "RoleArn": {
+                "Fn::GetAtt": [
+                  "IamRoleStateMachineExecution",
+                  "Arn"
+                ]
+              },
+              "Tags": [],
+              "StateMachineName": "schedule-service-dev-update-schedule-step-function"
+            },
+            "DependsOn": [
+              "IamRoleStateMachineExecution"
+            ]
+          },
+          "ApiGatewayResourceSchedules": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-root-resource-id"
+              },
+              "PathPart": "schedules",
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              }
+            }
+          },
+          "ApiGatewayResourceSchedulesIdVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceSchedules"
+              },
+              "PathPart": "{id}",
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              }
+            }
+          },
+          "ApiGatewayMethodSchedulesOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSchedules"
+              },
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              }
+            }
+          },
+          "ApiGatewayMethodSchedulesIdVarOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,PUT,GET'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSchedulesIdVar"
+              },
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              }
+            }
+          },
+          "ApiGatewayMethodSchedulesPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSchedules"
+              },
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              },
+              "ApiKeyRequired": true,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "CreateScheduleLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodSchedulesIdVarGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSchedulesIdVar"
+              },
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              },
+              "ApiKeyRequired": true,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GetScheduleLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodSchedulesGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSchedules"
+              },
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              },
+              "ApiKeyRequired": true,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ListSchedulesLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodSchedulesIdVarPut": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "PUT",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceSchedulesIdVar"
+              },
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              },
+              "ApiKeyRequired": true,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "UpdateScheduleLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayDeployment1578085476532": {
+            "Type": "AWS::ApiGateway::Deployment",
+            "Properties": {
+              "RestApiId": {
+                "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+              },
+              "StageName": "dev"
+            },
+            "DependsOn": [
+              "ApiGatewayMethodSchedulesOptions",
+              "ApiGatewayMethodSchedulesIdVarOptions",
+              "ApiGatewayMethodSchedulesPost",
+              "ApiGatewayMethodSchedulesIdVarGet",
+              "ApiGatewayMethodSchedulesGet",
+              "ApiGatewayMethodSchedulesIdVarPut"
+            ]
+          },
+          "CreateScheduleLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CreateScheduleLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "GetScheduleLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetScheduleLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ListSchedulesLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ListSchedulesLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "UpdateScheduleLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateScheduleLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "SNSTopicScheduleservicedevcreaterule": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {
+              "TopicName": "schedule-service-dev-create-rule",
+              "DisplayName": "",
+              "Subscription": [
+                {
+                  "Endpoint": {
+                    "Fn::GetAtt": [
+                      "CreateRuleLambdaFunction",
+                      "Arn"
+                    ]
+                  },
+                  "Protocol": "lambda"
+                }
+              ]
+            }
+          },
+          "CreateRuleLambdaPermissionScheduleservicedevcreateruleSNS": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CreateRuleLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "sns.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":sns:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    "schedule-service-dev-create-rule"
+                  ]
+                ]
+              }
+            }
+          },
+          "SNSTopicScheduleservicedevdeleterule": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {
+              "TopicName": "schedule-service-dev-delete-rule",
+              "DisplayName": "",
+              "Subscription": [
+                {
+                  "Endpoint": {
+                    "Fn::GetAtt": [
+                      "DeleteRuleLambdaFunction",
+                      "Arn"
+                    ]
+                  },
+                  "Protocol": "lambda"
+                }
+              ]
+            }
+          },
+          "DeleteRuleLambdaPermissionScheduleservicedevdeleteruleSNS": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteRuleLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "sns.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":sns:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    "schedule-service-dev-delete-rule"
+                  ]
+                ]
+              }
+            }
+          },
+          "UpsertLocationsSnsSubscriptionScheduleservicedevupsertlocations": {
+            "Type": "AWS::SNS::Subscription",
+            "Properties": {
+              "TopicArn": {
+                "Ref": "UpsertLocationsTopic"
+              },
+              "Protocol": "lambda",
+              "Endpoint": {
+                "Fn::GetAtt": [
+                  "UpsertLocationsLambdaFunction",
+                  "Arn"
+                ]
+              }
+            }
+          },
+          "UpsertLocationsLambdaPermissionScheduleservicedevupsertlocationsSNS": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpsertLocationsLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "sns.amazonaws.com",
+              "SourceArn": {
+                "Ref": "UpsertLocationsTopic"
+              }
+            }
+          },
+          "SNSTopicScheduleserviceschedulesdevcreateexception": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {
+              "TopicName": "schedule-service-schedules-dev-create-exception",
+              "DisplayName": "",
+              "Subscription": [
+                {
+                  "Endpoint": {
+                    "Fn::GetAtt": [
+                      "CreateExceptionLambdaFunction",
+                      "Arn"
+                    ]
+                  },
+                  "Protocol": "lambda"
+                }
+              ]
+            }
+          },
+          "CreateExceptionLambdaPermissionScheduleserviceschedulesdevcreateexceptionSNS": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CreateExceptionLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "sns.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":sns:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    "schedule-service-schedules-dev-create-exception"
+                  ]
+                ]
+              }
+            }
+          },
+          "DynamoDBTableSchedules": {
+            "Type": "AWS::DynamoDB::Table",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "TableName": "schedule-service-schedules-dev",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "pk",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "sk",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "location_endAt_occurrenceId",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "user_endAt_occurrenceId",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "scheduleId",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "pk",
+                  "KeyType": "HASH"
+                },
+                {
+                  "AttributeName": "sk",
+                  "KeyType": "RANGE"
+                }
+              ],
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": "1",
+                "WriteCapacityUnits": "1"
+              },
+              "LocalSecondaryIndexes": [
+                {
+                  "IndexName": "OccurrenceByLocationIndex",
+                  "KeySchema": [
+                    {
+                      "AttributeName": "pk",
+                      "KeyType": "HASH"
+                    },
+                    {
+                      "AttributeName": "location_endAt_occurrenceId",
+                      "KeyType": "RANGE"
+                    }
+                  ],
+                  "Projection": {
+                    "ProjectionType": "ALL"
+                  }
+                },
+                {
+                  "IndexName": "OccurrenceByUserIndex",
+                  "KeySchema": [
+                    {
+                      "AttributeName": "pk",
+                      "KeyType": "HASH"
+                    },
+                    {
+                      "AttributeName": "user_endAt_occurrenceId",
+                      "KeyType": "RANGE"
+                    }
+                  ],
+                  "Projection": {
+                    "ProjectionType": "ALL"
+                  }
+                }
+              ],
+              "GlobalSecondaryIndexes": [
+                {
+                  "IndexName": "ScheduleIdIndex",
+                  "KeySchema": [
+                    {
+                      "AttributeName": "scheduleId",
+                      "KeyType": "HASH"
+                    },
+                    {
+                      "AttributeName": "sk",
+                      "KeyType": "RANGE"
+                    }
+                  ],
+                  "Projection": {
+                    "ProjectionType": "ALL"
+                  },
+                  "ProvisionedThroughput": {
+                    "ReadCapacityUnits": "1",
+                    "WriteCapacityUnits": "1"
+                  }
+                }
+              ]
+            }
+          },
+          "SQSQueueLoopExceptions": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+              "QueueName": "loop-exceptions-queue-dev",
+              "RedrivePolicy": {
+                "deadLetterTargetArn": {
+                  "Fn::GetAtt": [
+                    "SQSDeadLetterQueueLoopExceptions",
+                    "Arn"
+                  ]
+                },
+                "maxReceiveCount": 5
+              }
+            }
+          },
+          "SQSDeadLetterQueueLoopExceptions": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+              "QueueName": "loop-exceptions-dead-letter-queue-dev"
+            }
+          },
+          "ScheduleLocationPolicy": {
+            "Type": "AWS::SNS::TopicPolicy",
+            "Properties": {
+              "PolicyDocument": {
+                "Id": "ScheduleLocationPolicy",
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Sid": "schedule-location-policy",
+                    "Effect": "Allow",
+                    "Principal": {
+                      "AWS": [
+                        "047871223545",
+                        "*"
+                      ]
+                    },
+                    "Action": "sns:Publish",
+                    "Resource": "*"
+                  }
+                ]
+              },
+              "Topics": [
+                {
+                  "Ref": "UpsertLocationsTopic"
+                },
+                {
+                  "Ref": "OccurrenceExpiredTopic"
+                }
+              ]
+            }
+          },
+          "OccurrenceExpiredTopic": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {
+              "TopicName": "schedule-service-dev-occurrence-expired"
+            }
+          },
+          "UpsertLocationsTopic": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {
+              "TopicName": "schedule-service-dev-upsert-locations"
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          },
+          "CreateRuleLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CreateRuleLambdaVersion2TyKJj0vqCJyBJv9NDchQdSh080271addzu6X8yltys"
+            }
+          },
+          "CreateScheduleLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CreateScheduleLambdaVersionmM6wJeKWFs4EJ01PDJOPjFBtI0FZrEHWGTfpJtLoI"
+            }
+          },
+          "DeleteOccurrencesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteOccurrencesLambdaVersionUQ5bq85c1SZVihxMuifhvwhFX0bJgkI9L25zWGE"
+            }
+          },
+          "DeleteRuleLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteRuleLambdaVersionZoicSsjI2N5Oq1aN3COygQRNPFFKkbGQO5TL1yGBuf4"
+            }
+          },
+          "GenerateOccurrencesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GenerateOccurrencesLambdaVersionNQN9B1StE9cIIZNMMWRjXswUkbWXoWrfq1IxqGVs7U"
+            }
+          },
+          "GetScheduleLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetScheduleLambdaVersion7YGnLJRA71Z0YIe1bprB0ULvnXS4epgLfFGNbEU"
+            }
+          },
+          "ListSchedulesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ListSchedulesLambdaVersionu5OfYicofvEFJ0MsofJJjxsuAr1obmEdeDaMslIjp8"
+            }
+          },
+          "UpdateScheduleLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateScheduleLambdaVersionsLu66dOcwwPrUNA5bV0XxdKBUnHNBGtcjqs6bDGy7Tg"
+            }
+          },
+          "UpsertLocationsLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpsertLocationsLambdaVersionGcifov4MCfV91sWX6Mf2fSdEhj3R7HGLmBBPPI7X4Y"
+            }
+          },
+          "OccurrenceExpiredLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "OccurrenceExpiredLambdaVersionPETqHQw6gKUBXNW0abrSky9X3wZ8c6AXCae1YC8snU"
+            }
+          },
+          "CreateExceptionLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CreateExceptionLambdaVersionORQuSIG8KwE7ts94lZrWCFaJCyefG0ogJltpZN2ki5U"
+            }
+          },
+          "ScheduleDashserviceDashdevDashcreateDashscheduleDashstepDashfunctionArn": {
+            "Description": "Current StateMachine Arn",
+            "Value": {
+              "Ref": "ScheduleDashserviceDashdevDashcreateDashscheduleDashstepDashfunction"
+            }
+          },
+          "ScheduleDashserviceDashdevDashupdateDashscheduleDashstepDashfunctionArn": {
+            "Description": "Current StateMachine Arn",
+            "Value": {
+              "Ref": "ScheduleDashserviceDashdevDashupdateDashscheduleDashstepDashfunction"
+            }
+          },
+          "ServiceEndpoint": {
+            "Description": "URL of the service endpoint",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Fn::ImportValue": "lighthouse-api-gateway-dev-rest-api-id"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  },
+                  "/dev"
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "coreCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          }
+        }
+      }
+    },
+    "custom": {
+      "serverless-offline": {
+        "port": 4000,
+        "region": "localhost",
+        "stage": "dev"
+      },
+      "serverless-offline-sns": {
+        "port": 4002,
+        "debug": true
+      },
+      "dynamodb": {
+        "start": {
+          "migrate": true,
+          "seed": true
+        },
+        "seed": {
+          "dev": {
+            "sources": [
+              {
+                "table": "schedule-service-schedules-dev",
+                "sources": [
+                  "./seed/dev.json"
+                ]
+              }
+            ]
+          }
+        },
+        "stages": [
+          "dev"
+        ]
+      }
+    },
+    "plugins": [
+      "@lighthouse/serverless-plugin-typescript",
+      "serverless-pseudo-parameters",
+      "serverless-dynamodb-local",
+      "serverless-offline",
+      "serverless-offline-sns",
+      "serverless-plugin-tracing",
+      "serverless-step-functions"
+    ],
+    "pluginsData": {},
+    "functions": {
+      "createRule": {
+        "description": "Creates a rule for a schedule occurrence",
+        "handler": "handlers.createRule",
+        "events": [
+          {
+            "sns": "schedule-service-dev-create-rule"
+          }
+        ],
+        "name": "schedule-service-dev-createRule",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "createSchedule": {
+        "description": "Creates a new schedule",
+        "handler": "handlers.createSchedule",
+        "events": [
+          {
+            "http": {
+              "path": "schedules",
+              "method": "post",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "private": "true",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "schedule-service-dev-createSchedule",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "deleteOccurrences": {
+        "description": "Deletes all schedule occurrences",
+        "handler": "handlers.deleteOccurrences",
+        "events": [],
+        "name": "schedule-service-dev-deleteOccurrences",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "deleteRule": {
+        "description": "Deletes a schedule occurrence rule",
+        "handler": "handlers.deleteRule",
+        "events": [
+          {
+            "sns": "schedule-service-dev-delete-rule"
+          }
+        ],
+        "name": "schedule-service-dev-deleteRule",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "generateOccurrences": {
+        "description": "Creates schedule occurrences",
+        "handler": "handlers.generateOccurrences",
+        "events": [],
+        "name": "schedule-service-dev-generateOccurrences",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "getSchedule": {
+        "description": "Gets an existing schedule",
+        "handler": "handlers.getSchedule",
+        "events": [
+          {
+            "http": {
+              "path": "schedules/{id}",
+              "method": "get",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "private": "true",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "schedule-service-dev-getSchedule",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "listSchedules": {
+        "description": "Gets all existing schedules",
+        "handler": "handlers.listSchedules",
+        "events": [
+          {
+            "http": {
+              "path": "schedules",
+              "method": "get",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "private": "true",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "schedule-service-dev-listSchedules",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "updateSchedule": {
+        "description": "Updates an existing schedule",
+        "handler": "handlers.updateSchedule",
+        "events": [
+          {
+            "http": {
+              "path": "schedules/{id}",
+              "method": "put",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "PUT"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "private": "true",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "schedule-service-dev-updateSchedule",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "upsertLocations": {
+        "description": "Upserts a schedule location",
+        "handler": "handlers.upsertLocations",
+        "events": [
+          {
+            "sns": {
+              "arn": {
+                "Ref": "UpsertLocationsTopic"
+              },
+              "topicName": "schedule-service-dev-upsert-locations"
+            }
+          }
+        ],
+        "name": "schedule-service-dev-upsertLocations",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "occurrenceExpired": {
+        "handler": "handlers.occurrenceExpired",
+        "events": [],
+        "name": "schedule-service-dev-occurrenceExpired",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "createException": {
+        "handler": "handlers.createException",
+        "events": [
+          {
+            "sns": "schedule-service-schedules-dev-create-exception"
+          }
+        ],
+        "name": "schedule-service-dev-createException",
+        "package": {
+          "exclude": [
+            "node_modules/serverless-plugin-typescript"
+          ],
+          "include": []
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      }
+    },
+    "resources": {
+      "Resources": {
+        "DynamoDBTableSchedules": {
+          "Type": "AWS::DynamoDB::Table",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "TableName": "schedule-service-schedules-dev",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "pk",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "sk",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "location_endAt_occurrenceId",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "user_endAt_occurrenceId",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "scheduleId",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "pk",
+                "KeyType": "HASH"
+              },
+              {
+                "AttributeName": "sk",
+                "KeyType": "RANGE"
+              }
+            ],
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": "1",
+              "WriteCapacityUnits": "1"
+            },
+            "LocalSecondaryIndexes": [
+              {
+                "IndexName": "OccurrenceByLocationIndex",
+                "KeySchema": [
+                  {
+                    "AttributeName": "pk",
+                    "KeyType": "HASH"
+                  },
+                  {
+                    "AttributeName": "location_endAt_occurrenceId",
+                    "KeyType": "RANGE"
+                  }
+                ],
+                "Projection": {
+                  "ProjectionType": "ALL"
+                }
+              },
+              {
+                "IndexName": "OccurrenceByUserIndex",
+                "KeySchema": [
+                  {
+                    "AttributeName": "pk",
+                    "KeyType": "HASH"
+                  },
+                  {
+                    "AttributeName": "user_endAt_occurrenceId",
+                    "KeyType": "RANGE"
+                  }
+                ],
+                "Projection": {
+                  "ProjectionType": "ALL"
+                }
+              }
+            ],
+            "GlobalSecondaryIndexes": [
+              {
+                "IndexName": "ScheduleIdIndex",
+                "KeySchema": [
+                  {
+                    "AttributeName": "scheduleId",
+                    "KeyType": "HASH"
+                  },
+                  {
+                    "AttributeName": "sk",
+                    "KeyType": "RANGE"
+                  }
+                ],
+                "Projection": {
+                  "ProjectionType": "ALL"
+                },
+                "ProvisionedThroughput": {
+                  "ReadCapacityUnits": "1",
+                  "WriteCapacityUnits": "1"
+                }
+              }
+            ]
+          }
+        },
+        "SQSQueueLoopExceptions": {
+          "Type": "AWS::SQS::Queue",
+          "Properties": {
+            "QueueName": "loop-exceptions-queue-dev",
+            "RedrivePolicy": {
+              "deadLetterTargetArn": {
+                "Fn::GetAtt": [
+                  "SQSDeadLetterQueueLoopExceptions",
+                  "Arn"
+                ]
+              },
+              "maxReceiveCount": 5
+            }
+          }
+        },
+        "SQSDeadLetterQueueLoopExceptions": {
+          "Type": "AWS::SQS::Queue",
+          "Properties": {
+            "QueueName": "loop-exceptions-dead-letter-queue-dev"
+          }
+        },
+        "ScheduleLocationPolicy": {
+          "Type": "AWS::SNS::TopicPolicy",
+          "Properties": {
+            "PolicyDocument": {
+              "Id": "ScheduleLocationPolicy",
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Sid": "schedule-location-policy",
+                  "Effect": "Allow",
+                  "Principal": {
+                    "AWS": [
+                      "047871223545",
+                      "*"
+                    ]
+                  },
+                  "Action": "sns:Publish",
+                  "Resource": "*"
+                }
+              ]
+            },
+            "Topics": [
+              {
+                "Ref": "UpsertLocationsTopic"
+              },
+              {
+                "Ref": "OccurrenceExpiredTopic"
+              }
+            ]
+          }
+        },
+        "OccurrenceExpiredTopic": {
+          "Type": "AWS::SNS::Topic",
+          "Properties": {
+            "TopicName": "schedule-service-dev-occurrence-expired"
+          }
+        },
+        "UpsertLocationsTopic": {
+          "Type": "AWS::SNS::Topic",
+          "Properties": {
+            "TopicName": "schedule-service-dev-upsert-locations"
+          }
+        }
+      },
+      "Outputs": {}
+    },
+    "serviceFilename": "serverless.yml",
+    "layers": {},
+    "stepFunctions": {
+      "stateMachines": {
+        "createScheduleStepFunction": {
+          "name": "schedule-service-dev-create-schedule-step-function",
+          "definition": {
+            "Comment": "A state machine to handle post actions of a creating a schedule",
+            "StartAt": "UpsertLocations",
+            "States": {
+              "UpsertLocations": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:schedule-service-dev-upsertLocations",
+                "ResultPath": null,
+                "TimeoutSeconds": 90,
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.TaskFailed"
+                    ],
+                    "MaxAttempts": 3
+                  }
+                ],
+                "Next": "GenerateOccurrences"
+              },
+              "GenerateOccurrences": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:schedule-service-dev-generateOccurrences",
+                "ResultPath": null,
+                "TimeoutSeconds": 90,
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.TaskFailed"
+                    ],
+                    "MaxAttempts": 3
+                  }
+                ],
+                "Next": "Done"
+              },
+              "Done": {
+                "Type": "Pass",
+                "End": true
+              }
+            }
+          }
+        },
+        "updateScheduleStepFunction": {
+          "name": "schedule-service-dev-update-schedule-step-function",
+          "definition": {
+            "Comment": "A state machine to handle post actions of a updating a schedule",
+            "StartAt": "UpsertLocations",
+            "States": {
+              "UpsertLocations": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:schedule-service-dev-upsertLocations",
+                "ResultPath": null,
+                "TimeoutSeconds": 90,
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.TaskFailed"
+                    ],
+                    "MaxAttempts": 3
+                  }
+                ],
+                "Next": "DeleteOccurrences"
+              },
+              "DeleteOccurrences": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:schedule-service-dev-deleteOccurrences",
+                "ResultPath": null,
+                "TimeoutSeconds": 90,
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.TaskFailed"
+                    ],
+                    "MaxAttempts": 3
+                  }
+                ],
+                "Next": "GenerateOccurrences"
+              },
+              "GenerateOccurrences": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:schedule-service-dev-generateOccurrences",
+                "ResultPath": null,
+                "TimeoutSeconds": 90,
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "States.TaskFailed"
+                    ],
+                    "MaxAttempts": 3
+                  }
+                ],
+                "Next": "Done"
+              },
+              "Done": {
+                "Type": "Pass",
+                "End": true
+              }
+            }
+          }
+        }
+      },
+      "activities": []
+    },
+    "artifact": "/Users/arivero/lh/serverless/services/schedule-service/.build/.serverless/schedule-service.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/schedule-service/dev/1578085514699-2020-01-03T21:05:14.699Z",
+    "artifact": "schedule-service.zip"
+  }
+}

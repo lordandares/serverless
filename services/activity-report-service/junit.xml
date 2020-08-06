@@ -1,0 +1,338 @@
+<testsuites name="jest tests" tests="139" failures="0" time="10.688">
+  <testsuite name="helpers:getShiftDetails" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:14" time="3.926" tests="5">
+    <testcase classname="helpers:getShiftDetails it returns filtered shifts when there are area location permissions" name="helpers:getShiftDetails it returns filtered shifts when there are area location permissions" time="0.031">
+    </testcase>
+    <testcase classname="helpers:getShiftDetails it returns filtered shifts when there are legacy location permissions" name="helpers:getShiftDetails it returns filtered shifts when there are legacy location permissions" time="0.005">
+    </testcase>
+    <testcase classname="helpers:getShiftDetails it returns all shifts when the user has no location permissions" name="helpers:getShiftDetails it returns all shifts when the user has no location permissions" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getShiftDetails it returns all locations when the legacy user has no location permissions" name="helpers:getShiftDetails it returns all locations when the legacy user has no location permissions" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getShiftDetails handles error when returning shifts and returns false" name="helpers:getShiftDetails handles error when returning shifts and returns false" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:emailProcessor" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:14" time="4.807" tests="12">
+    <testcase classname="handlers:emailProcessor it handles error when getting application users" name="handlers:emailProcessor it handles error when getting application users" time="0.015">
+    </testcase>
+    <testcase classname="handlers:emailProcessor it returns results when hours matches timezone hour with current time" name="handlers:emailProcessor it returns results when hours matches timezone hour with current time" time="0.04">
+    </testcase>
+    <testcase classname="handlers:emailProcessor it handles errors for one iteration" name="handlers:emailProcessor it handles errors for one iteration" time="0.005">
+    </testcase>
+    <testcase classname="handlers:emailProcessor it returns results when hours matches timezone hour with custom time" name="handlers:emailProcessor it returns results when hours matches timezone hour with custom time" time="0.003">
+    </testcase>
+    <testcase classname="handlers:emailProcessor it filters out falsey values when processing users" name="handlers:emailProcessor it filters out falsey values when processing users" time="0.001">
+    </testcase>
+    <testcase classname="handlers:emailProcessor it filters out falsey values when processing emails" name="handlers:emailProcessor it filters out falsey values when processing emails" time="0.001">
+    </testcase>
+    <testcase classname="handlers:emailProcessor userMatchesTimezoneHour returns false when user missing dar channel" name="handlers:emailProcessor userMatchesTimezoneHour returns false when user missing dar channel" time="0.001">
+    </testcase>
+    <testcase classname="handlers:emailProcessor userMatchesTimezoneHour returns false when user missing dar channel options" name="handlers:emailProcessor userMatchesTimezoneHour returns false when user missing dar channel options" time="0.001">
+    </testcase>
+    <testcase classname="handlers:emailProcessor userMatchesTimezoneHour returns false when user hours is outside timezone hour" name="handlers:emailProcessor userMatchesTimezoneHour returns false when user hours is outside timezone hour" time="0">
+    </testcase>
+    <testcase classname="handlers:emailProcessor userMatchesTimezoneHour returns true when user hours is inside timezone hour" name="handlers:emailProcessor userMatchesTimezoneHour returns true when user hours is inside timezone hour" time="0.001">
+    </testcase>
+    <testcase classname="handlers:emailProcessor userMatchesTimezoneHour daylight saving time is handled when it starts in a timezone" name="handlers:emailProcessor userMatchesTimezoneHour daylight saving time is handled when it starts in a timezone" time="0.002">
+    </testcase>
+    <testcase classname="handlers:emailProcessor userMatchesTimezoneHour daylight saving time is handled when it ends in a timezone" name="handlers:emailProcessor userMatchesTimezoneHour daylight saving time is handled when it ends in a timezone" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:shiftEmailProcessor" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:14" time="5.295" tests="11">
+    <testcase classname="handlers:shiftEmailProcessor it handles error when getting application users" name="handlers:shiftEmailProcessor it handles error when getting application users" time="0.009">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor it returns results when hours matches timezone hour with current time" name="handlers:shiftEmailProcessor it returns results when hours matches timezone hour with current time" time="0.128">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor it returns results when hours matches timezone hour with custom time" name="handlers:shiftEmailProcessor it returns results when hours matches timezone hour with custom time" time="0.109">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor it filters out falsey values when processing users" name="handlers:shiftEmailProcessor it filters out falsey values when processing users" time="0.109">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor it filters out falsey values when processing emails" name="handlers:shiftEmailProcessor it filters out falsey values when processing emails" time="0.102">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor userMatchesTimezoneHour returns false when user missing dsr channel" name="handlers:shiftEmailProcessor userMatchesTimezoneHour returns false when user missing dsr channel" time="0.001">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor userMatchesTimezoneHour returns false when user missing dsr channel options" name="handlers:shiftEmailProcessor userMatchesTimezoneHour returns false when user missing dsr channel options" time="0">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor userMatchesTimezoneHour returns false when user hours is outside timezone hour" name="handlers:shiftEmailProcessor userMatchesTimezoneHour returns false when user hours is outside timezone hour" time="0.001">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor userMatchesTimezoneHour returns true when user hours is inside timezone hour" name="handlers:shiftEmailProcessor userMatchesTimezoneHour returns true when user hours is inside timezone hour" time="0">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor userMatchesTimezoneHour daylight saving time is handled when it starts in a timezone" name="handlers:shiftEmailProcessor userMatchesTimezoneHour daylight saving time is handled when it starts in a timezone" time="0.003">
+    </testcase>
+    <testcase classname="handlers:shiftEmailProcessor userMatchesTimezoneHour daylight saving time is handled when it ends in a timezone" name="handlers:shiftEmailProcessor userMatchesTimezoneHour daylight saving time is handled when it ends in a timezone" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:locationProcessor" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:18" time="2.209" tests="11">
+    <testcase classname="handlers:locationProcessor locationProcessor should throw an error if the LOCATION_PROCESSOR_ARN environment variable is missing" name="handlers:locationProcessor locationProcessor should throw an error if the LOCATION_PROCESSOR_ARN environment variable is missing" time="0.004">
+    </testcase>
+    <testcase classname="handlers:locationProcessor locationProcessor should reject with an error if applications can not be retrieved" name="handlers:locationProcessor locationProcessor should reject with an error if applications can not be retrieved" time="0">
+    </testcase>
+    <testcase classname="handlers:locationProcessor locationProcessor should successfully trigger a location activity report with current time" name="handlers:locationProcessor locationProcessor should successfully trigger a location activity report with current time" time="0.036">
+    </testcase>
+    <testcase classname="handlers:locationProcessor locationProcessor should successfully trigger a location activity report with custom time" name="handlers:locationProcessor locationProcessor should successfully trigger a location activity report with custom time" time="0.005">
+    </testcase>
+    <testcase classname="handlers:locationProcessor parseApplicationLocations should return an empty array if no application locations are passed" name="handlers:locationProcessor parseApplicationLocations should return an empty array if no application locations are passed" time="0.001">
+    </testcase>
+    <testcase classname="handlers:locationProcessor parseApplicationLocations should return an empty array if application locations missing trigger time or timezone" name="handlers:locationProcessor parseApplicationLocations should return an empty array if application locations missing trigger time or timezone" time="0.004">
+    </testcase>
+    <testcase classname="handlers:locationProcessor parseApplicationLocations should process application locations" name="handlers:locationProcessor parseApplicationLocations should process application locations" time="0.002">
+    </testcase>
+    <testcase classname="handlers:locationProcessor parseApplicationLocations daylight saving time is handled when it starts in a timezone" name="handlers:locationProcessor parseApplicationLocations daylight saving time is handled when it starts in a timezone" time="0.01">
+    </testcase>
+    <testcase classname="handlers:locationProcessor parseApplicationLocations daylight saving time is handled when it ends in a timezone" name="handlers:locationProcessor parseApplicationLocations daylight saving time is handled when it ends in a timezone" time="0.001">
+    </testcase>
+    <testcase classname="handlers:locationProcessor processLocation should error if LOCATION_PROCESSOR_ARN is missing" name="handlers:locationProcessor processLocation should error if LOCATION_PROCESSOR_ARN is missing" time="0.001">
+    </testcase>
+    <testcase classname="handlers:locationProcessor processLocation should process location" name="handlers:locationProcessor processLocation should process location" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:setupDar" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:19" time="1.718" tests="5">
+    <testcase classname="handlers:setupDar should process stringified event body and return results" name="handlers:setupDar should process stringified event body and return results" time="0.004">
+    </testcase>
+    <testcase classname="handlers:setupDar should process object event and return results" name="handlers:setupDar should process object event and return results" time="0.001">
+    </testcase>
+    <testcase classname="handlers:setupDar should handle no data and return results " name="handlers:setupDar should handle no data and return results " time="0.002">
+    </testcase>
+    <testcase classname="handlers:setupDar should handle error when querying data" name="handlers:setupDar should handle error when querying data" time="0">
+    </testcase>
+    <testcase classname="handlers:setupDar should handle error when building references" name="handlers:setupDar should handle error when building references" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:getSummaryData" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:21" time="0.484" tests="17">
+    <testcase classname="helpers:getSummaryData should create mongo client passing secret id" name="helpers:getSummaryData should create mongo client passing secret id" time="0.006">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should handle missing required params" name="helpers:getSummaryData should handle missing required params" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should handle missing location" name="helpers:getSummaryData should handle missing location" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should handle location missing timezone" name="helpers:getSummaryData should handle location missing timezone" time="0">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the location" name="helpers:getSummaryData should query for the location" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the locations" name="helpers:getSummaryData should query for the locations" time="0.014">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the application" name="helpers:getSummaryData should query for the application" time="0.004">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the application users" name="helpers:getSummaryData should query for the application users" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the location audit entries" name="helpers:getSummaryData should query for the location audit entries" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the location enter events" name="helpers:getSummaryData should query for the location enter events" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the location issues" name="helpers:getSummaryData should query for the location issues" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the location tasks" name="helpers:getSummaryData should query for the location tasks" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the location zones" name="helpers:getSummaryData should query for the location zones" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should query for the users" name="helpers:getSummaryData should query for the users" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData should return all data" name="helpers:getSummaryData should return all data" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData when area returned for location should query for the area" name="helpers:getSummaryData when area returned for location should query for the area" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getSummaryData when area returned for location should query audits, events, issues and tasks with $or query" name="helpers:getSummaryData when area returned for location should query audits, events, issues and tasks with $or query" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:getShiftData" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:20" time="1.773" tests="3">
+    <testcase classname="handlers:getShiftData should process stringified event body and return results" name="handlers:getShiftData should process stringified event body and return results" time="0.007">
+    </testcase>
+    <testcase classname="handlers:getShiftData should handle no data and return results" name="handlers:getShiftData should handle no data and return results" time="0.001">
+    </testcase>
+    <testcase classname="handlers:getShiftData should process object event and return results" name="handlers:getShiftData should process object event and return results" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:getShiftSummaryData" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:21" time="0.645" tests="6">
+    <testcase classname="helpers:getShiftSummaryData should create mongo client passing secret id" name="helpers:getShiftSummaryData should create mongo client passing secret id" time="0.007">
+    </testcase>
+    <testcase classname="helpers:getShiftSummaryData should handle missing required params" name="helpers:getShiftSummaryData should handle missing required params" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getShiftSummaryData should skip for shift that exceeds the max duration" name="helpers:getShiftSummaryData should skip for shift that exceeds the max duration" time="0.046">
+    </testcase>
+    <testcase classname="helpers:getShiftSummaryData should skip for shift that does not have end time" name="helpers:getShiftSummaryData should skip for shift that does not have end time" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getShiftSummaryData should skip for shift that does not have start and end times" name="helpers:getShiftSummaryData should skip for shift that does not have start and end times" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getShiftSummaryData should return all data" name="helpers:getShiftSummaryData should return all data" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:mergePdfs" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:22" time="0.16" tests="5">
+    <testcase classname="handlers:mergePdfs should process stringified event body and return file path" name="handlers:mergePdfs should process stringified event body and return file path" time="0.006">
+    </testcase>
+    <testcase classname="handlers:mergePdfs should process object event" name="handlers:mergePdfs should process object event" time="0.003">
+    </testcase>
+    <testcase classname="handlers:mergePdfs should process return s3 key" name="handlers:mergePdfs should process return s3 key" time="0.001">
+    </testcase>
+    <testcase classname="handlers:mergePdfs should handle error when downloading files" name="handlers:mergePdfs should handle error when downloading files" time="0.001">
+    </testcase>
+    <testcase classname="handlers:mergePdfs should handle error when merging pdfs" name="handlers:mergePdfs should handle error when merging pdfs" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:buildSummary" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:21" time="0.722" tests="4">
+    <testcase classname="helpers:buildSummary builds summary config" name="helpers:buildSummary builds summary config" time="0.002">
+    </testcase>
+    <testcase classname="helpers:buildSummary builds summary, uploads and returns reference" name="helpers:buildSummary builds summary, uploads and returns reference" time="0.001">
+    </testcase>
+    <testcase classname="helpers:buildSummary page size when no region sets page size as A4" name="helpers:buildSummary page size when no region sets page size as A4" time="0.001">
+    </testcase>
+    <testcase classname="helpers:buildSummary page size when us-east-1 region sets page size as LETTER" name="helpers:buildSummary page size when us-east-1 region sets page size as LETTER" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:getData" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:22" time="0.535" tests="8">
+    <testcase classname="helpers:getData should handle missing shift" name="helpers:getData should handle missing shift" time="0.004">
+    </testcase>
+    <testcase classname="helpers:getData should handle missing user" name="helpers:getData should handle missing user" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getData should handle missing location" name="helpers:getData should handle missing location" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getData should handle location missing timezone" name="helpers:getData should handle location missing timezone" time="0">
+    </testcase>
+    <testcase classname="helpers:getData should query for the location" name="helpers:getData should query for the location" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getData should query for the locations" name="helpers:getData should query for the locations" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getData should query for the zones" name="helpers:getData should query for the zones" time="0.002">
+    </testcase>
+    <testcase classname="helpers:getData should query for the location audit entries" name="helpers:getData should query for the location audit entries" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:fetchLocations" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:22" time="0.542" tests="2">
+    <testcase classname="helpers:fetchLocations should error if the required params are invalid" name="helpers:fetchLocations should error if the required params are invalid" time="0.002">
+    </testcase>
+    <testcase classname="helpers:fetchLocations should fetch locations" name="helpers:fetchLocations should fetch locations" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:getShiftReportLinks" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:22" time="0.553" tests="4">
+    <testcase classname="helpers:getShiftReportLinks should process shift and return link details for summary report for user" name="helpers:getShiftReportLinks should process shift and return link details for summary report for user" time="0.004">
+    </testcase>
+    <testcase classname="helpers:getShiftReportLinks should process shift and return link details for full report for user" name="helpers:getShiftReportLinks should process shift and return link details for full report for user" time="0">
+    </testcase>
+    <testcase classname="helpers:getShiftReportLinks should set the link to null if timestamp greater than 24 hours ago" name="helpers:getShiftReportLinks should set the link to null if timestamp greater than 24 hours ago" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getShiftReportLinks should set link to null if no pdf data on location" name="helpers:getShiftReportLinks should set link to null if no pdf data on location" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:mergeReportPdfs" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:22" time="0.146" tests="5">
+    <testcase classname="handlers:mergeReportPdfs should process stringified event body and return file path" name="handlers:mergeReportPdfs should process stringified event body and return file path" time="0.005">
+    </testcase>
+    <testcase classname="handlers:mergeReportPdfs should process object event" name="handlers:mergeReportPdfs should process object event" time="0.002">
+    </testcase>
+    <testcase classname="handlers:mergeReportPdfs should process return s3 key" name="handlers:mergeReportPdfs should process return s3 key" time="0">
+    </testcase>
+    <testcase classname="handlers:mergeReportPdfs should handle error when downloading files" name="handlers:mergeReportPdfs should handle error when downloading files" time="0.001">
+    </testcase>
+    <testcase classname="handlers:mergeReportPdfs should handle error when merging pdfs" name="handlers:mergeReportPdfs should handle error when merging pdfs" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:getUserDetails" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:22" time="0.507" tests="2">
+    <testcase classname="helpers:getUserDetails it returns user details" name="helpers:getUserDetails it returns user details" time="0.007">
+    </testcase>
+    <testcase classname="helpers:getUserDetails handles error when returning applications and returns false" name="helpers:getUserDetails handles error when returning applications and returns false" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:finaliseLocationReport" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:22" time="0.392" tests="2">
+    <testcase classname="handlers:finaliseLocationReport should process stringified event body" name="handlers:finaliseLocationReport should process stringified event body" time="0.004">
+    </testcase>
+    <testcase classname="handlers:finaliseLocationReport should process object event" name="handlers:finaliseLocationReport should process object event" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:buildEmail" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.213" tests="9">
+    <testcase classname="helpers:buildEmail handles error and returns false" name="helpers:buildEmail handles error and returns false" time="0.036">
+    </testcase>
+    <testcase classname="helpers:buildEmail it returns email data" name="helpers:buildEmail it returns email data" time="0.005">
+    </testcase>
+    <testcase classname="helpers:buildEmail it returns email data with formSubmissions" name="helpers:buildEmail it returns email data with formSubmissions" time="0.002">
+    </testcase>
+    <testcase classname="helpers:buildEmail it returns email data without formSubmissions" name="helpers:buildEmail it returns email data without formSubmissions" time="0.003">
+    </testcase>
+    <testcase classname="helpers:buildEmail it returns email data with configuration set when the environment var is set" name="helpers:buildEmail it returns email data with configuration set when the environment var is set" time="0.001">
+    </testcase>
+    <testcase classname="helpers:buildEmail when not running in production it sets isProduction as false, adds stage to subject line and uses test template" name="helpers:buildEmail when not running in production it sets isProduction as false, adds stage to subject line and uses test template" time="0.01">
+    </testcase>
+    <testcase classname="helpers:buildEmail when no active or inactive locations it returns email data with hasNoLocations set to true" name="helpers:buildEmail when no active or inactive locations it returns email data with hasNoLocations set to true" time="0.002">
+    </testcase>
+    <testcase classname="helpers:buildEmail skipNoActivity Tests it returns email data with skipNoActivity set to true" name="helpers:buildEmail skipNoActivity Tests it returns email data with skipNoActivity set to true" time="0.002">
+    </testcase>
+    <testcase classname="helpers:buildEmail skipNoActivity Tests it returns false with no active locations and skipNoActivity set to true" name="helpers:buildEmail skipNoActivity Tests it returns false with no active locations and skipNoActivity set to true" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers:finaliseShiftReport" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.356" tests="2">
+    <testcase classname="handlers:finaliseShiftReport should process stringified event body" name="handlers:finaliseShiftReport should process stringified event body" time="0.003">
+    </testcase>
+    <testcase classname="handlers:finaliseShiftReport should process object event" name="handlers:finaliseShiftReport should process object event" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:getLocationReportLinks" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.135" tests="5">
+    <testcase classname="helpers:getLocationReportLinks should process location and return link details for summary report for user" name="helpers:getLocationReportLinks should process location and return link details for summary report for user" time="0.003">
+    </testcase>
+    <testcase classname="helpers:getLocationReportLinks should process location and return link details for full report for user" name="helpers:getLocationReportLinks should process location and return link details for full report for user" time="0.009">
+    </testcase>
+    <testcase classname="helpers:getLocationReportLinks should process location and return link details for legacy pdf reference" name="helpers:getLocationReportLinks should process location and return link details for legacy pdf reference" time="0.001">
+    </testcase>
+    <testcase classname="helpers:getLocationReportLinks should set the link to null if timestamp greater than 24 hours ago" name="helpers:getLocationReportLinks should set the link to null if timestamp greater than 24 hours ago" time="0">
+    </testcase>
+    <testcase classname="helpers:getLocationReportLinks should set link to null if no pdf data on location" name="helpers:getLocationReportLinks should set link to null if no pdf data on location" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:downloadFiles" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.102" tests="1">
+    <testcase classname="helpers:downloadFiles downloads files and returns file paths" name="helpers:downloadFiles downloads files and returns file paths" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:sendEmail" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.195" tests="2">
+    <testcase classname="helpers:sendEmail handles error and returns false" name="helpers:sendEmail handles error and returns false" time="0.002">
+    </testcase>
+    <testcase classname="helpers:sendEmail it sends email and returns result" name="helpers:sendEmail it sends email and returns result" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:buildShiftEmail" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.319" tests="8">
+    <testcase classname="helpers:buildShiftEmail handles error and returns false" name="helpers:buildShiftEmail handles error and returns false" time="0.01">
+    </testcase>
+    <testcase classname="helpers:buildShiftEmail it returns email data" name="helpers:buildShiftEmail it returns email data" time="0.004">
+    </testcase>
+    <testcase classname="helpers:buildShiftEmail it returns email data ordered by lastName and Timestamp" name="helpers:buildShiftEmail it returns email data ordered by lastName and Timestamp" time="0.004">
+    </testcase>
+    <testcase classname="helpers:buildShiftEmail it returns email data with formSubmissions" name="helpers:buildShiftEmail it returns email data with formSubmissions" time="0.005">
+    </testcase>
+    <testcase classname="helpers:buildShiftEmail it returns email data without formSubmissions" name="helpers:buildShiftEmail it returns email data without formSubmissions" time="0.003">
+    </testcase>
+    <testcase classname="helpers:buildShiftEmail it returns email data with configuration set when the environment var is set" name="helpers:buildShiftEmail it returns email data with configuration set when the environment var is set" time="0.002">
+    </testcase>
+    <testcase classname="helpers:buildShiftEmail when not running in production it sets isProduction as false, adds stage to subject line and uses test template" name="helpers:buildShiftEmail when not running in production it sets isProduction as false, adds stage to subject line and uses test template" time="0.001">
+    </testcase>
+    <testcase classname="helpers:buildShiftEmail when no active or inactive shift it returns email data with hasNoShifts set to true" name="helpers:buildShiftEmail when no active or inactive shift it returns email data with hasNoShifts set to true" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:buildSummaryPdf" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.07" tests="1">
+    <testcase classname="helpers:buildSummaryPdf creates summary pdf, uploads and returns reference" name="helpers:buildSummaryPdf creates summary pdf, uploads and returns reference" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:buildShiftSummaryPdf" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.08" tests="1">
+    <testcase classname="helpers:buildShiftSummaryPdf creates shift summary pdf, uploads and returns reference" name="helpers:buildShiftSummaryPdf creates shift summary pdf, uploads and returns reference" time="0.005">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:concatPdfs" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.113" tests="1">
+    <testcase classname="helpers:concatPdfs iterates file paths and creates merged pdf" name="helpers:concatPdfs iterates file paths and creates merged pdf" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:getReferences" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.12" tests="2">
+    <testcase classname="helpers:getReferences returns sorted references" name="helpers:getReferences returns sorted references" time="0.005">
+    </testcase>
+    <testcase classname="helpers:getReferences removes pdfs with no file pdf path" name="helpers:getReferences removes pdfs with no file pdf path" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:fetchApplications" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.053" tests="1">
+    <testcase classname="helpers:fetchApplications should fetch applications" name="helpers:fetchApplications should fetch applications" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:s3" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.064" tests="3">
+    <testcase classname="helpers:s3 should call getObject with params" name="helpers:s3 should call getObject with params" time="0.001">
+    </testcase>
+    <testcase classname="helpers:s3 should call listObjects with params" name="helpers:s3 should call listObjects with params" time="0.001">
+    </testcase>
+    <testcase classname="helpers:s3 should call putObject with params" name="helpers:s3 should call putObject with params" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="helpers:getPdfBuffer" errors="0" failures="0" skipped="0" timestamp="2020-03-23T18:28:23" time="0.463" tests="1">
+    <testcase classname="helpers:getPdfBuffer should return buffer" name="helpers:getPdfBuffer should return buffer" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>

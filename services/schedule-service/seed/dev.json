@@ -1,0 +1,101 @@
+[
+  {
+    "applicationId": "565e42d3d4c628373ab25231",
+    "createdAt": "2019-10-13T00:00:00.000Z",
+    "data": {
+      "areas": ["565e42d3d4c628373ab25200"],
+      "enabled": true,
+      "locations": ["565e42d3d4c628373ab25300"],
+      "name": "Schedule One",
+      "serviceHours": {
+        "hours": [
+          {
+            "description": "MON 11:00 - TUE 00:00",
+            "end": 86400000,
+            "start": 39600000,
+            "type": "DEFAULT'"
+          }
+        ],
+        "timezone": "Australia/Melbourne"
+      },
+      "strategy": {
+        "options": {
+          "duration": {
+            "unit": "minute",
+            "value": 15
+          },
+          "frequency": {
+            "unit": "minute",
+            "value": 15
+          }
+        },
+        "type": "stopwatch"
+      },
+      "type": "visit"
+    },
+    "endAt": "2019-10-1500:00:00.000Z",
+    "groupType": "schedule",
+    "pk": "565e42d3d4c628373ab25231-schedule",
+    "scheduleId": "5d7acd4e-985f-4953-8a58-41f3c82de085",
+    "sk": "2019-10-13T00:00:00.000Z-schedule",
+    "startAt": "2019-10-1400:00:00.000Z",
+    "updatedAt": "2019-10-13T01:00:00.000Z",
+    "userId": "5875c6538d4a4f75599378c4"
+  },
+  {
+    "applicationId": "565e42d3d4c628373ab25231",
+    "createdAt": "2019-10-13T12:00:00.000Z",
+    "data": {
+      "areas": ["565e42d3d4c628373ab25200"],
+      "enabled": true,
+      "locations": ["565e42d3d4c628373ab25300"],
+      "name": "Schedule Two",
+      "serviceHours": {
+        "hours": [
+          {
+            "description": "MON 11:00 - TUE 00:00",
+            "end": 86400000,
+            "start": 39600000,
+            "type": "DEFAULT"
+          }
+        ],
+        "timezone": "Australia/Melbourne"
+      },
+      "strategy": {
+        "options": {
+          "duration": {
+            "unit": "hour",
+            "value": 1
+          },
+          "frequency": {
+            "unit": "hour",
+            "value": 1
+          }
+        },
+        "type": "stopwatch'"
+      },
+      "type": "visit"
+    },
+    "endAt": "2019-10-1500:00:00.000Z",
+    "groupType": "schedule",
+    "pk": "565e42d3d4c628373ab25231-schedule",
+    "scheduleId": "5d7acd4e-985f-4953-8a58-41f3c82de086",
+    "sk": "2019-10-13T12:00:00.000Z-schedule",
+    "startAt": "2019-10-1400:00:00.000Z",
+    "updatedAt": "2019-10-13T12:00:00.000Z",
+    "userId": "5875c6538d4a4f75599378c4"
+  },
+  {
+    "applicationId": "565e42d3d4c628373ab25231",
+    "createdAt": "2019-10-13T12:00:00.000Z",
+    "data": {},
+    "endAt": "2019-10-1500:00:00.000Z",
+    "groupType": "occurrence",
+    "pk": "565e42d3d4c628373ab25231-occurrence",
+    "scheduleId": "5d7acd4e-985f-4953-8a58-41f3c82de086",
+    "sk": "2019-10-13T12:00:00.000Z-occurrence",
+    "startAt": "2019-10-1400:00:00.000Z",
+    "updatedAt": "2019-10-13T12:00:00.000Z",
+    "userId": "5875c6538d4a4f75599378c4"
+  }
+]

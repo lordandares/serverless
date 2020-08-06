@@ -1,0 +1,6 @@
+{
+  "lerna": "3.13.2",
+  "npmClient": "yarn",
+  "packages": ["services/*"],
+  "version": "0.0.0"
+}

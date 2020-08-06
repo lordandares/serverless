@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers:buildShiftEmail it returns email data 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-shift-reports",
+  "TemplateData": "{\\"activeShifts\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Wednesday 6th November\\",\\"hasNoShifts\\":false,\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"shortDate\\":\\"November 6\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildShiftEmail it returns email data ordered by lastName and Timestamp 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-shift-reports",
+  "TemplateData": "{\\"activeShifts\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a6\\",\\"link\\":\\"http://link.com\\",\\"fullName\\":\\"Paul Allen\\",\\"timestamp\\":null,\\"lastName\\":\\"Allen\\"},{\\"id\\":\\"565fe59257c5d59e60cc35a6\\",\\"link\\":\\"http://link.com\\",\\"fullName\\":\\"John Doe\\",\\"timestamp\\":null,\\"lastName\\":\\"Doe\\"},{\\"id\\":\\"565fe59257c5d59e60cc35a6\\",\\"link\\":\\"http://link.com\\",\\"fullName\\":\\"Steeve Jobs\\",\\"timestamp\\":null,\\"lastName\\":\\"Jobs\\"}],\\"date\\":\\"Wednesday 6th November\\",\\"hasNoShifts\\":false,\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"shortDate\\":\\"November 6\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildShiftEmail it returns email data with configuration set when the environment var is set 1`] = `
+Object {
+  "ConfigurationSetName": "ses-configuration-set",
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-shift-reports",
+  "TemplateData": "{\\"activeShifts\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Wednesday 6th November\\",\\"hasNoShifts\\":false,\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"shortDate\\":\\"November 6\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildShiftEmail it returns email data with formSubmissions 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-shift-reports",
+  "TemplateData": "{\\"activeShifts\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a6\\",\\"link\\":\\"http://link.com\\",\\"fullName\\":\\"Paul Allen\\",\\"timestamp\\":null,\\"lastName\\":\\"Allen\\"},{\\"id\\":\\"565fe59257c5d59e60cc35a3\\",\\"link\\":\\"activity-reports/shifts/565e42d3d4c628373ab25231/2019/10/10/2019-10-10-shift-5d9f83bd8bb82c0001cc20c3-summary-1570749390473.pdf\\"}],\\"date\\":\\"Wednesday 6th November\\",\\"hasNoShifts\\":false,\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"shortDate\\":\\"November 6\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildShiftEmail it returns email data without formSubmissions 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-shift-reports",
+  "TemplateData": "{\\"activeShifts\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a6\\",\\"link\\":\\"http://link.com\\",\\"fullName\\":\\"Paul Allen\\",\\"timestamp\\":null,\\"lastName\\":\\"Allen\\"},{\\"id\\":\\"565fe59257c5d59e60cc35a3\\",\\"link\\":\\"activity-reports/shifts/565e42d3d4c628373ab25231/2019/10/10/2019-10-10-shift-5d9f83bd8bb82c0001cc20c3-summary-and-forms-1570749390473.pdf\\"}],\\"date\\":\\"Wednesday 6th November\\",\\"hasNoShifts\\":false,\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"shortDate\\":\\"November 6\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildShiftEmail when no active or inactive shift it returns email data with hasNoShifts set to true 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-shift-reports",
+  "TemplateData": "{\\"activeShifts\\":[],\\"date\\":\\"Wednesday 6th November\\",\\"hasNoShifts\\":true,\\"isProduction\\":true,\\"name\\":\\"Steve\\",\\"shortDate\\":\\"November 6\\",\\"stage\\":\\"PRODUCTION\\"}",
+}
+`;
+
+exports[`helpers:buildShiftEmail when not running in production it sets isProduction as false, adds stage to subject line and uses test template 1`] = `
+Object {
+  "Destination": Object {
+    "CcAddresses": Array [],
+    "ToAddresses": Array [
+      "testing@test.com",
+    ],
+  },
+  "ReplyToAddresses": Array [
+    "notifications@lighthouse.io",
+  ],
+  "Source": "notifications@lighthouse.io",
+  "Template": "daily-shift-reports-test",
+  "TemplateData": "{\\"activeShifts\\":[{\\"id\\":\\"565fe59257c5d59e60cc35a2\\",\\"link\\":\\"http://link.com\\"}],\\"date\\":\\"Wednesday 6th November\\",\\"hasNoShifts\\":false,\\"isProduction\\":false,\\"name\\":\\"Steve\\",\\"shortDate\\":\\"November 6\\",\\"stage\\":\\"TESTING\\"}",
+}
+`;

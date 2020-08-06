@@ -1,0 +1,10 @@
+{
+  "to": "will@lighthouse.io",
+  "from": "support@lighthouse.io",
+  "subject": "Audit!",
+  "html": "<p>Hello</p>",
+  "pdf": {
+    "bucket": "pdf-data-develop-lighthouse-io",
+    "key": "test.json"
+  }
+}

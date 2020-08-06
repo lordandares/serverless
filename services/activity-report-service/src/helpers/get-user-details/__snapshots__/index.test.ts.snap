@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers:getUserDetails it returns user details 1`] = `
+Object {
+  "applicationName": "Testing Application",
+  "email": "testing@test.com",
+  "firstName": "Testing",
+  "lastName": undefined,
+  "preferences": Object {
+    "notifications": Object {
+      "channels": Array [
+        Object {
+          "enabled": true,
+          "name": "daily-location-report",
+          "options": Object {
+            "hours": 9,
+            "timezone": "America/Los_Angeles",
+          },
+        },
+      ],
+    },
+  },
+  "timezone": "America/Los_Angeles",
+}
+`;

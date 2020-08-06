@@ -1,0 +1,548 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`doesnt sync any schedules when no location and no schedule id 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "app1",
+        "createdAt": "2019-10-13T01:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "name": "WRNMMC Facility",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 00:00 - TUE 00:00",
+                "duration": 86400000,
+                "end": 86400000,
+                "start": 0,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "America/New_York",
+          },
+        },
+        "groupType": "location",
+        "pk": "app1-location",
+        "schedules": Array [],
+        "sk": "location1",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns created document from simple payload 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "app1",
+        "createdAt": "2019-10-13T01:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "name": "WRNMMC Facility",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 00:00 - TUE 00:00",
+                "duration": 86400000,
+                "end": 86400000,
+                "start": 0,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "America/New_York",
+          },
+        },
+        "groupType": "location",
+        "pk": "app1-location",
+        "schedules": Array [
+          "schedule1",
+        ],
+        "sk": "location1",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns created document from simple payload 2`] = `
+Array [
+  Object {
+    "applicationId": "app1",
+    "createdAt": "2019-10-13T01:00:00.000Z",
+    "createdBy": Object {
+      "id": "awsRequestId",
+      "label": "invokedFunctionArn",
+      "type": "system",
+    },
+    "data": Object {
+      "name": "WRNMMC Facility",
+      "serviceHours": Object {
+        "hours": Array [
+          Object {
+            "description": "MON 00:00 - TUE 00:00",
+            "duration": 86400000,
+            "end": 86400000,
+            "start": 0,
+            "type": "DEFAULT",
+          },
+        ],
+        "timezone": "America/New_York",
+      },
+    },
+    "groupType": "location",
+    "pk": "app1-location",
+    "schedules": Array [
+      "schedule1",
+    ],
+    "sk": "location1",
+    "updatedAt": "2019-10-13T01:00:00.000Z",
+    "updatedBy": Object {
+      "id": "awsRequestId",
+      "label": "invokedFunctionArn",
+      "type": "system",
+    },
+  },
+]
+`;
+
+exports[`returns created document from sns event 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "app1",
+        "createdAt": "2019-10-13T01:00:00.000Z",
+        "createdBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+        "data": Object {
+          "name": "WRNMMC Facility",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 00:00 - TUE 00:00",
+                "duration": 86400000,
+                "end": 86400000,
+                "start": 0,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "America/New_York",
+          },
+        },
+        "groupType": "location",
+        "pk": "app1-location",
+        "schedules": Array [
+          "schedule1",
+        ],
+        "sk": "location1",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`returns created document from sns event 2`] = `
+Array [
+  Object {
+    "applicationId": "app1",
+    "createdAt": "2019-10-13T01:00:00.000Z",
+    "createdBy": Object {
+      "id": "awsRequestId",
+      "label": "invokedFunctionArn",
+      "type": "system",
+    },
+    "data": Object {
+      "name": "WRNMMC Facility",
+      "serviceHours": Object {
+        "hours": Array [
+          Object {
+            "description": "MON 00:00 - TUE 00:00",
+            "duration": 86400000,
+            "end": 86400000,
+            "start": 0,
+            "type": "DEFAULT",
+          },
+        ],
+        "timezone": "America/New_York",
+      },
+    },
+    "groupType": "location",
+    "pk": "app1-location",
+    "schedules": Array [
+      "schedule1",
+    ],
+    "sk": "location1",
+    "updatedAt": "2019-10-13T01:00:00.000Z",
+    "updatedBy": Object {
+      "id": "awsRequestId",
+      "label": "invokedFunctionArn",
+      "type": "system",
+    },
+  },
+]
+`;
+
+exports[`syncs schedules when given associated location schedules and no schedule id 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "app1",
+        "createdAt": "2019-10-13T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "123456789",
+          "label": "label",
+          "type": "system",
+        },
+        "data": Object {
+          "name": "WRNMMC Facility",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 00:00 - TUE 00:00",
+                "duration": 86400000,
+                "end": 86400000,
+                "start": 0,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "America/New_York",
+          },
+        },
+        "groupType": "location",
+        "pk": "app1-location",
+        "schedules": Array [
+          "schedule1",
+        ],
+        "sk": "location1",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-13T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "user1",
+          "label": "Unknown User",
+          "type": "user",
+        },
+        "data": Object {
+          "areas": Array [
+            "area1",
+          ],
+          "enabled": true,
+          "included": Object {
+            "locations": Object {
+              "location1": Object {
+                "name": "WRNMMC Facility",
+              },
+            },
+          },
+          "locations": Array [
+            "location1",
+          ],
+          "name": "Schedule One",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 11:00 - TUE 00:00",
+                "end": 86400000,
+                "start": 39600000,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "Australia/Melbourne",
+          },
+          "strategy": Object {
+            "options": Object {
+              "duration": Object {
+                "unit": "minute",
+                "value": 15,
+              },
+              "frequency": Object {
+                "unit": "minute",
+                "value": 15,
+              },
+            },
+            "type": "stopwatch",
+          },
+          "type": "visit",
+        },
+        "endAt": "2019-10-1500:00:00.000Z",
+        "groupType": "schedule",
+        "pk": "application1-schedule",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-13T00:00:00.000Z-schedule1",
+        "startAt": "2019-10-1400:00:00.000Z",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "user1",
+          "label": "Unknown User",
+          "type": "user",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`syncs schedules when given associated location schedules and schedule id 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "app1",
+        "createdAt": "2019-10-13T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "123456789",
+          "label": "label",
+          "type": "system",
+        },
+        "data": Object {
+          "name": "WRNMMC Facility",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 00:00 - TUE 00:00",
+                "duration": 86400000,
+                "end": 86400000,
+                "start": 0,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "America/New_York",
+          },
+        },
+        "groupType": "location",
+        "pk": "app1-location",
+        "schedules": Array [
+          "schedule1",
+        ],
+        "sk": "location1",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "application1",
+        "createdAt": "2019-10-13T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "user1",
+          "label": "Unknown User",
+          "type": "user",
+        },
+        "data": Object {
+          "areas": Array [
+            "area1",
+          ],
+          "enabled": true,
+          "included": Object {
+            "locations": Object {
+              "location1": Object {
+                "name": "WRNMMC Facility",
+              },
+            },
+          },
+          "locations": Array [
+            "location1",
+          ],
+          "name": "Schedule One",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 11:00 - TUE 00:00",
+                "end": 86400000,
+                "start": 39600000,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "Australia/Melbourne",
+          },
+          "strategy": Object {
+            "options": Object {
+              "duration": Object {
+                "unit": "minute",
+                "value": 15,
+              },
+              "frequency": Object {
+                "unit": "minute",
+                "value": 15,
+              },
+            },
+            "type": "stopwatch",
+          },
+          "type": "visit",
+        },
+        "endAt": "2019-10-1500:00:00.000Z",
+        "groupType": "schedule",
+        "pk": "application1-schedule",
+        "scheduleId": "schedule1",
+        "sk": "2019-10-13T00:00:00.000Z-schedule1",
+        "startAt": "2019-10-1400:00:00.000Z",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "user1",
+          "label": "Unknown User",
+          "type": "user",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`syncs schedules when no given associated location schedules and no schedule id 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "app1",
+        "createdAt": "2019-10-13T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "123456789",
+          "label": "label",
+          "type": "system",
+        },
+        "data": Object {
+          "name": "WRNMMC Facility",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 00:00 - TUE 00:00",
+                "duration": 86400000,
+                "end": 86400000,
+                "start": 0,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "America/New_York",
+          },
+        },
+        "groupType": "location",
+        "pk": "app1-location",
+        "schedules": Array [
+          "schedule1",
+        ],
+        "sk": "location1",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;
+
+exports[`syncs schedules when no given associated location schedules and schedule id 1`] = `
+Array [
+  Array [
+    Object {
+      "Item": Object {
+        "applicationId": "app1",
+        "createdAt": "2019-10-13T00:00:00.000Z",
+        "createdBy": Object {
+          "id": "123456789",
+          "label": "label",
+          "type": "system",
+        },
+        "data": Object {
+          "name": "WRNMMC Facility",
+          "serviceHours": Object {
+            "hours": Array [
+              Object {
+                "description": "MON 00:00 - TUE 00:00",
+                "duration": 86400000,
+                "end": 86400000,
+                "start": 0,
+                "type": "DEFAULT",
+              },
+            ],
+            "timezone": "America/New_York",
+          },
+        },
+        "groupType": "location",
+        "pk": "app1-location",
+        "schedules": Array [
+          "schedule1",
+        ],
+        "sk": "location1",
+        "updatedAt": "2019-10-13T01:00:00.000Z",
+        "updatedBy": Object {
+          "id": "awsRequestId",
+          "label": "invokedFunctionArn",
+          "type": "system",
+        },
+      },
+      "TableName": "table-schedules",
+    },
+    [Function],
+  ],
+]
+`;

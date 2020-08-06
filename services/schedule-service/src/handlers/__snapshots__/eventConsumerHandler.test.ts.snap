@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`catches event processor errors and continues 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "data": Object {
+          "timestamp": "2020-02-11T03:19:00.000+0000",
+        },
+        "type": "location",
+      },
+    ],
+    Array [
+      Object {
+        "data": Object {
+          "timestamp": "2020-02-11T03:20:00.000+0000",
+        },
+        "type": "location",
+      },
+    ],
+    Array [
+      Object {
+        "data": Object {
+          "timestamp": "2020-02-11T03:21:00.000+0000",
+        },
+        "type": "location",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+    Object {
+      "isThrow": false,
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`handles stream event which fails to parse json but continues to process and throws after 1`] = `
+Array [
+  Array [
+    "EventsConsumerHandler: caught 1 errors when processing 2 records",
+  ],
+  Array [
+    "EventsConsumerHandlerError",
+    Object {
+      "err": [ApplicationError: EventsConsumerHandler: caught 1 errors when processing 2 records],
+      "event": Object {
+        "Records": Array [
+          Object {
+            "kinesis": Object {
+              "data": "ew==",
+            },
+          },
+          Object {
+            "kinesis": Object {
+              "data": "eyJkYXRhIjp7fSwidHlwZSI6ImxvY2F0aW9uIn0=",
+            },
+          },
+        ],
+      },
+    },
+  ],
+]
+`;
+
+exports[`handles stream event which fails to parse json but continues to process and throws after 2`] = `[ApplicationError: EventsConsumerHandler: caught 1 errors when processing 2 records]`;
+
+exports[`handles stream events which are out of order 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "data": Object {
+          "timestamp": "2020-02-11T03:19:51.508+0000",
+        },
+        "type": "location",
+      },
+    ],
+    Array [
+      Object {
+        "data": Object {
+          "timestamp": "2020-02-11T09:19:51.508+0000",
+        },
+        "type": "location",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+    Object {
+      "isThrow": false,
+      "value": undefined,
+    },
+  ],
+}
+`;

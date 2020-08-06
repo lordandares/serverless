@@ -1,0 +1,261 @@
+service:
+  name: "activity-reports"
+
+plugins:
+  - "@lighthouse/serverless-plugin-typescript"
+  - "serverless-offline"
+  - "serverless-step-functions"
+  - "serverless-pseudo-parameters"
+  - "serverless-prune-plugin"
+
+provider:
+  name: "aws"
+  apiGateway:
+    restApiId:
+      'Fn::ImportValue': "lighthouse-api-gateway-${opt:stage}-rest-api-id"
+    restApiRootResourceId:
+      'Fn::ImportValue': "lighthouse-api-gateway-${opt:stage}-root-resource-id"
+  endpointType: REGIONAL
+  environment:
+    CLOUDINARY_BASE_URL: "${env:CLOUDINARY_BASE_URL}"
+    LOCATION_PROCESSOR_ARN: "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage, self:provider.stage}-location-processor"
+    SHIFT_PROCESSOR_ARN: "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage, self:provider.stage}-shift-processor"
+    MONGODB_SECRET_ID: "${self:custom.secretsManager.${opt:region, self:provider.region}.${opt:stage, self:provider.stage}.mongodb.id}"
+    S3_BASE_URL: "${env:S3_BASE_URL}"
+    S3_BUCKET_UPLOADS: "${env:S3_BUCKET_UPLOADS}"
+    SES_CONFIGURATION_SET_NAME: "${env:SES_CONFIGURATION_SET_NAME}"
+    STAGE: "${opt:stage, self:provider.stage}"
+    PLATFORM: ${env:PLATFORM}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "secretsmanager:GetSecretValue"
+      Resource: "${self:custom.secretsManager.${opt:region, self:provider.region}.${opt:stage, self:provider.stage}.mongodb.arn}"
+    - Effect: "Allow"
+      Action:
+        - "s3:GetObject"
+        - "s3:PutObject"
+      Resource:
+        - "arn:aws:s3:::${env:S3_BUCKET_UPLOADS}"
+        - "arn:aws:s3:::${env:S3_BUCKET_UPLOADS}/*"
+    - Effect: "Allow"
+      Action:
+        - "ses:SendTemplatedEmail"
+      Resource: '*'
+    - Effect: "Allow"
+      Action:
+        - "states:StartExecution"
+      Resource: "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage}-location-processor"
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SECURITY_GROUP_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID_1}
+      - ${env:AWS_SUBNET_ID_2}
+
+custom:
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 3
+  secretsManager: "${file(secretsManager.yml)}"
+  serverless-offline:
+    port: 4000
+
+functions:
+  locationProcessor:
+    name: "${self:service.name}-${opt:stage}-location-processor"
+    description: "Processes application locations, and triggers DAR reports"
+    events:
+      - schedule:
+          name: "${self:service.name}-${opt:stage}-location-processor"
+          rate: "cron(5 * * * ? *)"
+    handler: "src/handlers/location-processor/index.locationProcessor"
+    runtime: "nodejs12.x"
+    timeout: 900
+  emailProcessor:
+    name: "${self:service.name}-${opt:stage}-email-processor"
+    description: "Sends daily location emails to all relevant users"
+    events:
+      - schedule:
+          name: "${self:service.name}-${opt:stage}-email-processor"
+          rate: "cron(35 * * * ? *)"
+    handler: "src/handlers/email-processor/index.emailProcessor"
+    memorySize: 2048
+    runtime: "nodejs12.x"
+    timeout: 900
+  shiftEmailProcessor:
+    name: "${self:service.name}-${opt:stage}-shift-email-processor"
+    description: "Sends daily shift emails to all relevant users"
+    events:
+      - schedule:
+          name: "${self:service.name}-${opt:stage}-shift-email-processor"
+          rate: "cron(35 * * * ? *)"
+    handler: "src/handlers/shift-email-processor/index.shiftEmailProcessor"
+    runtime: "nodejs12.x"
+    timeout: 900
+  finaliseLocationReport:
+    name: "${self:service.name}-${opt:stage}-finalise-location-report"
+    description: "Attaches pdf s3 file path to appropriate location"
+    handler: "src/handlers/finalise-location-report/index.finaliseLocationReport"
+    runtime: "nodejs12.x"
+    timeout: 30
+  mergePdfs:
+    name: "${self:service.name}-${opt:stage}-merge-pdfs"
+    description: "Retrieves all pdfs references and merges into single pdf"
+    handler: "src/handlers/merge-pdfs/index.mergePdfs"
+    layers:
+      - { Ref: HummusLambdaLayer }
+    runtime: "nodejs12.x"
+    timeout: 90
+  setupDar:
+    name: "${self:service.name}-${opt:stage}-setup-activity-report"
+    description: "Queries data, builds summary pdf and returns all pdf references"
+    handler: "src/handlers/setup-dar/index.setupDar"
+    runtime: "nodejs12.x"
+    memorySize: 2048
+    timeout: 90
+  getShiftData:
+    name: "${self:service.name}-${opt:stage}-get-shift-data"
+    description: "Queries data, builds summary pdf and returns all pdf references"
+    handler: "src/handlers/get-shift-data/index.getShiftData"
+    runtime: "nodejs12.x"
+    memorySize: 2048
+    timeout: 90
+  mergeReportPdfs:
+    name: "${self:service.name}-${opt:stage}-merge-report-pdfs"
+    description: "Retrieves all daily report pdfs references and merges into single pdf"
+    handler: "src/handlers/merge-report-pdfs/index.mergeReportPdfs"
+    layers:
+      - { Ref: HummusLambdaLayer }
+    runtime: "nodejs12.x"
+    timeout: 90
+  finaliseShiftReport:
+    name: "${self:service.name}-${opt:stage}-finalise-shift-report"
+    description: "Attaches pdf s3 file path to appropriate document in a collection"
+    handler: "src/handlers/finalise-shift-report/index.finaliseShiftReport"
+    runtime: "nodejs12.x"
+    timeout: 30
+
+layers:
+  hummus:
+    name: hummus-${opt:stage}
+    description: packages hummusjs
+    compatibleRuntimes: 
+      - nodejs12.x
+    package:
+      artifact: src/artifacts/hummusjs-layer.zip
+      
+stepFunctions:
+  stateMachines:
+    locationProcessor:
+      name: "${self:service.name}-${opt:stage}-location-processor"
+      definition:
+        Comment: "A state machine to generate the daily active report for a location"
+        StartAt: "SetupDar"
+        States:
+          SetupDar:
+            Type: "Task"
+            InputPath: "$"
+            ResultPath: "$.pdfs"
+            OutputPath: "$"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-setup-activity-report"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "ChoiceMergePdfs"
+          ChoiceMergePdfs:
+            Type: "Choice"
+            Choices:
+              -
+                BooleanEquals: true
+                Next: "Done"
+                Variable: "$.pdfs.skip"
+            Default: "MergePdfs"
+          MergePdfs:
+            Type: "Task"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-merge-pdfs"
+            InputPath: "$"
+            ResultPath: "$.pdfs.summaryAndFormsS3Path"
+            OutputPath: "$"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "Finalise"
+          Finalise:
+            Type: "Task"
+            InputPath: "$"
+            ResultPath: null
+            OutputPath: "$"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-finalise-location-report"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "Done"
+          Done:
+            Type: "Pass"
+            End: true
+    shiftProcessor:
+      name: "${self:service.name}-${opt:stage}-shift-processor"
+      events:
+        - http:
+            path: /reports/shifts
+            method: POST
+            private: true
+      definition:
+        Comment: "A state machine to generate the daily shift report"
+        StartAt: "getShiftData"
+        States:
+          getShiftData:
+            Type: "Task"
+            InputPath: "$"
+            ResultPath: "$.pdfs"
+            OutputPath: "$"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-get-shift-data"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "ChoiceMergePdfs"
+          ChoiceMergePdfs:
+            Type: "Choice"
+            Choices:
+              -
+                BooleanEquals: true
+                Next: "Done"
+                Variable: "$.pdfs.skip"
+            Default: "MergeReportPdfs"
+          MergeReportPdfs:
+            Type: "Task"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-merge-report-pdfs"
+            InputPath: "$"
+            ResultPath: "$.pdfs.summaryAndFormsS3Path"
+            OutputPath: "$"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "Finalise"
+          Finalise:
+            Type: "Task"
+            InputPath: "$"
+            ResultPath: null
+            OutputPath: "$"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-finalise-shift-report"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "Done"
+          Done:
+            Type: "Pass"
+            End: true

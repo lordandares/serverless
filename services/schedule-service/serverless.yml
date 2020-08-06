@@ -1,0 +1,562 @@
+service:
+  name: "schedule-service"
+
+plugins:
+  - "@lighthouse/serverless-plugin-typescript"
+  - "serverless-pseudo-parameters"
+  - "serverless-dynamodb-local"
+  - "serverless-offline"
+  - "serverless-offline-sns"
+  - "serverless-plugin-tracing"
+  - "serverless-step-functions"
+  - "serverless-prune-plugin"
+provider:
+  name: "aws"
+  runtime: "nodejs12.x"
+  tracing: "true"
+  apiGateway:
+    restApiId:
+      'Fn::ImportValue': "lighthouse-api-gateway-${opt:stage}-rest-api-id"
+    restApiRootResourceId:
+      'Fn::ImportValue': "lighthouse-api-gateway-${opt:stage}-root-resource-id"
+  endpointType: "REGIONAL"
+  environment:
+    CREATE_EXCEPTION_ARN: { "Ref": "CreateExceptionTopic" }
+    CREATE_SCHEDULE_STEP_FUNCTION: "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage, self:provider.stage}-create-schedule-step-function"
+    ENSURE_OCCURRENCES_STEP_FUNCTION: "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage, self:provider.stage}-ensure-occurrences-step-function"
+    LOOP_EXCEPTIONS_QUEUE_URL: "https://sqs.#{AWS::Region}.amazonaws.com/#{AWS::AccountId}/${self:resources.Resources.SQSQueueLoopExceptions.Properties.QueueName}"
+    MONGODB_SECRET_ID: "lio/global/mongodb/${opt:stage, self:provider.stage}"
+    OCCURRENCE_ACTIVE_ARN: { "Ref": "OccurrenceActiveTopic" }
+    OCCURRENCE_EXPIRED_ARN: { "Ref": "OccurrenceExpiredTopic" }
+    OCCURRENCE_RESOLVED_ARN: { "Ref": "OccurrenceResolvedTopic" }
+    TABLE_SCHEDULES: "${self:service.name}-schedules-${opt:stage}"
+    PLATFORM: "${env:PLATFORM}"
+    UPDATE_SCHEDULE_STEP_FUNCTION: "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage, self:provider.stage}-update-schedule-step-function"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:DeleteItem"
+        - "dynamodb:GetItem"
+        - "dynamodb:PutItem"
+        - "dynamodb:Query"
+        - "dynamodb:UpdateItem"
+      Resource:
+        - { "Fn::GetAtt": ["DynamoDBTableSchedules", "Arn"] }
+        # NOTE: permissions are needed for secondary indexes
+        - { "Fn::Join": ["/", [ { "Fn::GetAtt": ["DynamoDBTableSchedules", "Arn"] }, "*" ] ] }
+    - Effect: "Allow"
+      Action:
+        - "cloudwatch:PutMetricData"
+      Resource: "*"
+    - Effect: "Allow"
+      Action: "secretsmanager:GetSecretValue"
+      Resource:
+        - "arn:aws:secretsmanager:#{AWS::Region}:#{AWS::AccountId}:secret:lio/global/mongodb/${opt:stage}*" 
+    - Effect: "Allow"
+      Action:
+        - "states:StartExecution"
+      Resource: 
+        - "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage}-create-schedule-step-function"
+        - "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage}-ensure-occurrences-step-function"
+        - "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:service.name}-${opt:stage}-update-schedule-step-function"
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+    - Effect: "Allow"
+      Action:
+        - "sns:Publish"
+      Resource:
+        - { "Ref": "CreateExceptionTopic" }
+        - { "Ref": "OccurrenceActiveTopic" }
+        - { "Ref": "OccurrenceExpiredTopic" }
+        - { "Ref": "OccurrenceResolvedTopic" }
+        - { "Ref": "UpsertLocationsTopic" }
+    - Effect: "Allow"
+      Action:
+        - "sqs:SendMessage"
+      Resource:
+        - "arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:${self:resources.Resources.SQSQueueLoopExceptions.Properties.QueueName}"
+  vpc:
+    securityGroupIds:
+      - "${env:AWS_SECURITY_GROUP_ID}"
+    subnetIds:
+      - "${env:AWS_SUBNET_ID_1}"
+      - "${env:AWS_SUBNET_ID_2}"
+
+functions:
+  createException:
+    description: "Creates an exception for an expired occurrence"
+    handler: "handlers.createException"
+    events:
+      - sns:
+          arn: { "Ref": "CreateExceptionTopic" }
+          topicName: "${self:service.name}-${opt:stage}-create-exception"
+  createRule:
+    description: "Creates a rule for a schedule occurrence"
+    handler: "handlers.createRule"
+  createSchedule:
+    description: "Creates a new schedule"
+    handler: "handlers.createSchedule"
+    events:
+      - http:
+          path: "/schedules"
+          method: "POST"
+          cors: "true"
+          private: "true"
+  createTimer:
+    description: "Creates a timer for a schedule"
+    handler: "handlers.createTimer"
+  deleteOccurrences:
+    description: "Deletes all schedule occurrences"
+    handler: "handlers.deleteOccurrences"
+  deleteRule:
+    description: "Deletes a schedule occurrence rule"
+    handler: "handlers.deleteRule"
+    events:
+      - sns: "${self:service.name}-${opt:stage}-delete-rule"
+  deleteSchedule:
+    description: "Deletes a schedule"
+    handler: "handlers.deleteSchedule"
+    events:
+      - http:
+          path: "/schedules/{id}"
+          method: "DELETE"
+          cors: "true"
+          private: "true"
+  eventsConsumer:
+    description: "Consumes data from the events stream"
+    handler: "handlers.eventsConsumer"
+    events:
+      - stream:
+          type: "kinesis"
+          arn: "arn:aws:kinesis:#{AWS::Region}:#{AWS::AccountId}:stream/EventsStream-${opt:stage}"
+          batchSize: 50
+  generateOccurrences:
+    description: "Creates schedule occurrences"
+    handler: "handlers.generateOccurrences"
+  getSchedule:
+    description: "Gets an existing schedule"
+    handler: "handlers.getSchedule"
+    events:
+      - http:
+          path: "/schedules/{id}"
+          method: "GET"
+          cors: "true"
+          private: "true"
+  listSchedules:
+    description: "Gets all existing schedules"
+    handler: "handlers.listSchedules"
+    events:
+      - http:
+          path: "/schedules"
+          method: "GET"
+          cors: "true"
+          private: "true"
+  timerProcessor:
+    description: "Processes timer documents"
+    handler: "handlers.timerProcessor"
+    events:
+      - schedule: "rate(1 minute)"
+  occurrenceActive:
+    description: "Updates occurrence status to active"
+    handler: "handlers.occurrenceActive"
+    events:
+      - sns:
+          arn: { "Ref": "OccurrenceActiveTopic" }
+          topicName: "${self:service.name}-${opt:stage}-occurrence-active"
+  occurrenceExpired:
+    description: "Updates occurrence status to expired"
+    handler: "handlers.occurrenceExpired"
+    events:
+      - sns:
+          arn: { "Ref": "OccurrenceExpiredTopic" }
+          topicName: "${self:service.name}-${opt:stage}-occurrence-expired"
+  occurrenceResolved:
+    description: "Updates occurrence status to resolved and generates next occurrence"
+    handler: "handlers.occurrenceResolved"
+    events:
+      - sns:
+          arn: { "Ref": "OccurrenceResolvedTopic" }
+          topicName: "${self:service.name}-${opt:stage}-occurrence-resolved"
+  updateSchedule:
+    description: "Updates an existing schedule"
+    handler: "handlers.updateSchedule"
+    events:
+      - http:
+          path: "/schedules/{id}"
+          method: "PUT"
+          cors: "true"
+          private: "true"
+  upsertLocations:
+    description: "Upserts a schedule location"
+    handler: "handlers.upsertLocations"
+    events:
+      - sns:
+          arn: { "Ref": "UpsertLocationsTopic" }
+          topicName: "${self:service.name}-${opt:stage}-upsert-locations"
+
+resources:
+  Resources:
+    DynamoDBTableSchedules:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: "Retain"
+      Properties:
+        TableName: "${self:provider.environment.TABLE_SCHEDULES}"
+        AttributeDefinitions:
+          - AttributeName: "pk"
+            AttributeType: "S"
+          - AttributeName: "sk"
+            AttributeType: "S"
+          - AttributeName: "location_endAt_occurrenceId"
+            AttributeType: "S"
+          - AttributeName: "user_endAt_occurrenceId"
+            AttributeType: "S"
+          - AttributeName: "scheduleId"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "pk"
+            KeyType: "HASH"
+          - AttributeName: "sk"
+            KeyType: "RANGE"
+        ProvisionedThroughput:
+          ReadCapacityUnits: "1"
+          WriteCapacityUnits: "1"
+        LocalSecondaryIndexes:
+          - IndexName: "OccurrenceByLocationIndex"
+            KeySchema:
+              - AttributeName: "pk"
+                KeyType: "HASH"
+              - AttributeName: "location_endAt_occurrenceId"
+                KeyType: "RANGE"
+            Projection:
+              ProjectionType: "ALL"
+          - IndexName: "OccurrenceByUserIndex"
+            KeySchema:
+              - AttributeName: "pk"
+                KeyType: "HASH"
+              - AttributeName: "user_endAt_occurrenceId"
+                KeyType: "RANGE"
+            Projection:
+              ProjectionType: "ALL"
+        GlobalSecondaryIndexes:
+          - IndexName: "ScheduleIdIndex"
+            KeySchema:
+              - AttributeName: "scheduleId"
+                KeyType: "HASH"
+              - AttributeName: "sk"
+                KeyType: "RANGE"
+            Projection:
+              ProjectionType: "ALL"
+            ProvisionedThroughput:
+              ReadCapacityUnits: "1"
+              WriteCapacityUnits: "1"
+        TimeToLiveSpecification:
+          AttributeName: "expiresAt"
+          Enabled: true
+    SQSQueueLoopExceptions:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: "loop-exceptions-queue-${opt:stage}"
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+              - "SQSDeadLetterQueueLoopExceptions"
+              - "Arn"
+          maxReceiveCount: 5
+    SQSDeadLetterQueueLoopExceptions:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: "loop-exceptions-dead-letter-queue-${opt:stage}"
+    ScheduleTopicsPolicy:
+      Type: "AWS::SNS::TopicPolicy"
+      Properties:
+        PolicyDocument:
+          Id: "ScheduleTopicsPolicy"
+          Version: "2012-10-17"
+          Statement:
+            - Sid: "schedule-topics-policy"
+              Effect: "Allow"
+              Principal:
+                AWS:
+                  # NOTE: remove when the develop api service is running in same account
+                  - "047871223545"
+              Action: "sns:Publish"
+              Resource: "*"
+        Topics:
+          - { "Ref": "CreateExceptionTopic" }
+          - { "Ref": "OccurrenceActiveTopic" }
+          - { "Ref": "OccurrenceExpiredTopic" }
+          - { "Ref": "OccurrenceResolvedTopic" }
+          - { "Ref": "UpsertLocationsTopic" }
+    CreateExceptionTopic:
+      Type: "AWS::SNS::Topic"
+      Properties:
+        DisplayName: "Create exception"
+    OccurrenceActiveTopic:
+      Type: "AWS::SNS::Topic"
+      Properties:
+        DisplayName: "Occurrence active"
+    OccurrenceExpiredTopic:
+      Type: "AWS::SNS::Topic"
+      Properties:
+        DisplayName: "Occurrence expired"
+    OccurrenceResolvedTopic:
+      Type: "AWS::SNS::Topic"
+      Properties:
+        DisplayName: "Occurrence resolved"
+    UpsertLocationsTopic:
+      Type: "AWS::SNS::Topic"
+      Properties:
+        DisplayName: "Upsert location"
+
+stepFunctions:
+  stateMachines:
+    createScheduleStepFunction:
+      name: "${self:service.name}-${opt:stage}-create-schedule-step-function"
+      definition:
+        Comment: "A state machine to handle post actions of a creating a schedule"
+        StartAt: "UpsertLocations"
+        States:
+          UpsertLocations:
+            Type: "Task"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-upsertLocations"
+            ResultPath: null
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "GenerateOccurrences"
+          GenerateOccurrences:
+            Type: "Task"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-generateOccurrences"
+            ResultPath: "$"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "GenerateTimersAndRules"
+          GenerateTimersAndRules:
+            Type: "Map"
+            Next: "Done"
+            ItemsPath: "$"
+            Iterator:
+              StartAt: "CreateExpiryTimer"
+              States:
+                CreateExpiryTimer:
+                  Type: "Task"
+                  Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-createTimer"
+                  Parameters:
+                    scheduleId.$: "$.scheduleId"
+                    datetime.$: "$.endAt"
+                    targetArn: "${self:provider.environment.OCCURRENCE_EXPIRED_ARN}"
+                    targetPk.$: "$.pk"
+                    targetSk.$: "$.sk"
+                    type: "occurrence"
+                  ResultPath: "$.expiryTimers"
+                  TimeoutSeconds: 90
+                  Retry:
+                    - ErrorEquals:
+                        - "States.TaskFailed"
+                      MaxAttempts: 3
+                  Next: "CreateRule"
+                CreateRule:
+                  Type: "Task"
+                  Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-createRule"
+                  Parameters:
+                    applicationId.$: "$.applicationId"
+                    data.$: "$.data"
+                    locationId.$: "$.locationId"
+                    occurrenceId.$: "$.occurrenceId"
+                    pk.$: "$.pk"
+                    scheduleId.$: "$.scheduleId"
+                    sk.$: "$.sk"
+                    startAt.$: "$.startAt"
+                    type: "visit"
+                  ResultPath: "$.rules"
+                  TimeoutSeconds: 90
+                  Retry:
+                    - ErrorEquals:
+                        - "States.TaskFailed"
+                      MaxAttempts: 3
+                  End: true
+          Done:
+            Type: "Pass"
+            End: true
+    ensureOccurrencesStepFunction:
+      name: "${self:service.name}-${opt:stage}-ensure-occurrences-step-function"
+      definition:
+        Comment: "A state machine to ensure occurrences for a schedule"
+        StartAt: "GenerateOccurrences"
+        States:
+          GenerateOccurrences:
+            Type: "Task"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-generateOccurrences"
+            ResultPath: "$"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "GenerateTimersAndRules"
+          GenerateTimersAndRules:
+            Type: "Map"
+            Next: "Done"
+            ItemsPath: "$"
+            Iterator:
+              StartAt: "CreateExpiryTimer"
+              States:
+                CreateExpiryTimer:
+                  Type: "Task"
+                  Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-createTimer"
+                  Parameters:
+                    scheduleId.$: "$.scheduleId"
+                    datetime.$: "$.endAt"
+                    targetArn: "${self:provider.environment.OCCURRENCE_EXPIRED_ARN}"
+                    targetPk.$: "$.pk"
+                    targetSk.$: "$.sk"
+                    type: "occurrence"
+                  ResultPath: "$.expiryTimers"
+                  TimeoutSeconds: 90
+                  Retry:
+                    - ErrorEquals:
+                        - "States.TaskFailed"
+                      MaxAttempts: 3
+                  Next: "CreateRule"
+                CreateRule:
+                  Type: "Task"
+                  Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-createRule"
+                  Parameters:
+                    applicationId.$: "$.applicationId"
+                    data.$: "$.data"
+                    locationId.$: "$.locationId"
+                    occurrenceId.$: "$.occurrenceId"
+                    pk.$: "$.pk"
+                    scheduleId.$: "$.scheduleId"
+                    sk.$: "$.sk"
+                    startAt.$: "$.startAt"
+                    type: "visit"
+                  ResultPath: "$.rules"
+                  TimeoutSeconds: 90
+                  Retry:
+                    - ErrorEquals:
+                        - "States.TaskFailed"
+                      MaxAttempts: 3
+                  End: true
+          Done:
+            Type: "Pass"
+            End: true
+    updateScheduleStepFunction:
+      name: "${self:service.name}-${opt:stage}-update-schedule-step-function"
+      definition:
+        Comment: "A state machine to handle post actions of a updating a schedule"
+        StartAt: "UpsertLocations"
+        States:
+          UpsertLocations:
+            Type: "Task"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-upsertLocations"
+            ResultPath: null
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "DeleteOccurrences"
+          DeleteOccurrences:
+            Type: "Task"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-deleteOccurrences"
+            ResultPath: null
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "GenerateOccurrences"
+          GenerateOccurrences:
+            Type: "Task"
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-generateOccurrences"
+            ResultPath: "$"
+            TimeoutSeconds: 90
+            Retry:
+              - ErrorEquals:
+                - "States.TaskFailed"
+                MaxAttempts: 3
+            Next: "GenerateTimersAndRules"
+          GenerateTimersAndRules:
+            Type: "Map"
+            Next: "Done"
+            ItemsPath: "$"
+            Iterator:
+              StartAt: "CreateExpiryTimer"
+              States:
+                CreateExpiryTimer:
+                  Type: "Task"
+                  Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-createTimer"
+                  Parameters:
+                    scheduleId.$: "$.scheduleId"
+                    datetime.$: "$.endAt"
+                    targetArn: "${self:provider.environment.OCCURRENCE_EXPIRED_ARN}"
+                    targetPk.$: "$.pk"
+                    targetSk.$: "$.sk"
+                    type: "occurrence"
+                  ResultPath: "$.expiryTimers"
+                  TimeoutSeconds: 90
+                  Retry:
+                    - ErrorEquals:
+                        - "States.TaskFailed"
+                      MaxAttempts: 3
+                  Next: "CreateRule"
+                CreateRule:
+                  Type: "Task"
+                  Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service.name}-${opt:stage}-createRule"
+                  Parameters:
+                    applicationId.$: "$.applicationId"
+                    data.$: "$.data"
+                    locationId.$: "$.locationId"
+                    occurrenceId.$: "$.occurrenceId"
+                    pk.$: "$.pk"
+                    scheduleId.$: "$.scheduleId"
+                    sk.$: "$.sk"
+                    startAt.$: "$.startAt"
+                    type: "visit"
+                  ResultPath: "$.rules"
+                  TimeoutSeconds: 90
+                  Retry:
+                    - ErrorEquals:
+                        - "States.TaskFailed"
+                      MaxAttempts: 3
+                  End: true
+          Done:
+            Type: "Pass"
+            End: true
+
+custom:
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 3
+  serverless-offline:
+    port: 4000
+    region: "localhost"
+    stage: "dev"
+  serverless-offline-sns:
+    port: 4002 # a free port for the sns server to run on
+    debug: true
+    # host: 0.0.0.0 # Optional, defaults to 127.0.0.1 if not provided to serverless-offline
+    # sns-endpoint: http://127.0.0.1:4567 # Optional. Only if you want to use a custom endpoint
+    # accountId: 123456789012 # Optional
+  dynamodb:
+    start:
+      migrate: true
+      seed: true
+    seed:
+      dev:
+        sources:
+          - table: "${self:resources.Resources.DynamoDBTableSchedules.Properties.TableName}"
+            sources: ["./seed/dev.json"]
+    stages:
+      - "dev"

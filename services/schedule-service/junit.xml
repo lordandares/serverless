@@ -1,0 +1,170 @@
+<testsuites name="jest tests" tests="61" failures="0" time="41.461">
+  <testsuite name="undefined" errors="0" failures="0" skipped="6" timestamp="2019-11-25T18:46:08" time="19.328" tests="6">
+    <testcase classname=" error handling for missing id" name=" error handling for missing id" time="0.002">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error handling for missing timestamp" name=" error handling for missing timestamp" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error if update fails conditional check" name=" error if update fails conditional check" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error if occurrence not found" name=" error if occurrence not found" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" generic error" name=" generic error" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" valid event" name=" valid event" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="6" timestamp="2019-11-25T18:46:08" time="19.936" tests="6">
+    <testcase classname=" error handling for missing id" name=" error handling for missing id" time="0.001">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error handling for missing timestamp" name=" error handling for missing timestamp" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error if update fails conditional check" name=" error if update fails conditional check" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error if occurrence not found" name=" error if occurrence not found" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" generic error" name=" generic error" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" valid event" name=" valid event" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="6" timestamp="2019-11-25T18:46:08" time="20.028" tests="6">
+    <testcase classname=" error handling for missing id" name=" error handling for missing id" time="0.038">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error handling for missing timestamp" name=" error handling for missing timestamp" time="0.006">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error if update fails conditional check" name=" error if update fails conditional check" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" error if occurrence not found" name=" error if occurrence not found" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" generic update error" name=" generic update error" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" valid event" name=" valid event" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="4" timestamp="2019-11-25T18:46:27" time="9.865" tests="4">
+    <testcase classname=" invalid arguments" name=" invalid arguments" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" generic error" name=" generic error" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" returns 204 (idempotent) for non-existent document" name=" returns 204 (idempotent) for non-existent document" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" deletes and returns 204" name=" deletes and returns 204" time="0">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-11-25T18:46:28" time="9.214" tests="11">
+    <testcase classname=" event body error" name=" event body error" time="0.023">
+    </testcase>
+    <testcase classname=" event applicationId header error" name=" event applicationId header error" time="0.009">
+    </testcase>
+    <testcase classname=" event userId header error" name=" event userId header error" time="0.007">
+    </testcase>
+    <testcase classname=" event path id error" name=" event path id error" time="0.015">
+    </testcase>
+    <testcase classname=" not found error" name=" not found error" time="0.092">
+    </testcase>
+    <testcase classname=" generic error" name=" generic error" time="0.071">
+    </testcase>
+    <testcase classname=" application error" name=" application error" time="0.02">
+    </testcase>
+    <testcase classname=" validates against payload schema" name=" validates against payload schema" time="0.118">
+    </testcase>
+    <testcase classname=" validates against document schema" name=" validates against document schema" time="0.067">
+    </testcase>
+    <testcase classname=" returns 200 with updated document" name=" returns 200 with updated document" time="0.091">
+    </testcase>
+    <testcase classname=" update error" name=" update error" time="0.052">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-11-25T18:46:28" time="9.25" tests="9">
+    <testcase classname=" event body error" name=" event body error" time="0.081">
+    </testcase>
+    <testcase classname=" event applicationId header error" name=" event applicationId header error" time="0.009">
+    </testcase>
+    <testcase classname=" event userId header error" name=" event userId header error" time="0.002">
+    </testcase>
+    <testcase classname=" generic error" name=" generic error" time="0.23">
+    </testcase>
+    <testcase classname=" application error" name=" application error" time="0.009">
+    </testcase>
+    <testcase classname=" validates against payload schema" name=" validates against payload schema" time="0.06">
+    </testcase>
+    <testcase classname=" validates against document schema" name=" validates against document schema" time="0.117">
+    </testcase>
+    <testcase classname=" returns 201 with new document" name=" returns 201 with new document" time="0.065">
+    </testcase>
+    <testcase classname=" returns 201 with new document and no locations" name=" returns 201 with new document and no locations" time="0.05">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-11-25T18:46:37" time="4.038" tests="3">
+    <testcase classname=" event applicationId header error" name=" event applicationId header error" time="0.049">
+    </testcase>
+    <testcase classname=" generic error" name=" generic error" time="0.048">
+    </testcase>
+    <testcase classname=" Returns 200 for existing documents" name=" Returns 200 for existing documents" time="0.025">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-11-25T18:46:37" time="4.105" tests="3">
+    <testcase classname=" returns 200 with created document" name=" returns 200 with created document" time="0.071">
+    </testcase>
+    <testcase classname=" returns 500 with not created document" name=" returns 500 with not created document" time="0.032">
+    </testcase>
+    <testcase classname=" returns 500 with not created document known error" name=" returns 500 with not created document known error" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-11-25T18:46:38" time="4.079" tests="5">
+    <testcase classname=" event applicationId header error" name=" event applicationId header error" time="0.026">
+    </testcase>
+    <testcase classname=" event path id error" name=" event path id error" time="0.002">
+    </testcase>
+    <testcase classname=" generic error" name=" generic error" time="0.12">
+    </testcase>
+    <testcase classname=" Returns 200 for existing document" name=" Returns 200 for existing document" time="0.064">
+    </testcase>
+    <testcase classname=" Returns 404 when no documents" name=" Returns 404 when no documents" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-11-25T18:46:42" time="0.472" tests="2">
+    <testcase classname=" when region is localhost config is returned" name=" when region is localhost config is returned" time="0.005">
+    </testcase>
+    <testcase classname=" when region is not localhost empty config is returned" name=" when region is not localhost empty config is returned" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-11-25T18:46:42" time="0.913" tests="4">
+    <testcase classname=" transforms document to payload" name=" transforms document to payload" time="0.014">
+    </testcase>
+    <testcase classname=" transforms new payload to document" name=" transforms new payload to document" time="0.003">
+    </testcase>
+    <testcase classname=" transforms existing document payload to document" name=" transforms existing document payload to document" time="0.003">
+    </testcase>
+    <testcase classname=" transforms new payload to document scheduleLocation" name=" transforms new payload to document scheduleLocation" time="0.008">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-11-25T18:46:42" time="1.815" tests="2">
+    <testcase classname=" document client gets instanced with no errors" name=" document client gets instanced with no errors" time="0.015">
+    </testcase>
+    <testcase classname=" document client gets wrapped and instanced with no errors" name=" document client gets wrapped and instanced with no errors" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>

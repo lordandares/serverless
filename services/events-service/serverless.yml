@@ -1,0 +1,72 @@
+service:
+  name: "events-service"
+
+plugins:
+  - "@lighthouse/serverless-plugin-typescript"
+  - "serverless-pseudo-parameters"
+  - "serverless-plugin-tracing"
+  - "serverless-prune-plugin"
+
+provider:
+  name: "aws"
+  runtime: "nodejs12.x"
+  tracing: "true"
+  apiGateway:
+    restApiId:
+      'Fn::ImportValue': "lighthouse-api-gateway-${opt:stage}-rest-api-id"
+    restApiRootResourceId:
+      'Fn::ImportValue': "lighthouse-api-gateway-${opt:stage}-root-resource-id"
+  endpointType: "REGIONAL"
+  environment:
+    KINESIS_EVENTS_STREAM_NAME: "${self:custom.streamName}"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "cloudwatch:PutMetricData"
+      Resource: "*"
+    - Effect: "Allow"
+      Action: 
+        - "kinesis:PutRecords"
+      Resource: 
+        - { "Fn::GetAtt": ["EventsStream", "Arn"] }
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+  vpc:
+    securityGroupIds:
+      - "${env:AWS_SECURITY_GROUP_ID}"
+    subnetIds:
+      - "${env:AWS_SUBNET_ID_1}"
+      - "${env:AWS_SUBNET_ID_2}"
+
+functions:
+  # NOTE: Do not deploy consumer to production!
+  #consumer:
+  #  description: "Consumes data from the events stream"
+  #  handler: "handlers.eventsConsumer"
+  #  events:
+  #    - stream:
+  #        type: "kinesis"
+  #        arn: { "Fn::GetAtt": ["EventsStream", "Arn"] }
+  #        batchSize: 50
+  producer:
+    description: "Produces data to the events stream"
+    handler: "handlers.eventsProducer"
+
+resources:
+  Resources:
+    EventsStream: 
+      Type: "AWS::Kinesis::Stream"
+      Properties: 
+        Name: "${self:custom.streamName}"
+        ShardCount: 1
+
+custom:
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 3
+  streamName: "EventsStream-${opt:stage}"

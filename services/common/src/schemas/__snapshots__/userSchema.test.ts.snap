@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`valid user 1`] = `
+Object {
+  "auth": Object {
+    "username": "joe-bloggs",
+  },
+  "email": "joe@bloggs.com",
+  "firstName": "Joe",
+  "lastName": "Bloggs",
+}
+`;

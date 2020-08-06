@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handlers:resolve-shift-handler should error if the \`shiftId\` is missing 1`] = `"The Resource \\"shift\\" with ID of \\"Unknown\\" could not be found"`;
+
+exports[`handlers:resolve-shift-handler should send a notification for shift with messages that need immediately actioned 1`] = `
+Object {
+  "shift": Object {
+    "_id": "5d1eb8a4fc13ae1f85000000",
+    "messages": Array [
+      Object {
+        "_id": "5d4697a7e652cbb5b680a001",
+        "isGlobal": true,
+        "message": "test message",
+        "messageId": 1,
+        "punchActionId": null,
+        "response1": "Yes",
+        "response1Id": 0,
+        "response2": "Also Yes",
+        "response2Id": 0,
+      },
+    ],
+    "status": "resolved",
+  },
+  "user": Object {
+    "_id": "user-id",
+  },
+}
+`;
+
+exports[`handlers:resolve-shift-handler should update a shift status to confirmed without messages 1`] = `
+Object {
+  "shift": Object {
+    "_id": "5d1eb8a4fc13ae1f85000000",
+    "messages": Array [],
+    "status": "resolved",
+  },
+  "user": Object {
+    "_id": "user-id",
+  },
+}
+`;
+
+exports[`handlers:resolve-shift-handler should update a shift status to resolved if shift messages could not be retrieved 1`] = `
+Object {
+  "shift": Object {
+    "_id": "5d1eb8a4fc13ae1f85000000",
+    "messages": Array [],
+    "status": "resolved",
+  },
+  "user": Object {
+    "_id": "user-id",
+  },
+}
+`;
+
+exports[`handlers:resolve-shift-handler should update a shift status to resolved with messages 1`] = `
+Object {
+  "shift": Object {
+    "_id": "5d1eb8a4fc13ae1f85000000",
+    "messages": Array [
+      Object {
+        "_id": "5d4697a7e652cbb5b680a004",
+        "isGlobal": false,
+        "message": "test message",
+        "messageId": 1,
+        "punchActionId": 6,
+        "response1": "Yes",
+        "response1Id": 0,
+        "response2": "Also Yes",
+        "response2Id": 2,
+      },
+    ],
+    "status": "resolved",
+  },
+  "user": Object {
+    "_id": "user-id",
+  },
+}
+`;
+
+exports[`helpers :: getStartShiftMessages should return both global messages, and messages matching the start shift punchActionIds 1`] = `
+Array [
+  Object {
+    "_id": "5d4697a7e652cbb5b680a001",
+    "isGlobal": true,
+    "message": "global message 1",
+    "messageId": 1,
+    "punchActionId": 6,
+    "response1": "Yes",
+    "response1Id": 0,
+    "response2": "Also Yes",
+    "response2Id": 2,
+  },
+  Object {
+    "_id": "5d4697a7e652cbb5b680a002",
+    "isGlobal": false,
+    "message": "start shift message",
+    "messageId": 1,
+    "punchActionId": 3,
+    "response1": "Yes",
+    "response1Id": 0,
+    "response2": "Also Yes",
+    "response2Id": 2,
+  },
+]
+`;

@@ -1,0 +1,235 @@
+{
+  "info": {
+    "_postman_id": "7458cb7b-b8ba-4f2b-9c8e-31bac9f0d7de",
+    "name": "LI Scheduling Service",
+    "schema":
+      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "/schedules",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "7c134a76-c175-451f-b04b-70b7ab95d772",
+            "exec": [
+              "pm.test(\"response must be valid and have a body\", function () {",
+              "     pm.response.to.have.status(200);",
+              "     pm.response.to.be.withBody;",
+              "     pm.response.to.be.json;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "lio-application-id",
+            "value": "565e42d3d4c628373ab25231",
+            "type": "text"
+          },
+          {
+            "key": "x-api-key",
+            "value": "d41d8cd98f00b204e9800998ecf8427e",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:4000/schedules",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["schedules"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/schedules/:id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "3a16f887-354e-4068-898f-b89aa423c547",
+            "exec": [
+              "pm.test(\"response must be valid and have a body\", function () {",
+              "     pm.response.to.have.status(200);",
+              "     pm.response.to.be.withBody;",
+              "     pm.response.to.be.json;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "lio-application-id",
+            "value": "565e42d3d4c628373ab25231",
+            "type": "text"
+          },
+          {
+            "key": "x-api-key",
+            "value": "d41d8cd98f00b204e9800998ecf8427e",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw":
+            "http://localhost:4000/schedules/5d7acd4e-985f-4953-8a58-41f3c82de086",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["schedules", "5d7acd4e-985f-4953-8a58-41f3c82de086"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/schedules",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "887a52a4-7c0e-4ef9-82d3-907846580587",
+            "exec": [
+              "pm.test(\"response must be valid and have a body\", function () {",
+              "     pm.response.to.have.status(201);",
+              "     pm.response.to.be.withBody;",
+              "     pm.response.to.be.json;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "lio-application-id",
+            "value": "565e42d3d4c628373ab25231",
+            "type": "text"
+          },
+          {
+            "key": "lio-user-id",
+            "value": "5875c6538d4a4f75599378c4",
+            "type": "text"
+          },
+          {
+            "key": "x-api-key",
+            "value": "d41d8cd98f00b204e9800998ecf8427e",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw":
+            "{\n    \"areas\": [\n        \"5875c6538d4a4f75599378c5\"\n    ],\n    \"enabled\": true,\n    \"endAt\": \"2019-10-15T00:00:00.000Z\",\n    \"locations\": [\n        \"5875c6538d4a4f75599378c6\"\n    ],\n    \"name\": \"Schedule Testing\",\n    \"serviceHours\": {\n        \"hours\": [\n            {\n                \"description\": \"MON 11:00 - TUE 00:00\",\n                \"end\": 86400000,\n                \"start\": 39600000,\n                \"type\": \"DEFAULT\"\n            }\n        ],\n        \"timezone\": \"Australia/Melbourne\"\n    },\n    \"startAt\": \"2019-10-14T00:00:00.000Z\",\n   \"strategy\": {\n        \"options\": {\n            \"duration\": {\n                \"unit\": \"minute\",\n                \"value\": 1            \n            },\n            \"frequency\": {\n                \"unit\": \"minute\",\n                \"value\": 1\n            }\n        },\n        \"type\": \"stopwatch\"\n    },\n    \"type\": \"visit\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/schedules",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["schedules"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/schedules/:id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "3a16f887-354e-4068-898f-b89aa423c547",
+            "exec": [
+              "pm.test(\"response must be valid and have a body\", function () {",
+              "     pm.response.to.have.status(200);",
+              "     pm.response.to.be.withBody;",
+              "     pm.response.to.be.json;",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "lio-application-id",
+            "value": "565e42d3d4c628373ab25231",
+            "type": "text"
+          },
+          {
+            "key": "lio-user-id",
+            "value": "5875c6538d4a4f75599378c4",
+            "type": "text"
+          },
+          {
+            "key": "x-api-key",
+            "value": "d41d8cd98f00b204e9800998ecf8427e",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw":
+            "{\n    \"applicationId\": \"565e42d3d4c628373ab25231\",\n    \"areas\": [\n        \"565e42d3d4c628373ab25200\",\n        \"565e42d3d4c628373ab25201\"\n    ],\n    \"createdAt\": \"2019-10-13T12:00:00.000Z\",\n    \"enabled\": true,\n    \"endAt\": \"2019-10-1500:00:00.000Z\",\n    \"id\": \"5d7acd4e-985f-4953-8a58-41f3c82de086\",\n    \"locations\": [\n        \"565e42d3d4c628373ab25300\",\n        \"565e42d3d4c628373ab25301\"\n    ],\n    \"name\": \"Schedule Updated\",\n    \"serviceHours\": {\n        \"hours\": [\n            {\n                \"start\": 39600000,\n                \"description\": \"MON 11:00 - TUE 00:00\",\n                \"end\": 86400000,\n                \"type\": \"DEFAULT\"\n            }\n        ],\n        \"timezone\": \"Australia/Melbourne\"\n    },\n    \"startAt\": \"2019-10-1400:00:00.000Z\",\n    \"strategy\": {\n        \"options\": {\n            \"duration\": {\n                \"value\": 1,\n                \"unit\": \"minute\"\n            },\n            \"frequency\": {\n                \"value\": 1,\n                \"unit\": \"minute\"\n            }\n        },\n        \"type\": \"stopwatch\"\n    },\n    \"type\": \"visit\",\n    \"updatedAt\": \"2019-10-13T12:00:00.000Z\",\n    \"userId\": \"5875c6538d4a4f75599378c4\"\n}"
+        },
+        "url": {
+          "raw":
+            "http://localhost:4000/schedules/5d7acd4e-985f-4953-8a58-41f3c82de086",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "4000",
+          "path": ["schedules", "5d7acd4e-985f-4953-8a58-41f3c82de086"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "e65bee6e-b4d6-4491-844b-8597794ada7a",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "c20e0796-41e9-4d26-bce8-f79c3aaf6869",
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+service:
+  name: "github-service"
+
+plugins:
+  - "serverless-kms-secrets"
+  - "serverless-pseudo-parameters"
+  - "serverless-plugin-typescript"
+  - "serverless-offline"
+
+provider:
+  name: "aws"
+  environment:
+    SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+    SNS_TOPIC_DELETE_TIMEOUT_ARN: "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:timeout-service-${opt:stage}-delete-timeout"
+    SNS_TOPIC_PUT_TIMEOUT_ARN: "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:timeout-service-${opt:stage}-put-timeout"
+    WEBHOOK_SECRET: "${self:custom.kmsSecrets.secrets.WEBHOOK_SECRET}"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "KMS:Decrypt"
+      Resource: "${self:custom.kmsSecrets.keyArn}"
+    - Effect: "Allow"
+      Action:
+        - "sns:Publish"
+      Resource:
+        - "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:timeout-service-${opt:stage}-delete-timeout"
+        - "arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:timeout-service-${opt:stage}-put-timeout"
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SECURITY_GROUP_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID_1}
+      - ${env:AWS_SUBNET_ID_2}
+
+functions:
+  processWebhook:
+    name: "${self:service.name}-${opt:stage}-process-webhook"
+    description: "Processes incoming Github webhooks"
+    events:
+      - http:
+          path: "webhook"
+          method: "post"
+    handler: "handler.processWebhook"
+    runtime: "nodejs8.10"
+  pullRequestReminder:
+    name: "${self:service.name}-${opt:stage}-consumer-pull-request-reminder"
+    description: "Processes Github pull request reminders"
+    events:
+      - sns: "${self:service.name}-${opt:stage}-consumer-pull-request-reminder"
+    handler: "handler.pullRequestReminder"
+    runtime: "nodejs8.10"
+
+custom:
+  kmsSecrets: "${file(kms-secrets.${opt:stage, self:provider.stage}.${opt:region, self:provider.region}.yml)}"
+  serverless-offline:
+    port: 4000
+

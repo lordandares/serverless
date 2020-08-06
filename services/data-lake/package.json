@@ -1,0 +1,33 @@
+{
+  "name": "@lighthouse/data-lake",
+  "private": true,
+  "version": "0.1.0",
+  "bin": {
+    "data-lake": "bin/data-lake.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "deploy": "yarn build && just deploy",
+    "diff": "yarn build && just diff",
+    "synth": "yarn build && just synth",
+    "watch": "tsc -w",
+    "cdk": "cdk"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-iam": "^1.7.0",
+    "@aws-cdk/aws-kms": "^1.7.0",
+    "@aws-cdk/aws-s3": "^1.7.0",
+    "@aws-cdk/core": "^1.8.0",
+    "@types/bluebird": "^3.5.27",
+    "@types/lodash": "^4.14.138",
+    "@types/shelljs": "^0.8.5",
+    "aws-cdk": "^1.7.0",
+    "bluebird": "^3.5.5",
+    "just-scripts": "^0.29.0",
+    "lodash": "^4.17.15",
+    "shelljs": "^0.8.3",
+    "source-map-support": "^0.5.9",
+    "ts-node": "^8.1.0",
+    "typescript": "~3.6.2"
+  }
+}

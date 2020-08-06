@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handlers:locationProcessor locationProcessor should successfully trigger a location activity report with current time 1`] = `
+Object {
+  "locationsProcessedCount": 1,
+}
+`;
+
+exports[`handlers:locationProcessor locationProcessor should successfully trigger a location activity report with custom time 1`] = `
+Object {
+  "locationsProcessedCount": 1,
+}
+`;
+
+exports[`handlers:locationProcessor parseApplicationLocations daylight saving time is handled when it ends in a timezone 1`] = `
+Array [
+  Object {
+    "applicationId": 101,
+    "end": "2019-11-02T09:59:59+00:00",
+    "locationId": 1,
+    "start": "2019-11-01T10:00:00+00:00",
+  },
+]
+`;
+
+exports[`handlers:locationProcessor parseApplicationLocations daylight saving time is handled when it starts in a timezone 1`] = `
+Array [
+  Object {
+    "applicationId": 101,
+    "end": "2019-03-11T09:59:59+00:00",
+    "locationId": 1,
+    "start": "2019-03-10T10:00:00+00:00",
+  },
+]
+`;
+
+exports[`handlers:locationProcessor parseApplicationLocations should process application locations 1`] = `
+Array [
+  Object {
+    "applicationId": 101,
+    "end": "2018-11-09T15:59:59+00:00",
+    "locationId": 1,
+    "start": "2018-11-08T16:00:00+00:00",
+  },
+  Object {
+    "applicationId": 101,
+    "end": "2018-11-09T15:59:59+00:00",
+    "locationId": 2,
+    "start": "2018-11-08T16:00:00+00:00",
+  },
+]
+`;

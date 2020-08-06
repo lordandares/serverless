@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`findS3Resources should parse JPG images from an event payload 1`] = `
+Array [
+  Object {
+    "bucket": "lighthouse-uploads",
+    "key": "5bf4eb5b8d7c870001974be4/3e670f8ebe2efaec-image-3c928b94-0482-4477-b72b-ca9859790ff0.jpg",
+  },
+  Object {
+    "bucket": "lighthouse-uploads",
+    "key": "5bf4eb5b8d7c870001974be4/3e670f8ebe2efaec-image-3c928b94-0482-4477-b72b-ca9859790ff1.jpg",
+  },
+  Object {
+    "bucket": "lighthouse-uploads",
+    "key": "5bf4eb5b8d7c870001974be4/3e670f8ebe2efaec-image-3c928b94-0482-4477-b72b-ca9859790ff2.png",
+  },
+  Object {
+    "bucket": "lighthouse-uploads",
+    "key": "5bf4eb5b8d7c870001974be4/3e670f8ebe2efaec-image-3c928b94-0482-4477-b72b-ca9859790ff5.jpeg",
+  },
+  Object {
+    "bucket": "lighthouse-uploads",
+    "key": "5bf4eb5b8d7c870001974be4/3e670f8ebe2efaec-image-3c928b94-0482-4477-b72b-ca9859790ff6.JPG",
+  },
+  Object {
+    "bucket": "lighthouse-uploads",
+    "key": "5bf4eb5b8d7c870001974be4/3e670f8ebe2efaec-image-3c928b94-0482-4477-b72b-ca9859790ff7.JPEG",
+  },
+  Object {
+    "bucket": "lighthouse-uploads",
+    "key": "5bf4eb5b8d7c870001974be4/3e670f8ebe2efaec-image-3c928b94-0482-4477-b72b-ca9859790ff8.PNG",
+  },
+]
+`;
+
+exports[`getPdfS3Paths should return a resolved promise with count and values 1`] = `
+Object {
+  "count": 4,
+  "values": Array [
+    Object {
+      "bucket": "lighthouse-uploads",
+      "key": "565e42d3d4c628373ab25231/C26C3E36-B363-43DA-8C35-B134F8E2E7BD-D07F854C-4C64-46C4-B5AB-017ED13F0FE7.jpg",
+    },
+    Object {
+      "bucket": "lighthouse-uploads",
+      "key": "565e42d3d4c628373ab25231/C26C3E36-B363-43DA-8C35-B134F8E2E7BD-D07F854C-4C64-46C4-B5AB-017ED13F0FE8.jpg",
+    },
+    Object {
+      "bucket": "lighthouse-uploads",
+      "key": "565e42d3d4c628373ab25231/C26C3E36-B363-43DA-8C35-B134F8E2E7BD-D07F854C-4C64-46C4-B5AB-017ED13F0FE9.jpg",
+    },
+    Object {
+      "bucket": "lighthouse-uploads",
+      "key": "565e42d3d4c628373ab25231/C26C3E36-B363-43DA-8C35-B134F8E2E7BD-D07F854C-4C64-46C4-B5AB-017ED13F0FE0.jpg",
+    },
+  ],
+}
+`;

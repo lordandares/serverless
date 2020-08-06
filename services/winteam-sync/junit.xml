@@ -1,0 +1,103 @@
+<testsuites name="jest tests" tests="44" failures="0" time="10.446">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-10-23T13:38:11" time="6.768" tests="8">
+    <testcase classname=" errors when missing EMPLOYEES_ENDPOINT env" name=" errors when missing EMPLOYEES_ENDPOINT env" time="0.031">
+    </testcase>
+    <testcase classname=" errors when missing TENANT_BASE_URL env" name=" errors when missing TENANT_BASE_URL env" time="0.008">
+    </testcase>
+    <testcase classname=" errors when missing TENANT_CODE env" name=" errors when missing TENANT_CODE env" time="0.001">
+    </testcase>
+    <testcase classname=" errors when `WinTeamDBName` is missing" name=" errors when `WinTeamDBName` is missing" time="0.002">
+    </testcase>
+    <testcase classname=" Handle WT database if does not found" name=" Handle WT database if does not found" time="0.01">
+    </testcase>
+    <testcase classname=" Winteam Tenant API should return the expected response" name=" Winteam Tenant API should return the expected response" time="0.003">
+    </testcase>
+    <testcase classname=" handles unknown application" name=" handles unknown application" time="0.003">
+    </testcase>
+    <testcase classname=" process new employee with valid data" name=" process new employee with valid data" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="http" errors="0" failures="0" skipped="0" timestamp="2019-10-23T13:38:11" time="6.805" tests="5">
+    <testcase classname="http errors when missing applicationId" name="http errors when missing applicationId" time="0.011">
+    </testcase>
+    <testcase classname="http handles unknown application" name="http handles unknown application" time="0.028">
+    </testcase>
+    <testcase classname="http handles valid input for created and updated" name="http handles valid input for created and updated" time="0.042">
+    </testcase>
+    <testcase classname="http handles valid input for updated" name="http handles valid input for updated" time="0.011">
+    </testcase>
+    <testcase classname="http handles valid input with dryRun`is true" name="http handles valid input with dryRun`is true" time="0.008">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-10-23T13:38:11" time="7.069" tests="8">
+    <testcase classname=" errors when `body` is missing" name=" errors when `body` is missing" time="0.01">
+    </testcase>
+    <testcase classname=" should get a json response if the body has a valid eventType" name=" should get a json response if the body has a valid eventType" time="0.003">
+    </testcase>
+    <testcase classname=" validates unknown `change operation`" name=" validates unknown `change operation`" time="0.001">
+    </testcase>
+    <testcase classname=" validates missing `change operation`" name=" validates missing `change operation`" time="0">
+    </testcase>
+    <testcase classname=" validates unknown `table name`" name=" validates unknown `table name`" time="0.001">
+    </testcase>
+    <testcase classname=" validates missing `table name`" name=" validates missing `table name`" time="0.001">
+    </testcase>
+    <testcase classname=" handles job events" name=" handles job events" time="0.001">
+    </testcase>
+    <testcase classname=" handles employee events" name=" handles employee events" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-10-23T13:38:18" time="0.972" tests="9">
+    <testcase classname=" errors when missing LIGHTHOUSE_BASE_URL env" name=" errors when missing LIGHTHOUSE_BASE_URL env" time="0.016">
+    </testcase>
+    <testcase classname=" errors when missing LIGHTHOUSE_API_SECRET env" name=" errors when missing LIGHTHOUSE_API_SECRET env" time="0.001">
+    </testcase>
+    <testcase classname=" errors when missing `application` input" name=" errors when missing `application` input" time="0.003">
+    </testcase>
+    <testcase classname=" errors when missing `employee` input" name=" errors when missing `employee` input" time="0.001">
+    </testcase>
+    <testcase classname=" errors when application does not have default role" name=" errors when application does not have default role" time="0.001">
+    </testcase>
+    <testcase classname=" handles valid new user" name=" handles valid new user" time="0.021">
+    </testcase>
+    <testcase classname=" handles valid existing user" name=" handles valid existing user" time="0.003">
+    </testcase>
+    <testcase classname=" handles Error Update User Error" name=" handles Error Update User Error" time="0.002">
+    </testcase>
+    <testcase classname=" handles Error New User Error" name=" handles Error New User Error" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="1" timestamp="2019-10-23T13:38:18" time="1.094" tests="10">
+    <testcase classname=" errors when missing JOBS_ENDPOINT env" name=" errors when missing JOBS_ENDPOINT env" time="0.008">
+    </testcase>
+    <testcase classname=" errors when missing WINTEAM_BASE_URL env" name=" errors when missing WINTEAM_BASE_URL env" time="0.003">
+    </testcase>
+    <testcase classname=" errors when missing AZURE_KEY_VAULT env" name=" errors when missing AZURE_KEY_VAULT env" time="0.001">
+    </testcase>
+    <testcase classname=" errors when missing LIGHTHOUSE_BASE_URL env" name=" errors when missing LIGHTHOUSE_BASE_URL env" time="0.001">
+    </testcase>
+    <testcase classname=" errors when missing LIGHTHOUSE_API_SECRET env" name=" errors when missing LIGHTHOUSE_API_SECRET env" time="0.001">
+    </testcase>
+    <testcase classname=" errors when jobId is missing" name=" errors when jobId is missing" time="0.001">
+    </testcase>
+    <testcase classname=" handles unknown job" name=" handles unknown job" time="0.002">
+    </testcase>
+    <testcase classname=" handles mongo error" name=" handles mongo error" time="0">
+      <skipped/>
+    </testcase>
+    <testcase classname=" process new job with valid data" name=" process new job with valid data" time="0.02">
+    </testcase>
+    <testcase classname=" process existing job with valid data" name=" process existing job with valid data" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2019-10-23T13:38:18" time="1.3" tests="4">
+    <testcase classname=" errors when `PrimaryKeyValue` is missing" name=" errors when `PrimaryKeyValue` is missing" time="0.007">
+    </testcase>
+    <testcase classname=" handles unknown employee" name=" handles unknown employee" time="0.004">
+    </testcase>
+    <testcase classname=" handles unknown application" name=" handles unknown application" time="0.002">
+    </testcase>
+    <testcase classname=" process new employee with valid data" name=" process new employee with valid data" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>

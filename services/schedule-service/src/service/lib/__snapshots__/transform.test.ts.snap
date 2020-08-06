@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transforms existing schedule payload to document 1`] = `
+Object {
+  "applicationId": "application1",
+  "createdAt": "2019-10-12T00:00:00.000Z",
+  "createdBy": Object {
+    "id": "user1",
+    "label": "Unknown User",
+    "type": "user",
+  },
+  "data": Object {
+    "areas": Array [
+      "area1",
+    ],
+    "enabled": true,
+    "included": Object {
+      "locations": Object {
+        "location1": Object {
+          "name": "Location 1",
+        },
+      },
+    },
+    "locations": Array [
+      "location1",
+    ],
+    "name": "Schedule One",
+    "serviceHours": Object {
+      "hours": Array [
+        Object {
+          "description": "MON 11:00 - TUE 00:00",
+          "end": 86400000,
+          "start": 39600000,
+          "type": "DEFAULT",
+        },
+      ],
+      "timezone": "Australia/Melbourne",
+    },
+    "strategy": Object {
+      "options": Object {
+        "duration": Object {
+          "unit": "minute",
+          "value": 15,
+        },
+        "frequency": Object {
+          "unit": "minute",
+          "value": 15,
+        },
+      },
+      "type": "stopwatch",
+    },
+    "type": "visit",
+  },
+  "endAt": "2019-10-1500:00:00.000Z",
+  "groupType": "schedule",
+  "pk": "application1-schedule",
+  "scheduleId": "schedule2",
+  "sk": "2019-10-12T00:00:00.000Z-schedule2",
+  "startAt": "2019-10-1400:00:00.000Z",
+  "updatedAt": "2019-10-13T01:00:00.000Z",
+  "updatedBy": Object {
+    "id": "user2",
+    "label": "Unknown User",
+    "type": "user",
+  },
+}
+`;
+
+exports[`transforms new schedule payload to document 1`] = `
+Object {
+  "applicationId": "application1",
+  "createdAt": "2019-10-13T01:00:00.000Z",
+  "createdBy": Object {
+    "id": "user1",
+    "label": "Unknown User",
+    "type": "user",
+  },
+  "data": Object {
+    "areas": Array [
+      "area1",
+    ],
+    "enabled": true,
+    "included": Object {
+      "locations": Object {
+        "location1": Object {
+          "name": "Location 1",
+        },
+      },
+    },
+    "locations": Array [
+      "location1",
+    ],
+    "name": "Schedule One",
+    "serviceHours": Object {
+      "hours": Array [
+        Object {
+          "description": "MON 11:00 - TUE 00:00",
+          "end": 86400000,
+          "start": 39600000,
+          "type": "DEFAULT",
+        },
+      ],
+      "timezone": "Australia/Melbourne",
+    },
+    "strategy": Object {
+      "options": Object {
+        "duration": Object {
+          "unit": "minute",
+          "value": 15,
+        },
+        "frequency": Object {
+          "unit": "minute",
+          "value": 15,
+        },
+      },
+      "type": "stopwatch",
+    },
+    "type": "visit",
+  },
+  "endAt": "2019-10-1500:00:00.000Z",
+  "groupType": "schedule",
+  "pk": "application1-schedule",
+  "scheduleId": "schedule1",
+  "sk": "2019-10-13T01:00:00.000Z-schedule1",
+  "startAt": "2019-10-1400:00:00.000Z",
+  "updatedAt": "2019-10-13T01:00:00.000Z",
+  "updatedBy": Object {
+    "id": "user1",
+    "label": "Unknown User",
+    "type": "user",
+  },
+}
+`;
+
+exports[`transforms schedule document to payload 1`] = `
+Object {
+  "areas": Array [
+    "area1",
+  ],
+  "createdAt": "2019-10-13T00:00:00.000Z",
+  "createdBy": Object {
+    "id": "user1",
+    "label": "Unknown User",
+    "type": "user",
+  },
+  "enabled": true,
+  "endAt": "2019-10-1500:00:00.000Z",
+  "id": "schedule1",
+  "included": Object {},
+  "locations": Array [
+    "location1",
+  ],
+  "name": "Schedule One",
+  "serviceHours": Object {
+    "hours": Array [
+      Object {
+        "description": "MON 11:00 - TUE 00:00",
+        "end": 86400000,
+        "start": 39600000,
+        "type": "DEFAULT",
+      },
+    ],
+    "timezone": "Australia/Melbourne",
+  },
+  "startAt": "2019-10-1400:00:00.000Z",
+  "strategy": Object {
+    "options": Object {
+      "duration": Object {
+        "unit": "minute",
+        "value": 15,
+      },
+      "frequency": Object {
+        "unit": "minute",
+        "value": 15,
+      },
+    },
+    "type": "stopwatch",
+  },
+  "type": "visit",
+  "updatedAt": "2019-10-13T01:00:00.000Z",
+  "updatedBy": Object {
+    "id": "user1",
+    "label": "Unknown User",
+    "type": "user",
+  },
+}
+`;

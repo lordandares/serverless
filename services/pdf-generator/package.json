@@ -1,0 +1,37 @@
+{
+  "name": "@lighthouse/serverless-pdf-generator",
+  "private": true,
+  "version": "1.0.1",
+  "license": "UNLICENSED",
+  "main": "handler.js",
+  "scripts": {
+    "deploy": "sls deploy",
+    "start": "sls offline start --stage dev",
+    "test": "TZ=UTC jest",
+    "test:ci": "yarn type-check && TZ=UTC jest",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lighthouse/common": "^4.15.13",
+    "@lighthouse/serverless-common": "^1.0.0",
+    "@lighthouse/serverless-plugin-typescript": "1.1.10-beta-1",
+    "aws-xray-sdk": "^2.4.0",
+    "bluebird": "^3.5.1",
+    "date-fns": "^1.29.0",
+    "fetch-ponyfill": "^5.0.0",
+    "filereader": "^0.10.3",
+    "lodash": "^4.17.10",
+    "moment-timezone": "^0.5.23",
+    "pdfmake": "^0.1.40",
+    "react": "^16.4.1",
+    "react-html-parser": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.11.7",
+    "aws-sdk": "^2.559.0",
+    "jest": "^23.x.x",
+    "source-map-support": "^0.5.0",
+    "typescript": "^3.6.4"
+  }
+}

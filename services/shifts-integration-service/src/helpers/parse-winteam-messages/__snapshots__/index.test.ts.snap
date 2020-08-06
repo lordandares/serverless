@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers :: parseWinTeamMessages should return lowercase versions of all messages with Id mapped to messageId 1`] = `
+Array [
+  Object {
+    "_id": "5d4697a7e652cbb5b680a000",
+    "isGlobal": false,
+    "message": "parent message",
+    "messageId": 1,
+    "punchActionId": 6,
+    "response1": "Yes",
+    "response1Id": 0,
+    "response2": "Also Yes",
+    "response2Id": 2,
+  },
+  Object {
+    "_id": "5d4697a7e652cbb5b680a001",
+    "isGlobal": false,
+    "message": "child message",
+    "messageId": 2,
+    "punchActionId": 6,
+    "response1": "no",
+    "response1Id": 0,
+    "response2": "Also no",
+    "response2Id": 0,
+  },
+  Object {
+    "_id": "5d4697a7e652cbb5b680a002",
+    "isGlobal": true,
+    "message": "global shift message 1",
+    "messageId": 3,
+    "punchActionId": null,
+    "response1": "no",
+    "response1Id": 0,
+    "response2": "Also no",
+    "response2Id": 0,
+  },
+  Object {
+    "_id": "5d4697a7e652cbb5b680a003",
+    "isGlobal": true,
+    "message": "global shift message 2",
+    "messageId": 4,
+    "punchActionId": null,
+    "response1": "no",
+    "response1Id": 0,
+    "response2": "Also no",
+    "response2Id": 0,
+  },
+]
+`;

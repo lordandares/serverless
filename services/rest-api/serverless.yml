@@ -1,0 +1,99 @@
+service: lighthouse-serverless-rest-api
+
+plugins:
+  - "serverless-pseudo-parameters"
+  - "serverless-offline"
+
+provider:
+  name: aws
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SECURITY_GROUP_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID_1}
+      - ${env:AWS_SUBNET_ID_2}
+
+resources:
+  Resources:
+    LighthouseApiGW:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: lighthouse-api-gateway-${opt:stage}
+        MinimumCompressionSize: 1024
+    LighthouseApiGWDeployment:
+      Type: AWS::ApiGateway::Deployment
+      DependsOn:
+        - LighthouseApiGW
+        - LighthouseApiMockMethod
+      Properties:
+        StageName: ${opt:stage}
+        Description: ${opt:stage} stage
+        RestApiId:
+          Ref: "LighthouseApiGW"
+    LighthouseApiKey:
+      Type: AWS::ApiGateway::ApiKey
+      DependsOn:
+        - LighthouseApiGWDeployment
+      Properties:
+        Name: lighthouse-api-key-${opt:stage}
+        Description: "API key for: Lighthouse API Gateway / ${opt:stage}"
+        Enabled: "true"
+        StageKeys:
+          - RestApiId:
+              Ref: "LighthouseApiGW"
+            StageName: ${opt:stage}
+    LighthouseApiUsagePlan:
+      Type: AWS::ApiGateway::UsagePlan
+      DependsOn:
+        - LighthouseApiGWDeployment
+      Properties:
+        ApiStages:
+          - ApiId:
+              Ref: "LighthouseApiGW"
+            Stage: ${opt:stage}
+        Description: Lighthouse API Usage Plan
+        Throttle:
+          BurstLimit: 200
+          RateLimit: 100
+        UsagePlanName: "lighthouse-api-usage-plan-${opt:stage}"
+    LighthouseApiUsagePlanKey:
+      Type: AWS::ApiGateway::UsagePlanKey
+      DependsOn:
+        - LighthouseApiKey
+        - LighthouseApiUsagePlan
+      Properties:
+        KeyId:
+          Ref: "LighthouseApiKey"
+        KeyType: API_KEY
+        UsagePlanId:
+          Ref: "LighthouseApiUsagePlan"
+    LighthouseApiMockMethod:
+      Type: AWS::ApiGateway::Method
+      DependsOn:
+        - LighthouseApiGW
+      Properties:
+        RestApiId:
+          Ref: "LighthouseApiGW"
+        ResourceId:
+          Fn::GetAtt:
+            - "LighthouseApiGW"
+            - "RootResourceId"
+        HttpMethod: "GET"
+        AuthorizationType: "NONE"
+        Integration:
+          Type: "MOCK"
+
+  Outputs:
+    apiGatewayRestApiId:
+      Value:
+        Ref: LighthouseApiGW
+      Export:
+        Name: lighthouse-api-gateway-${opt:stage}-rest-api-id
+
+    apiGatewayRestApiRootResourceId:
+      Value:
+        Fn::GetAtt:
+          - LighthouseApiGW
+          - RootResourceId
+      Export:
+        Name: lighthouse-api-gateway-${opt:stage}-root-resource-id

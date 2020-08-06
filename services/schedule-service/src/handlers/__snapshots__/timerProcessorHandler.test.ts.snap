@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handles delete error but continues to process and throws after 1`] = `[ApplicationError: TimerProcessorHandler: caught 1 delete errors for 1 timers]`;
+
+exports[`handles sns error but continues to process and throws after 1`] = `[ApplicationError: TimerProcessorHandler: caught 1 processing errors for 2 timers]`;

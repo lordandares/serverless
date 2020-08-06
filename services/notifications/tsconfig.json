@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es5", "es6", "dom", "es2015", "esnext.asynciterable"],
+    "outDir": ".build",
+    "preserveConstEnums": true,
+    "rootDir": "./",
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es5"
+  }
+}

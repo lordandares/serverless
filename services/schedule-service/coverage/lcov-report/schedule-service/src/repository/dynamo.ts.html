@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for schedule-service/src/repository/dynamo.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">schedule-service/src/repository</a> dynamo.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>73/73</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>6/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>10/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>68/68</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242</td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">164x</span>
+<span class="cline-any cline-yes">164x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">152x</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">112x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">112x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+  ExpressionAttributes,
+  UpdateExpression,
+} from '@aws/dynamodb-expressions'
+import { errors } from '@lighthouse/serverless-common'
+import * as AWSSdk from 'aws-sdk'
+import {
+  ClientConfiguration,
+  Converter,
+  DocumentClient as DC,
+} from 'aws-sdk/clients/dynamodb'
+import * as AWSXRay from 'aws-xray-sdk'
+import { each, isArray, isNil, isObject, omit } from 'lodash'
+&nbsp;
+import { getDynamoDbConfig } from './config'
+&nbsp;
+declare var process: {
+  env: {
+    IS_OFFLINE: string
+    REGION: string
+  }
+}
+&nbsp;
+export function getDocumentClient(): DC {
+  const dynamoDbConfig: ClientConfiguration = getDynamoDbConfig(
+    process.env.REGION,
+  )
+&nbsp;
+  const DynamoDB = process.env.IS_OFFLINE
+    ? AWSSdk.DynamoDB
+    : AWSXRay.captureAWS(AWSSdk).DynamoDB
+&nbsp;
+  return new DynamoDB.DocumentClient(dynamoDbConfig)
+}
+&nbsp;
+export function DynamoRepository(tableName: string) {
+  const create = async entity =&gt; {
+    try {
+      const documentClient = getDocumentClient()
+      const dynamoItem: DC.PutItemInput = {
+        Item: entity,
+        TableName: tableName,
+      }
+      await documentClient.put(dynamoItem).promise()
+      return entity
+    } catch (err) {
+      throw new errors.ApplicationError({ message: err.message })
+    }
+  }
+&nbsp;
+  // const getLocation = async (applicationId: string, locationId: string) =&gt; {
+  //   const attributes = new ExpressionAttributes()
+  //   const documentClient = getDocumentClient()
+&nbsp;
+  //   const groupTypeName = attributes.addName('groupType')
+  //   const groupTypeVal = attributes.addValue('location')
+  //   const pkName = attributes.addName('pk')
+  //   const pkVal = attributes.addValue(applicationId)
+  //   const skName = attributes.addName('sk')
+  //   const skVal = attributes.addValue(`${applicationId}-${locationId}`)
+&nbsp;
+  //   const attributeNames = attributes.names
+  //   const attributeValues = Converter.unmarshall(attributes.values)
+&nbsp;
+  //   const dynamoQuery: DC.QueryInput = {
+  //     ExpressionAttributeNames: attributeNames,
+  //     ExpressionAttributeValues: attributeValues,
+  //     FilterExpression: `${groupTypeName} = ${groupTypeVal}`,
+  //     KeyConditionExpression: `${pkName} = ${pkVal} AND ${skName} = ${skVal}`,
+  //     Limit: 1,
+  //     TableName: tableName,
+  //   }
+&nbsp;
+  //   try {
+  //     const response: DC.QueryOutput = await documentClient
+  //       .query(dynamoQuery)
+  //       .promise()
+&nbsp;
+  //     const entities = response.Items
+  //     return entities
+  //   } catch (err) {
+  //     throw new errors.ApplicationError({ message: err.message })
+  //   }
+  // }
+&nbsp;
+  const getSchedule = async (scheduleId: string) =&gt; {
+    const attributes = new ExpressionAttributes()
+    const documentClient = getDocumentClient()
+&nbsp;
+    const scheduleIdName = attributes.addName('scheduleId')
+    const scheduleIdVal = attributes.addValue(scheduleId)
+    const groupTypeName = attributes.addName('groupType')
+    const groupTypeVal = attributes.addValue('schedule')
+&nbsp;
+    const attributeNames = attributes.names
+    const attributeValues = Converter.unmarshall(attributes.values)
+&nbsp;
+    const dynamoQuery: DC.QueryInput = {
+      ExpressionAttributeNames: attributeNames,
+      ExpressionAttributeValues: attributeValues,
+      FilterExpression: `${groupTypeName} = ${groupTypeVal}`,
+      IndexName: 'ScheduleIdIndex',
+      KeyConditionExpression: `${scheduleIdName} = ${scheduleIdVal}`,
+      Limit: 1,
+      TableName: tableName,
+    }
+&nbsp;
+    try {
+      const response: DC.QueryOutput = await documentClient
+        .query(dynamoQuery)
+        .promise()
+&nbsp;
+      return response.Items
+    } catch (err) {
+      throw new errors.ApplicationError({ message: err.message })
+    }
+  }
+&nbsp;
+  const listSchedules = async (applicationId: string) =&gt; {
+    const attributes = new ExpressionAttributes()
+    const documentClient = getDocumentClient()
+&nbsp;
+    const pkName = attributes.addName('pk')
+    const pkVal = attributes.addValue(`${applicationId}-schedule`)
+    const groupTypeName = attributes.addName('groupType')
+    const groupTypeVal = attributes.addValue('schedule')
+&nbsp;
+    const attributeNames = attributes.names
+    const attributeValues = Converter.unmarshall(attributes.values)
+&nbsp;
+    const dynamoQuery: DC.QueryInput = {
+      ExpressionAttributeNames: attributeNames,
+      ExpressionAttributeValues: attributeValues,
+      FilterExpression: `${groupTypeName} = ${groupTypeVal}`,
+      KeyConditionExpression: `${pkName} = ${pkVal}`,
+      ScanIndexForward: false,
+      TableName: tableName,
+    }
+&nbsp;
+    try {
+      const response: DC.QueryOutput = await documentClient
+        .query(dynamoQuery)
+        .promise()
+&nbsp;
+      return response.Items
+    } catch (err) {
+      throw new errors.ApplicationError({ message: err.message })
+    }
+  }
+&nbsp;
+  const upsert = async entity =&gt; {
+    const { pk, sk } = entity
+&nbsp;
+    const attributes = new ExpressionAttributes()
+    const documentClient = getDocumentClient()
+    const expr = new UpdateExpression()
+&nbsp;
+    const properties = omit(entity, ['pk', 'sk'])
+    each(properties, (value, parentKey) =&gt;
+      generateExpressions({ expr, parentKey, value }),
+    )
+&nbsp;
+    const attributeUpdates = expr.serialize(attributes)
+    const attributeNames = attributes.names
+    const attributeValues = Converter.unmarshall(attributes.values)
+&nbsp;
+    try {
+      const dynamoItem: DC.UpdateItemInput = {
+        ExpressionAttributeNames: attributeNames,
+        ExpressionAttributeValues: attributeValues,
+        Key: { pk, sk },
+        TableName: tableName,
+        UpdateExpression: attributeUpdates,
+      }
+      await documentClient.update(dynamoItem).promise()
+      return entity
+    } catch (err) {
+      throw new errors.ApplicationError({ message: err.message })
+    }
+  }
+&nbsp;
+  // const remove = async (scheduleId: string): Promise&lt;void&gt; =&gt; {
+  //   const documentClient = getDocumentClient()
+  //   try {
+  //     const result: DC.QueryOutput = await performQuery(scheduleId)
+  //     if (!result || result.Count === 0 || !result.Items) {
+  //       return
+  //     }
+&nbsp;
+  //     const { Items } = result
+  //     const transactParams: DC.TransactWriteItemsInput = {
+  //       TransactItems: Items.map(item =&gt; ({
+  //         Delete: {
+  //           Key: {
+  //             pk: item.pk,
+  //             sk: item.sk,
+  //           },
+  //           TableName: tableName,
+  //         },
+  //       })),
+  //     }
+&nbsp;
+  //     await documentClient.transactWrite(transactParams).promise()
+  //   } catch (err) {
+  //     // APPLICATION ERROR
+  //     throw new Error(err.message)
+  //   }
+  // }
+&nbsp;
+  return {
+    create,
+    // getLocation,
+    getSchedule,
+    listSchedules,
+    upsert,
+  }
+}
+&nbsp;
+function generateExpressions({ expr, parentKey, value }) {
+  if (isArray(value)) {
+    return each(value, (val, index) =&gt;
+      generateExpressions({
+        expr,
+        parentKey: `${parentKey}[${index}]`,
+        value: val,
+      }),
+    )
+  }
+&nbsp;
+  if (isObject(value)) {
+    return each(value, (val, key) =&gt;
+      generateExpressions({
+        expr,
+        parentKey: `${parentKey}.${key}`,
+        value: val,
+      }),
+    )
+  }
+&nbsp;
+  expr.set(parentKey, value)
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Nov 25 2019 18:46:45 GMT+0000 (Coordinated Universal Time)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

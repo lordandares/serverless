@@ -1,0 +1,242 @@
+{
+  "notification": {
+    "email": {
+      "pdf": {
+        "attach": true,
+        "filename": "test-audit.pdf",
+        "type": "audit",
+        "data": {
+          "entity": {
+            "_id": "5b3c26a4b396456c4821a3a8",
+            "updatedAt": "2018-07-04T01:45:08.418Z",
+            "createdAt": "2018-07-04T01:45:08.418Z",
+            "application": "56b2dc56d4c6f552c5cc0c94",
+            "title": "Signature Test",
+            "date": "2018-07-04T01:45:06.247Z",
+            "location": "56b2de0d2eec92db6a46c5a7",
+            "user": "59e41dccaffc27533f14bf3d",
+            "zone": "57c6377421c407ee44f2228f",
+            "audit": "5b30c13d86fe133585a7a4a0",
+            "__v": 0,
+            "footerFields": {
+              "relations": [],
+              "formGroups": [
+                {
+                  "updatedAt": "2018-06-25T10:15:58.550Z",
+                  "createdAt": "2018-06-25T10:15:58.550Z",
+                  "label": "Signature",
+                  "_id": "5b30c0dea8bdb23ad69eaaa0",
+                  "fieldGroups": [
+                    {
+                      "_id": "5b30c0dea8bdb23ad69eaaa1",
+                      "fields": [
+                        {
+                          "label": "Please Sign",
+                          "fieldtype": "text",
+                          "_id": "5b30c0dea8bdb23ad69eaaa2",
+                          "value": "signature",
+                          "validation": {
+                            "enum": []
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "repeatable": 1
+                }
+              ]
+            },
+            "headerFields": {
+              "relations": [],
+              "formGroups": [
+                {
+                  "updatedAt": "2018-06-25T10:15:25.007Z",
+                  "createdAt": "2018-06-25T10:15:25.007Z",
+                  "label": "Details",
+                  "_id": "5b30c0bd86fe133585a7a479",
+                  "fieldGroups": [
+                    {
+                      "_id": "5b30c0bd86fe133585a7a47a",
+                      "fields": [
+                        {
+                          "label": "Priority",
+                          "fieldtype": "select",
+                          "options": {
+                            "type": "select-single"
+                          },
+                          "_id": "5b30c0bd86fe133585a7a47b",
+                          "value": "High",
+                          "validation": {
+                            "enum": ["High", "Medium", "Low"]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "repeatable": 1
+                }
+              ]
+            },
+            "area": {
+              "floorsRef": []
+            },
+            "score": {
+              "result": 0.75,
+              "actual": 3,
+              "max": 4
+            },
+            "gps": {
+              "floorsRef": []
+            },
+            "participants": [],
+            "items": [
+              {
+                "scoreWeight": 0.5,
+                "label": "Are the floors clean?",
+                "weight": 1,
+                "_id": "5b30c13d86fe133585a7a4ad",
+                "comments": "Yes they are clean",
+                "score": 0.5,
+                "assets": ["skeptical.jpg", "skeptical.jpg"],
+                "scores": [
+                  {
+                    "label": "Pass",
+                    "value": 1,
+                    "_id": "5b30c13d86fe133585a7a4b0"
+                  },
+                  {
+                    "label": "IR",
+                    "value": 0.5,
+                    "_id": "5b30c13d86fe133585a7a4af"
+                  },
+                  {
+                    "label": "Fail",
+                    "value": 0,
+                    "_id": "5b30c13d86fe133585a7a4ae"
+                  }
+                ],
+                "group": {
+                  "id": "0",
+                  "label": "Indoors"
+                }
+              },
+              {
+                "scoreWeight": 0.5,
+                "label": "Are the windows clean?",
+                "weight": 1,
+                "_id": "5b30c13d86fe133585a7a4a9",
+                "comments": "Windows dirty\n💀☠️👾😿",
+                "score": 0.5,
+                "assets": ["skeptical.jpg"],
+                "scores": [
+                  {
+                    "label": "Pass",
+                    "value": 1,
+                    "_id": "5b30c13d86fe133585a7a4ac"
+                  },
+                  {
+                    "label": "IR",
+                    "value": 0.5,
+                    "_id": "5b30c13d86fe133585a7a4ab"
+                  },
+                  {
+                    "label": "Fail",
+                    "value": 0,
+                    "_id": "5b30c13d86fe133585a7a4aa"
+                  }
+                ],
+                "group": {
+                  "id": "0",
+                  "label": "Indoors"
+                }
+              },
+              {
+                "scoreWeight": 1,
+                "label": "Is the exterior in good condition",
+                "weight": 1,
+                "_id": "5b30c13d86fe133585a7a4a5",
+                "comments": "Brvxsvcc",
+                "score": 1,
+                "assets": ["skeptical.jpg"],
+                "scores": [
+                  {
+                    "label": "Pass",
+                    "value": 1,
+                    "_id": "5b30c13d86fe133585a7a4a8"
+                  },
+                  {
+                    "label": "IR",
+                    "value": 0.5,
+                    "_id": "5b30c13d86fe133585a7a4a7"
+                  },
+                  {
+                    "label": "Fail",
+                    "value": 0,
+                    "_id": "5b30c13d86fe133585a7a4a6"
+                  }
+                ],
+                "group": {
+                  "id": "01",
+                  "label": "Outdoors"
+                }
+              },
+              {
+                "scoreWeight": 1,
+                "label": "Are the bins accessible",
+                "weight": 1,
+                "_id": "5b30c13d86fe133585a7a4a1",
+                "comments": "Aaaaaa",
+                "score": 1,
+                "assets": ["skeptical.jpg"],
+                "scores": [
+                  {
+                    "label": "Pass",
+                    "value": 1,
+                    "_id": "5b30c13d86fe133585a7a4a4"
+                  },
+                  {
+                    "label": "IR",
+                    "value": 0.5,
+                    "_id": "5b30c13d86fe133585a7a4a3"
+                  },
+                  {
+                    "label": "Fail",
+                    "value": 0,
+                    "_id": "5b30c13d86fe133585a7a4a2"
+                  }
+                ],
+                "group": {
+                  "id": "01",
+                  "label": "Outdoors"
+                }
+              }
+            ],
+            "zones": []
+          },
+          "locations": {
+            "56b2de0d2eec92db6a46c5a7": {
+              "_id": "56b2de0d2eec92db6a46c5a7",
+              "name": "Test Location"
+            }
+          },
+          "timezone": "Australia/Melbourne",
+          "users": {
+            "59e41dccaffc27533f14bf3d": {
+              "user": {
+                "_id": "59e41dccaffc27533f14bf3d",
+                "firstName": "Testing",
+                "lastName": "Tester"
+              }
+            }
+          },
+          "zones": {
+            "57c6377421c407ee44f2228f": {
+              "_id": "57c6377421c407ee44f2228f",
+              "name": "Test Zone"
+            }
+          }
+        }
+      }
+    }
+  }
+}

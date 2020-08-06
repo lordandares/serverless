@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers:getSummaryData when area returned for location should query audits, events, issues and tasks with $or query 1`] = `
+Array [
+  Object {
+    "$or": Array [
+      Object {
+        "application": "5bff0da28d7c870001a01639",
+        "createdAt": Object {
+          "$gte": 2000-01-01T00:00:00.000Z,
+          "$lte": 2000-01-01T12:00:00.000Z,
+        },
+        "gps.geometry": Object {
+          "$geoWithin": Object {
+            "$geometry": Object {
+              "coordinates": Array [
+                Array [
+                  Array [
+                    144.98665809631345,
+                    -37.79712984141311,
+                  ],
+                  Array [
+                    144.98663127422333,
+                    -37.79726760509564,
+                  ],
+                  Array [
+                    144.98681366443634,
+                    -37.79729303836279,
+                  ],
+                  Array [
+                    144.9868431687355,
+                    -37.797148916399856,
+                  ],
+                  Array [
+                    144.98665809631345,
+                    -37.79712984141311,
+                  ],
+                ],
+              ],
+              "type": "Polygon",
+            },
+          },
+        },
+        "location": null,
+      },
+      Object {
+        "application": "5bff0da28d7c870001a01639",
+        "createdAt": Object {
+          "$gte": 2000-01-01T00:00:00.000Z,
+          "$lte": 2000-01-01T12:00:00.000Z,
+        },
+        "location": "5bff0da28d7c870001a01638",
+      },
+    ],
+  },
+]
+`;
+
+exports[`helpers:getSummaryData when area returned for location should query audits, events, issues and tasks with $or query 2`] = `
+Array [
+  Object {
+    "application": "5bff0da28d7c870001a01639",
+    "location": "5bff0da28d7c870001a01638",
+    "timestamp": Object {
+      "$gte": 2000-01-01T00:00:00.000Z,
+      "$lte": 2000-01-01T12:00:00.000Z,
+    },
+    "type": "enter",
+  },
+]
+`;
+
+exports[`helpers:getSummaryData when area returned for location should query audits, events, issues and tasks with $or query 3`] = `
+Array [
+  Object {
+    "$or": Array [
+      Object {
+        "application": "5bff0da28d7c870001a01639",
+        "createdAt": Object {
+          "$gte": 2000-01-01T00:00:00.000Z,
+          "$lte": 2000-01-01T12:00:00.000Z,
+        },
+        "gps.geometry": Object {
+          "$geoWithin": Object {
+            "$geometry": Object {
+              "coordinates": Array [
+                Array [
+                  Array [
+                    144.98665809631345,
+                    -37.79712984141311,
+                  ],
+                  Array [
+                    144.98663127422333,
+                    -37.79726760509564,
+                  ],
+                  Array [
+                    144.98681366443634,
+                    -37.79729303836279,
+                  ],
+                  Array [
+                    144.9868431687355,
+                    -37.797148916399856,
+                  ],
+                  Array [
+                    144.98665809631345,
+                    -37.79712984141311,
+                  ],
+                ],
+              ],
+              "type": "Polygon",
+            },
+          },
+        },
+        "location": null,
+      },
+      Object {
+        "application": "5bff0da28d7c870001a01639",
+        "createdAt": Object {
+          "$gte": 2000-01-01T00:00:00.000Z,
+          "$lte": 2000-01-01T12:00:00.000Z,
+        },
+        "location": "5bff0da28d7c870001a01638",
+      },
+    ],
+  },
+]
+`;
+
+exports[`helpers:getSummaryData when area returned for location should query audits, events, issues and tasks with $or query 4`] = `
+Array [
+  Object {
+    "$or": Array [
+      Object {
+        "application": "5bff0da28d7c870001a01639",
+        "createdAt": Object {
+          "$gte": 2000-01-01T00:00:00.000Z,
+          "$lte": 2000-01-01T12:00:00.000Z,
+        },
+        "gps.geometry": Object {
+          "$geoWithin": Object {
+            "$geometry": Object {
+              "coordinates": Array [
+                Array [
+                  Array [
+                    144.98665809631345,
+                    -37.79712984141311,
+                  ],
+                  Array [
+                    144.98663127422333,
+                    -37.79726760509564,
+                  ],
+                  Array [
+                    144.98681366443634,
+                    -37.79729303836279,
+                  ],
+                  Array [
+                    144.9868431687355,
+                    -37.797148916399856,
+                  ],
+                  Array [
+                    144.98665809631345,
+                    -37.79712984141311,
+                  ],
+                ],
+              ],
+              "type": "Polygon",
+            },
+          },
+        },
+        "location": null,
+      },
+      Object {
+        "application": "5bff0da28d7c870001a01639",
+        "createdAt": Object {
+          "$gte": 2000-01-01T00:00:00.000Z,
+          "$lte": 2000-01-01T12:00:00.000Z,
+        },
+        "location": "5bff0da28d7c870001a01638",
+      },
+    ],
+  },
+]
+`;

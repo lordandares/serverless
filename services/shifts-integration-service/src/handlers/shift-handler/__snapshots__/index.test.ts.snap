@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handlers:shift-handler should successfully process a start shift 1`] = `
+Object {
+  "input": "{\\"application\\":{\\"_id\\":\\"000000000000000000000000\\",\\"name\\":\\"Valid Application\\",\\"plugins\\":{\\"winteam\\":{\\"enabled\\":true}}},\\"event\\":\\"shift-start\\",\\"plugins\\":{\\"winteamEnabled\\":true},\\"shift\\":{\\"_id\\":\\"111111111111111111111111\\",\\"application\\":\\"000000000000000000000000\\",\\"location\\":\\"222222222222222222222222\\",\\"start\\":{\\"time\\":\\"2019-06-01T05:00:00.000Z\\"},\\"user\\":\\"333333333333333333333333\\"},\\"user\\":{\\"_id\\":\\"valid-user-id\\",\\"email\\":\\"valid-email-address\\",\\"firstName\\":\\"first-name\\",\\"lastName\\":\\"last-name\\",\\"plugins\\":{\\"winteam\\":{\\"enabled\\":true,\\"options\\":{\\"employeeNumber\\":\\"wt-1234\\"}}},\\"username\\":\\"user-name\\"}}",
+  "name": "valid-user-id-shift-start-946684800000",
+  "stateMachineArn": "arn:aws:states:us-east-1:0123456789012:stateMachine:state-machine-arn",
+}
+`;
+
+exports[`handlers:shift-handler should successfully process an end shift 1`] = `
+Object {
+  "input": "{\\"application\\":{\\"_id\\":\\"000000000000000000000000\\",\\"name\\":\\"Valid Application\\",\\"plugins\\":{\\"winteam\\":{\\"enabled\\":true}}},\\"event\\":\\"shift-end\\",\\"plugins\\":{\\"winteamEnabled\\":true},\\"shift\\":{\\"_id\\":\\"111111111111111111111111\\",\\"application\\":\\"000000000000000000000000\\",\\"location\\":\\"222222222222222222222222\\",\\"start\\":{\\"time\\":\\"2019-06-01T05:00:00.000Z\\"},\\"user\\":\\"333333333333333333333333\\"},\\"user\\":{\\"_id\\":\\"valid-user-id\\",\\"email\\":\\"valid-email-address\\",\\"firstName\\":\\"first-name\\",\\"lastName\\":\\"last-name\\",\\"plugins\\":{\\"winteam\\":{\\"enabled\\":true,\\"options\\":{\\"employeeNumber\\":\\"wt-1234\\"}}},\\"username\\":\\"user-name\\"}}",
+  "name": "valid-user-id-shift-end-946684800000",
+  "stateMachineArn": "arn:aws:states:us-east-1:0123456789012:stateMachine:state-machine-arn",
+}
+`;

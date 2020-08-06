@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers:getShiftDetails it returns all locations when the legacy user has no location permissions 1`] = `
+Object {
+  "applicationName": "Testing Application",
+  "email": "testing@test.com",
+  "firstName": "Testing",
+  "lastName": undefined,
+  "preferences": Object {
+    "notifications": Object {
+      "channels": Array [
+        Object {
+          "enabled": true,
+          "name": "daily-location-report",
+          "options": Object {
+            "hours": 9,
+            "timezone": "America/Los_Angeles",
+          },
+        },
+      ],
+    },
+  },
+  "shifts": Array [
+    Object {
+      "_id": "5b480e6120d8f51322b0bfed",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0001",
+    },
+    Object {
+      "_id": "60082e79dc704419ac763518",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0002",
+    },
+    Object {
+      "_id": "60082e79dc704419ac763124",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0003",
+    },
+  ],
+  "timezone": "America/Los_Angeles",
+}
+`;
+
+exports[`helpers:getShiftDetails it returns all shifts when the user has no location permissions 1`] = `
+Object {
+  "applicationName": "Testing Application",
+  "email": "testing@test.com",
+  "firstName": "Testing",
+  "lastName": undefined,
+  "preferences": Object {
+    "notifications": Object {
+      "channels": Array [
+        Object {
+          "enabled": true,
+          "name": "daily-location-report",
+          "options": Object {
+            "hours": 9,
+            "timezone": "America/Los_Angeles",
+          },
+        },
+      ],
+    },
+  },
+  "shifts": Array [
+    Object {
+      "_id": "5b480e6120d8f51322b0bfee",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0001",
+    },
+    Object {
+      "_id": "60082e79dc704419ac763517",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0002",
+    },
+    Object {
+      "_id": "60082e79dc704419ac763123",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0003",
+    },
+  ],
+  "timezone": "America/Los_Angeles",
+}
+`;
+
+exports[`helpers:getShiftDetails it returns filtered shifts when there are area location permissions 1`] = `
+Object {
+  "applicationName": "Testing Application",
+  "email": "testing@test.com",
+  "firstName": "Testing",
+  "lastName": undefined,
+  "preferences": Object {
+    "notifications": Object {
+      "channels": Array [
+        Object {
+          "enabled": true,
+          "name": "daily-location-report",
+          "options": Object {
+            "hours": 9,
+            "timezone": "America/Los_Angeles",
+          },
+        },
+      ],
+    },
+  },
+  "shifts": Array [
+    Object {
+      "_id": "5b480e6120d8f51322b0bfee",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0001",
+    },
+    Object {
+      "_id": "60082e79dc704419ac763123",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0003",
+    },
+  ],
+  "timezone": "America/Los_Angeles",
+}
+`;
+
+exports[`helpers:getShiftDetails it returns filtered shifts when there are legacy location permissions 1`] = `
+Object {
+  "applicationName": "Testing Application",
+  "email": "testing@test.com",
+  "firstName": "Testing",
+  "lastName": undefined,
+  "preferences": Object {
+    "notifications": Object {
+      "channels": Array [
+        Object {
+          "enabled": true,
+          "name": "daily-location-report",
+          "options": Object {
+            "hours": 9,
+            "timezone": "America/Los_Angeles",
+          },
+        },
+      ],
+    },
+  },
+  "shifts": Array [
+    Object {
+      "_id": "5b480e6120d8f51322b0bfed",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0001",
+    },
+    Object {
+      "_id": "60082e79dc704419ac763518",
+      "files": Object {
+        "pdf": Object {
+          "path": "activity-reports/565fe59257c5d59e60cc35b3/1999/12/1999-12-31-1548194730622.pdf",
+          "timestamp": 2019-12-31T18:00:00.000Z,
+        },
+      },
+      "user": "565fe59257c5d59e60cc0002",
+    },
+  ],
+  "timezone": "America/Los_Angeles",
+}
+`;

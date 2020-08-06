@@ -1,0 +1,22 @@
+{
+  "name": "@lighthouse/serverless-github-service",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "handler.ts",
+  "scripts": {
+    "deploy": "sls deploy",
+    "start": "SLS_DEBUG=* sls offline start --stage dev",
+    "test": "TZ=UTC jest",
+    "test:ci": "TZ=UTC jest --coverage"
+  },
+  "dependencies": {
+    "@slack/client": "^4.5.0",
+    "aws-sdk": "^2.298.0",
+    "date-fns": "^1.29.0",
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "jest": "^23.x.x"
+  }
+}

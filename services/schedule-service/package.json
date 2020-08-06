@@ -1,0 +1,43 @@
+{
+  "name": "@lighthouse/serverless-schedule-service",
+  "private": true,
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "main": "handler.ts",
+  "scripts": {
+    "deploy": "sls deploy",
+    "package": "SLS_DEBUG='*' sls package --stage dev",
+    "start": "SLS_DEBUG=* sls offline start --stage dev",
+    "test": "TZ=UTC jest",
+    "test:ci": "yarn type-check && TZ=UTC jest --coverage",
+    "test:http": "newman run ./http/postman_collection.json",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lighthouse/common": "^4.15.13",
+    "@lighthouse/serverless-common": "^1.0.0",
+    "@lighthouse/serverless-plugin-typescript": "1.1.10-beta-1",
+    "@turf/turf": "^5.1.6",
+    "aws-xray-sdk": "^2.4.0",
+    "bluebird": "^3.5.3",
+    "moment": "^2.24.0",
+    "react": "^16.6.3",
+    "serverless-offline-sns": "^0.65.0",
+    "uuid": "^3.3.2",
+    "yup": "^0.27.0"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.7",
+    "@types/jest": "^24.0.17",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.11.7",
+    "@types/turf": "^3.5.32",
+    "aws-sdk": "^2.559.0",
+    "aws-sdk-mock": "^4.3.1",
+    "jest": "^23.x.x",
+    "mockdate": "^2.0.2",
+    "newman": "^4.5.5",
+    "serverless-offline-sns": "^0.65.0",
+    "typescript": "^3.7.3"
+  }
+}

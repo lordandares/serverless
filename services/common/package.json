@@ -1,0 +1,38 @@
+{
+  "name": "@lighthouse/serverless-common",
+  "private": true,
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf dist; tsc",
+    "prepare": "yarn build",
+    "test": "TZ=UTC jest",
+    "test:ci": "yarn type-check && TZ=UTC jest --coverage",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@azure/identity": "^1.0.0-preview.3",
+    "@azure/keyvault-secrets": "^4.0.0-preview.4",
+    "@lighthouse/common": "^4.15.13",
+    "fetch-ponyfill": "^6.1.0",
+    "lodash": "^4.17.10",
+    "moment-timezone": "^0.5.26",
+    "mongodb": "^3.1.10",
+    "react": "^16.10.2",
+    "yup": "^0.27.0"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.7",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.11.7",
+    "@types/yup": "^0.26.27",
+    "aws-sdk": "^2.559.0",
+    "aws-sdk-mock": "^4.2.0",
+    "aws-xray-sdk": "^2.4.0",
+    "jest": "^23.x.x",
+    "nock": "^11.6.0",
+    "typescript": "^3.6.4"
+  }
+}

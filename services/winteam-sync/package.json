@@ -1,0 +1,45 @@
+{
+  "name": "@lighthouse/azure-winteam-sync",
+  "version": "1.0.0",
+  "description": "Winteam & Lighthouse Sync Service",
+  "scripts": {
+    "build": "rimraf dist; tsc",
+    "test": "TZ=UTC jest",
+    "start": "func host start",
+    "deploy": "sls deploy",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "azure",
+    "serverless"
+  ],
+  "dependencies": {
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-typescript": "^7.7.7",
+    "@lighthouse/serverless-common": "^1.0.0",
+    "@lighthouse/serverless-integrations": "^1.0.0",
+    "@turf/circle": "^6.0.1",
+    "@turf/helpers": "^6.1.4",
+    "@types/node": "^10.14.1",
+    "aws-sdk": "^2.528.0",
+    "babel-loader": "^8.0.6",
+    "core-js": "3",
+    "scramjet": "4.23.2",
+    "serverless-azure-functions": "^1.0.0",
+    "serverless-offline": "^5.12.0",
+    "serverless-webpack": "^5.3.1"
+  },
+  "devDependencies": {
+    "@azure/eventgrid": "^1.5.0",
+    "@azure/functions": "^1.0.3",
+    "@types/lodash": "^4.14.149",
+    "azure-functions-core-tools": "^2.7.1585",
+    "jest": "^24.x.x",
+    "nock": "^11.7.0",
+    "typescript": "^3.6.3"
+  },
+  "volta": {
+    "node": "10.14.1",
+    "yarn": "1.17.3"
+  }
+}

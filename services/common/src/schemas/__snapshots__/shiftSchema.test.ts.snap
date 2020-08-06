@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`valid end shift 1`] = `
+Object {
+  "application": "applicationId",
+  "end": Object {
+    "time": "end-timestamp",
+  },
+  "location": "locationId",
+  "start": Object {
+    "time": "start-timestamp",
+  },
+  "user": "userId",
+}
+`;
+
+exports[`valid message 1`] = `
+Object {
+  "application": "applicationId",
+  "end": null,
+  "location": "locationId",
+  "messages": Array [
+    Object {
+      "isGlobal": false,
+      "message": "message",
+      "messageId": 123,
+      "punchActionId": 0,
+      "response1": "response1",
+      "response1Id": 0,
+      "response2": "response2",
+      "response2Id": 0,
+    },
+  ],
+  "start": Object {
+    "time": "timestamp",
+  },
+  "user": "userId",
+}
+`;
+
+exports[`valid shift for GPS user 1`] = `
+Object {
+  "application": "applicationId",
+  "end": Object {
+    "area": Object {
+      "location": Object {
+        "id": "area-location-id-2",
+      },
+    },
+    "time": "end-timestamp",
+  },
+  "location": null,
+  "start": Object {
+    "area": Object {
+      "location": Object {
+        "id": "area-location-id-1",
+      },
+    },
+    "time": "start-timestamp",
+  },
+  "user": "userId",
+}
+`;
+
+exports[`valid start shift 1`] = `
+Object {
+  "application": "applicationId",
+  "end": null,
+  "location": "locationId",
+  "start": Object {
+    "time": "timestamp",
+  },
+  "user": "userId",
+}
+`;

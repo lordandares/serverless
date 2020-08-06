@@ -1,0 +1,11 @@
+{
+  "Template": {
+    "TemplateName": "daily-location-reports",
+    "SubjectPart":
+      "{{#if isProduction}}[Lighthouse]{{else}}[Lighthouse {{stage}}]{{/if}} {{applicationName}} - Daily Location Reports - {{shortDate}}",
+    "HtmlPart":
+      "<p>Hi {{name}},</p>{{#if hasNoLocations}}<p>There were no daily location reports for {{date}}.</p>{{/if}}{{#if activeLocations}}<p>Please see below daily location reports for {{date}}:</p>{{#each activeLocations}}<p><strong>{{name}}</strong><br><a href={{link}}>Download Report</a></p>{{/each}}{{/if}}{{#if inactiveLocations}}{{#if sendInactive}}<p>The following locations did not record any activity during this period:</p><p>{{#each inactiveLocations}}<strong>{{name}}</strong><br>{{/each}}</p>{{/if}}{{/if}}<p>This email was sent from <a href=https://lighthouse.io>Lighthouse.io</a>.<br><span style='color: #999999; font-size: 12px'>Click <a href='https://app.lighthouse.io/settings/profile' target='_blank'>here</a> to login to the web portal and update your notification preferences. If you are unsure of your login details, <a href='https://app.lighthouse.io/reset-password/request' target='_blank'>reset your password</a> or <a href='mailto:support@lighthouse.io'>contact support</a>.</span></p>",
+    "TextPart":
+      "Hi {{name}},{{#if hasNoLocations}}\r\nThere were no daily location reports for {{date}}.{{/if}}{{#if activeLocations}}\r\nPlease see below daily location reports for {{date}}:\r\n{{#each activeLocations}}{{name}}\r{{link}}\r{{/each}}{{/if}}{{#if inactiveLocations}}{{#if sendInactive}}\r\nThe following locations did not record any activity during this period:\r\n<{{#each inactiveLocations}}{{name}}\r{{/each}}{{/if}}{{/if}}\r\nThis email was sent from Lighthouse.io.\r\nLogin to the web portal using https://app.lighthouse.io to update your notification preferences. If you are unsure of your login details, reset your password or contact support.\r\n"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@lighthouse/shifts-integration-service",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Lighthouse.io - Shifts Integration Service",
+  "license": "UNLICENSED",
+  "main": "handler.ts",
+  "scripts": {
+    "build-dev": "SLS_DEBUG=* sls package --stage dev",
+    "deploy": "sls deploy",
+    "test": "TZ=UTC npx jest",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.11.7",
+    "aws-sdk": "^2.387.0",
+    "jest": "^23.x.x",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@lighthouse/serverless-common": "^1.0.0",
+    "@lighthouse/serverless-integrations": "^1.0.0",
+    "@lighthouse/serverless-plugin-typescript": "1.1.10-beta-1",
+    "aws-xray-sdk": "^2.4.0",
+    "bluebird": "^3.5.3",
+    "date-fns": "^1.29.0",
+    "moment-timezone": "^0.5.23"
+  }
+}

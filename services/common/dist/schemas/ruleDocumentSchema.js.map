@@ -1,0 +1,1 @@
+{"version":3,"file":"ruleDocumentSchema.js","sourceRoot":"","sources":["../../src/schemas/ruleDocumentSchema.ts"],"names":[],"mappings":";;AAAA,6BAA+C;AAElC,QAAA,kBAAkB,GAAG,YAAM,EAAE,CAAC,KAAK,CAAC;IAC/C,EAAE,EAAE,YAAM,EAAE;IACZ,IAAI,EAAE,YAAM,EAAE,CAAC,QAAQ,EAAE;IACzB,KAAK,EAAE,YAAM,EAAE,CAAC,QAAQ,EAAE;CAC3B,CAAC,CAAA;AAIF,kBAAe,0BAAkB,CAAA"}

@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transforms existing rulePattern document payload to rulePattern document 1`] = `
+Object {
+  "createdAt": "2019-06-02T00:00:00.000Z",
+  "createdBy": Object {
+    "id": "created-by-id-11111",
+    "label": "created-by-label-1111",
+    "type": "created-by-type-11111",
+  },
+  "groupType": "rule-pattern",
+  "matches": Object {
+    "occurrence1": Object {
+      "pk": "application1-occurrence",
+      "sk": "2019-06-02T00:00:00.000Z-occurrence1",
+    },
+  },
+  "pk": "rule-pattern-application-id-1111-location-id-11111",
+  "sk": "visit",
+  "updatedAt": "2019-10-13T01:00:00.000Z",
+  "updatedBy": Object {
+    "id": "actor-id-2222",
+    "label": "actor-label-22222",
+    "type": "actor-type-22222",
+  },
+}
+`;
+
+exports[`transforms new payload to rulePattern document 1`] = `
+Object {
+  "createdAt": "2019-10-13T01:00:00.000Z",
+  "createdBy": Object {
+    "id": "actor-id-2222",
+    "label": "actor-label-22222",
+    "type": "actor-type-22222",
+  },
+  "groupType": "rule-pattern",
+  "matches": Object {
+    "occurrence1": Object {
+      "pk": "application1-occurrence",
+      "sk": "2019-06-02T00:00:00.000Z-occurrence1",
+    },
+  },
+  "pk": "rule-pattern-application-id-1111-location-id-11111",
+  "sk": "visit",
+  "updatedAt": "2019-10-13T01:00:00.000Z",
+  "updatedBy": Object {
+    "id": "actor-id-2222",
+    "label": "actor-label-22222",
+    "type": "actor-type-22222",
+  },
+}
+`;

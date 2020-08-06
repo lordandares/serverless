@@ -1,0 +1,39 @@
+{
+  "name": "@lighthouse/dar-service",
+  "private": true,
+  "version": "1.2.0",
+  "description": "",
+  "license": "UNLICENSED",
+  "main": "handler.ts",
+  "scripts": {
+    "deploy": "sls deploy",
+    "start": "SLS_DEBUG=* sls offline start --stage dev",
+    "test": "TZ=UTC jest",
+    "test:ci": "TZ=UTC jest --coverage",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.11.7",
+    "aws-sdk": "^2.559.0",
+    "jest": "^23.x.x",
+    "mockdate": "^2.0.2",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@lighthouse/common": "^4.15.13",
+    "@lighthouse/serverless-common": "^1.0.0",
+    "@lighthouse/serverless-plugin-typescript": "1.1.10-beta-1",
+    "aws-xray-sdk": "^2.4.0",
+    "bluebird": "^3.5.3",
+    "date-fns": "^1.29.0",
+    "fs-extra": "^7.0.1",
+    "lodash": "^4.17.15",
+    "moment-timezone": "^0.5.23",
+    "node-pre-gyp": "^0.12.0",
+    "node-uuid": "^1.4.8",
+    "pdfmake": "^0.1.40",
+    "react": "^16.6.3",
+    "react-html-parser": "^2.0.2"
+  }
+}

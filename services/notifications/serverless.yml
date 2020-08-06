@@ -1,0 +1,106 @@
+service:
+  name: notifications-service
+
+plugins:
+  - serverless-offline
+  - serverless-step-functions
+  - serverless-pseudo-parameters
+provider:
+  name: aws
+  apiKeys:
+    - SERVICE_NOTIFICATIONS_API_KEY_${opt:stage}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "states:StartExecution"
+      Resource:
+        - "*"
+  vpc:
+    securityGroupIds:
+      - ${env:AWS_SECURITY_GROUP_ID}
+    subnetIds:
+      - ${env:AWS_SUBNET_ID_1}
+      - ${env:AWS_SUBNET_ID_2}
+
+custom:
+  serverless-offline:
+    port: 4000
+
+stepFunctions:
+  stateMachines:
+    NotificationsProcessor:
+      name: NotificationsProcessor-${opt:stage}
+      events:
+        - http:
+            path: notifications
+            method: POST
+            private: true
+      definition:
+        Comment: "A state machine to process Lighthouse notifications"
+        StartAt: Ingest
+        States:
+          Ingest:
+            Type: Choice
+            Choices:
+              - Variable: "$.notification.email.attachPdf"
+                BooleanEquals: true
+                Next: GetPdfS3Paths
+            Default: SendNotification
+          GetPdfS3Paths:
+            Type: Task
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:pdf-generator-${opt:stage}-get-pdf-s3-paths"
+            InputPath: "$.notification.email.pdf"
+            ResultPath: "$.s3Paths"
+            Next: ChoiceHasPdfS3Paths
+          ChoiceHasPdfS3Paths:
+            Type: Choice
+            Choices:
+              -
+                NumericGreaterThan: 0
+                Next: DelayNotification
+                Variable: "$.s3Paths.count"
+            Default: GeneratePdf
+          DelayNotification:
+            Type: Wait
+            Seconds: 60
+            Next: VerifyS3Resources
+          VerifyS3Resources:
+            Type: Task
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:pdf-generator-${opt:stage}-verify-s3-resources"
+            InputPath: "$.s3Paths.values"
+            ResultPath: "$.s3Paths.results"
+            TimeoutSeconds: 45
+            # NOTE retry logic is to account for s3 images not yet available
+            Retry:
+              - ErrorEquals:
+                - "MissingS3Resource"
+                IntervalSeconds: 180
+                MaxAttempts: 5
+                BackoffRate: 1
+            # NOTE catch logic is to account for s3 images which are unavailable
+            Catch:
+              - ErrorEquals:
+                - "MissingS3Resource"
+                # NOTE must return error otherwise overwrites original input
+                ResultPath: "$.error"
+                Next: GeneratePdf
+            Next: GeneratePdf
+          GeneratePdf:
+            Type: Task
+            Resource: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:pdf-generator-${opt:stage}-generate-pdf"
+            InputPath: "$.notification.email.pdf"
+            ResultPath: "$.notification.email.attachment"
+            TimeoutSeconds: 45
+            Next: SendNotification
+          SendNotification:
+            Type: Task
+            Resource: "arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:activity:${opt:stage}-send-notification"
+            TimeoutSeconds: 120
+            Retry:
+              - ErrorEquals:
+                - "States.Timeout"
+                MaxAttempts: 3
+                BackoffRate: 1.5
+            End: true
+  activities:
+    - "${opt:stage}-send-notification"

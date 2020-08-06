@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1578952364462" clover="3.2.0">
+  <project timestamp="1578952364462" name="All files">
+    <metrics statements="826" coveredstatements="826" conditionals="170" coveredconditionals="170" methods="85" coveredmethods="85" elements="1081" coveredelements="1081" complexity="0" loc="826" ncloc="826" packages="33" files="43" classes="43">
+      <package name="activity-report-service">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="jest.setup.js" path="/Users/arivero/lh/serverless/services/activity-report-service/jest.setup.js">
+          <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="2" count="29" type="stmt"/>
+          <line num="3" count="29" type="stmt"/>
+          <line num="4" count="29" type="stmt"/>
+          <line num="5" count="29" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.email-processor">
+        <metrics statements="65" coveredstatements="65" conditionals="24" coveredconditionals="24" methods="8" coveredmethods="8"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/email-processor/fixtures.ts">
+          <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="86" count="1" type="stmt"/>
+          <line num="125" count="1" type="stmt"/>
+          <line num="130" count="1" type="stmt"/>
+          <line num="141" count="1" type="stmt"/>
+          <line num="148" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/email-processor/index.ts">
+          <metrics statements="56" coveredstatements="56" conditionals="24" coveredconditionals="24" methods="8" coveredmethods="8"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="44" count="1" type="stmt"/>
+          <line num="45" count="6" type="stmt"/>
+          <line num="46" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="47" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="49" count="6" type="stmt"/>
+          <line num="51" count="6" type="stmt"/>
+          <line num="52" count="6" type="stmt"/>
+          <line num="54" count="6" type="stmt"/>
+          <line num="68" count="6" type="stmt"/>
+          <line num="70" count="5" type="stmt"/>
+          <line num="71" count="5" type="stmt"/>
+          <line num="72" count="5" type="stmt"/>
+          <line num="74" count="5" type="stmt"/>
+          <line num="75" count="15" type="stmt"/>
+          <line num="78" count="5" type="stmt"/>
+          <line num="85" count="5" type="stmt"/>
+          <line num="87" count="9" type="stmt"/>
+          <line num="89" count="9" type="stmt"/>
+          <line num="91" count="8" type="cond" truecount="2" falsecount="0"/>
+          <line num="93" count="6" type="stmt"/>
+          <line num="98" count="6" type="stmt"/>
+          <line num="103" count="6" type="stmt"/>
+          <line num="105" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="107" count="8" type="stmt"/>
+          <line num="109" count="1" type="stmt"/>
+          <line num="116" count="1" type="stmt"/>
+          <line num="121" count="1" type="stmt"/>
+          <line num="124" count="4" type="stmt"/>
+          <line num="126" count="4" type="stmt"/>
+          <line num="140" count="1" type="stmt"/>
+          <line num="144" count="6" type="stmt"/>
+          <line num="148" count="6" type="stmt"/>
+          <line num="149" count="6" type="stmt"/>
+          <line num="150" count="6" type="stmt"/>
+          <line num="152" count="6" type="stmt"/>
+          <line num="154" count="16" type="cond" truecount="2" falsecount="0"/>
+          <line num="155" count="9" type="stmt"/>
+          <line num="158" count="7" type="stmt"/>
+          <line num="159" count="7" type="stmt"/>
+          <line num="160" count="7" type="stmt"/>
+          <line num="162" count="7" type="cond" truecount="2" falsecount="0"/>
+          <line num="164" count="7" type="stmt"/>
+          <line num="170" count="6" type="stmt"/>
+          <line num="182" count="3" type="stmt"/>
+          <line num="188" count="1" type="stmt"/>
+          <line num="189" count="23" type="stmt"/>
+          <line num="190" count="23" type="stmt"/>
+          <line num="191" count="23" type="cond" truecount="2" falsecount="0"/>
+          <line num="193" count="23" type="cond" truecount="5" falsecount="0"/>
+          <line num="198" count="21" type="stmt"/>
+          <line num="203" count="21" type="cond" truecount="2" falsecount="0"/>
+          <line num="205" count="12" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.finalise-location-report">
+        <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/finalise-location-report/index.ts">
+          <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="10" count="2" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+          <line num="13" count="2" type="stmt"/>
+          <line num="15" count="2" type="stmt"/>
+          <line num="17" count="4" type="stmt"/>
+          <line num="39" count="2" type="stmt"/>
+          <line num="42" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.finalise-shift-report">
+        <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/finalise-shift-report/index.ts">
+          <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="10" count="2" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+          <line num="13" count="2" type="stmt"/>
+          <line num="15" count="2" type="stmt"/>
+          <line num="17" count="4" type="stmt"/>
+          <line num="39" count="2" type="stmt"/>
+          <line num="42" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.get-shift-data">
+        <metrics statements="33" coveredstatements="33" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/get-shift-data/fixtures.ts">
+          <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="19" count="1" type="stmt"/>
+          <line num="27" count="1" type="stmt"/>
+          <line num="30" count="1" type="stmt"/>
+          <line num="36" count="1" type="stmt"/>
+          <line num="45" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/get-shift-data/index.ts">
+          <metrics statements="26" coveredstatements="26" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="3" type="stmt"/>
+          <line num="12" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="14" count="3" type="stmt"/>
+          <line num="16" count="3" type="stmt"/>
+          <line num="17" count="3" type="stmt"/>
+          <line num="19" count="1" type="stmt"/>
+          <line num="20" count="2" type="stmt"/>
+          <line num="21" count="2" type="stmt"/>
+          <line num="23" count="2" type="stmt"/>
+          <line num="24" count="2" type="stmt"/>
+          <line num="29" count="2" type="stmt"/>
+          <line num="37" count="1" type="stmt"/>
+          <line num="40" count="2" type="stmt"/>
+          <line num="41" count="2" type="stmt"/>
+          <line num="42" count="2" type="stmt"/>
+          <line num="43" count="2" type="stmt"/>
+          <line num="44" count="2" type="stmt"/>
+          <line num="45" count="2" type="stmt"/>
+          <line num="47" count="2" type="stmt"/>
+          <line num="48" count="2" type="stmt"/>
+          <line num="50" count="2" type="stmt"/>
+          <line num="53" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.location-processor">
+        <metrics statements="53" coveredstatements="53" conditionals="16" coveredconditionals="16" methods="7" coveredmethods="7"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/location-processor/index.ts">
+          <metrics statements="53" coveredstatements="53" conditionals="16" coveredconditionals="16" methods="7" coveredmethods="7"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="19" count="1" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="23" count="1" type="stmt"/>
+          <line num="24" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="25" count="1" type="stmt"/>
+          <line num="28" count="3" type="stmt"/>
+          <line num="29" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="30" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="32" count="3" type="stmt"/>
+          <line num="33" count="3" type="stmt"/>
+          <line num="35" count="2" type="stmt"/>
+          <line num="36" count="2" type="stmt"/>
+          <line num="39" count="2" type="stmt"/>
+          <line num="42" count="2" type="stmt"/>
+          <line num="47" count="2" type="stmt"/>
+          <line num="49" count="2" type="stmt"/>
+          <line num="58" count="2" type="stmt"/>
+          <line num="59" count="2" type="stmt"/>
+          <line num="61" count="2" type="stmt"/>
+          <line num="63" count="2" type="stmt"/>
+          <line num="65" count="2" type="stmt"/>
+          <line num="68" count="4" type="stmt"/>
+          <line num="71" count="2" type="stmt"/>
+          <line num="76" count="1" type="stmt"/>
+          <line num="77" count="9" type="cond" truecount="2" falsecount="0"/>
+          <line num="79" count="8" type="stmt"/>
+          <line num="80" count="8" type="stmt"/>
+          <line num="82" count="8" type="stmt"/>
+          <line num="85" count="9" type="stmt"/>
+          <line num="87" count="20" type="stmt"/>
+          <line num="88" count="20" type="stmt"/>
+          <line num="89" count="20" type="stmt"/>
+          <line num="90" count="20" type="stmt"/>
+          <line num="94" count="20" type="cond" truecount="4" falsecount="0"/>
+          <line num="96" count="14" type="stmt"/>
+          <line num="101" count="14" type="stmt"/>
+          <line num="106" count="14" type="cond" truecount="2" falsecount="0"/>
+          <line num="107" count="6" type="stmt"/>
+          <line num="116" count="9" type="stmt"/>
+          <line num="122" count="1" type="stmt"/>
+          <line num="123" count="4" type="stmt"/>
+          <line num="125" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="126" count="1" type="stmt"/>
+          <line num="131" count="3" type="stmt"/>
+          <line num="136" count="3" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.merge-pdfs">
+        <metrics statements="34" coveredstatements="34" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/merge-pdfs/index.ts">
+          <metrics statements="34" coveredstatements="34" conditionals="6" coveredconditionals="6" methods="1" coveredmethods="1"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="17" count="5" type="stmt"/>
+          <line num="18" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="20" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="21" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="23" count="5" type="stmt"/>
+          <line num="24" count="5" type="stmt"/>
+          <line num="26" count="5" type="stmt"/>
+          <line num="27" count="5" type="stmt"/>
+          <line num="29" count="5" type="stmt"/>
+          <line num="35" count="3" type="stmt"/>
+          <line num="37" count="3" type="stmt"/>
+          <line num="38" count="3" type="stmt"/>
+          <line num="39" count="3" type="stmt"/>
+          <line num="40" count="3" type="stmt"/>
+          <line num="41" count="3" type="stmt"/>
+          <line num="43" count="3" type="stmt"/>
+          <line num="44" count="3" type="stmt"/>
+          <line num="46" count="3" type="stmt"/>
+          <line num="47" count="3" type="stmt"/>
+          <line num="49" count="3" type="stmt"/>
+          <line num="51" count="3" type="stmt"/>
+          <line num="52" count="6" type="stmt"/>
+          <line num="59" count="3" type="stmt"/>
+          <line num="61" count="3" type="stmt"/>
+          <line num="62" count="6" type="stmt"/>
+          <line num="63" count="3" type="stmt"/>
+          <line num="65" count="3" type="stmt"/>
+          <line num="68" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.merge-report-pdfs">
+        <metrics statements="35" coveredstatements="35" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/merge-report-pdfs/fixtures.ts">
+          <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="18" count="1" type="stmt"/>
+          <line num="19" count="1" type="stmt"/>
+          <line num="20" count="1" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/merge-report-pdfs/index.ts">
+          <metrics statements="27" coveredstatements="27" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+          <line num="16" count="5" type="stmt"/>
+          <line num="17" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="20" count="5" type="stmt"/>
+          <line num="24" count="5" type="stmt"/>
+          <line num="25" count="5" type="stmt"/>
+          <line num="27" count="5" type="stmt"/>
+          <line num="28" count="10" type="stmt"/>
+          <line num="30" count="5" type="stmt"/>
+          <line num="31" count="5" type="stmt"/>
+          <line num="33" count="3" type="stmt"/>
+          <line num="34" count="3" type="stmt"/>
+          <line num="36" count="3" type="stmt"/>
+          <line num="38" count="3" type="stmt"/>
+          <line num="39" count="3" type="stmt"/>
+          <line num="41" count="3" type="stmt"/>
+          <line num="42" count="6" type="stmt"/>
+          <line num="50" count="3" type="stmt"/>
+          <line num="51" count="6" type="stmt"/>
+          <line num="53" count="3" type="stmt"/>
+          <line num="55" count="2" type="stmt"/>
+          <line num="60" count="2" type="stmt"/>
+          <line num="64" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.setup-dar">
+        <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/setup-dar/index.ts">
+          <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="10" count="5" type="stmt"/>
+          <line num="11" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="13" count="5" type="stmt"/>
+          <line num="15" count="4" type="stmt"/>
+          <line num="16" count="4" type="stmt"/>
+          <line num="18" count="1" type="stmt"/>
+          <line num="19" count="3" type="stmt"/>
+          <line num="20" count="2" type="stmt"/>
+          <line num="22" count="2" type="stmt"/>
+          <line num="25" count="1" type="stmt"/>
+          <line num="28" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.handlers.shift-email-processor">
+        <metrics statements="43" coveredstatements="43" conditionals="13" coveredconditionals="13" methods="7" coveredmethods="7"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/shift-email-processor/fixtures.ts">
+          <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="64" count="1" type="stmt"/>
+          <line num="75" count="1" type="stmt"/>
+          <line num="82" count="1" type="stmt"/>
+          <line num="143" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/handlers/shift-email-processor/index.ts">
+          <metrics statements="35" coveredstatements="35" conditionals="13" coveredconditionals="13" methods="7" coveredmethods="7"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="23" count="5" type="stmt"/>
+          <line num="24" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="25" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="26" count="5" type="stmt"/>
+          <line num="27" count="5" type="stmt"/>
+          <line num="29" count="5" type="stmt"/>
+          <line num="42" count="5" type="stmt"/>
+          <line num="44" count="4" type="stmt"/>
+          <line num="45" count="4" type="stmt"/>
+          <line num="46" count="4" type="stmt"/>
+          <line num="48" count="8" type="stmt"/>
+          <line num="51" count="4" type="stmt"/>
+          <line num="55" count="4" type="stmt"/>
+          <line num="56" count="4" type="stmt"/>
+          <line num="57" count="4" type="stmt"/>
+          <line num="60" count="4" type="stmt"/>
+          <line num="61" count="4" type="stmt"/>
+          <line num="62" count="3" type="stmt"/>
+          <line num="65" count="4" type="stmt"/>
+          <line num="66" count="4" type="stmt"/>
+          <line num="67" count="4" type="stmt"/>
+          <line num="70" count="1" type="stmt"/>
+          <line num="71" count="16" type="stmt"/>
+          <line num="72" count="16" type="stmt"/>
+          <line num="73" count="16" type="cond" truecount="2" falsecount="0"/>
+          <line num="75" count="16" type="cond" truecount="5" falsecount="0"/>
+          <line num="77" count="14" type="stmt"/>
+          <line num="82" count="14" type="cond" truecount="2" falsecount="0"/>
+          <line num="84" count="7" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers">
+        <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/index.ts">
+          <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="7" type="stmt"/>
+          <line num="3" count="7" type="stmt"/>
+          <line num="4" count="7" type="stmt"/>
+          <line num="5" count="7" type="stmt"/>
+          <line num="6" count="7" type="stmt"/>
+          <line num="7" count="7" type="stmt"/>
+          <line num="8" count="7" type="stmt"/>
+          <line num="9" count="7" type="stmt"/>
+          <line num="10" count="7" type="stmt"/>
+          <line num="11" count="7" type="stmt"/>
+          <line num="12" count="7" type="stmt"/>
+          <line num="13" count="7" type="stmt"/>
+          <line num="14" count="7" type="stmt"/>
+          <line num="15" count="7" type="stmt"/>
+          <line num="16" count="7" type="stmt"/>
+          <line num="17" count="7" type="stmt"/>
+          <line num="18" count="7" type="stmt"/>
+          <line num="19" count="7" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.build-email">
+        <metrics statements="30" coveredstatements="30" conditionals="11" coveredconditionals="11" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/build-email/index.ts">
+          <metrics statements="30" coveredstatements="30" conditionals="11" coveredconditionals="11" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="13" count="8" type="stmt"/>
+          <line num="24" count="8" type="stmt"/>
+          <line num="28" count="8" type="stmt"/>
+          <line num="34" count="8" type="stmt"/>
+          <line num="44" count="8" type="stmt"/>
+          <line num="47" count="9" type="stmt"/>
+          <line num="55" count="9" type="stmt"/>
+          <line num="56" count="9" type="stmt"/>
+          <line num="57" count="9" type="stmt"/>
+          <line num="61" count="9" type="stmt"/>
+          <line num="63" count="9" type="stmt"/>
+          <line num="68" count="9" type="stmt"/>
+          <line num="69" count="9" type="stmt"/>
+          <line num="71" count="9" type="stmt"/>
+          <line num="72" count="9" type="stmt"/>
+          <line num="74" count="9" type="stmt"/>
+          <line num="75" count="15" type="stmt"/>
+          <line num="81" count="8" type="stmt"/>
+          <line num="82" count="8" type="stmt"/>
+          <line num="84" count="8" type="stmt"/>
+          <line num="87" count="8" type="cond" truecount="2" falsecount="0"/>
+          <line num="91" count="1" type="stmt"/>
+          <line num="96" count="1" type="stmt"/>
+          <line num="99" count="7" type="stmt"/>
+          <line num="101" count="7" type="stmt"/>
+          <line num="114" count="7" type="stmt"/>
+          <line num="126" count="1" type="stmt"/>
+          <line num="127" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.build-location-summary-pdf">
+        <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/build-location-summary-pdf/index.ts">
+          <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="4" count="8" type="stmt"/>
+          <line num="6" count="8" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+          <line num="14" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="18" count="1" type="stmt"/>
+          <line num="19" count="1" type="stmt"/>
+          <line num="20" count="1" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+          <line num="25" count="1" type="stmt"/>
+          <line num="26" count="1" type="stmt"/>
+          <line num="27" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.build-shift-email">
+        <metrics statements="36" coveredstatements="36" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/build-shift-email/fixtures.ts">
+          <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="29" count="1" type="stmt"/>
+          <line num="37" count="1" type="stmt"/>
+          <line num="43" count="1" type="stmt"/>
+          <line num="49" count="1" type="stmt"/>
+          <line num="78" count="1" type="stmt"/>
+          <line num="110" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/build-shift-email/index.ts">
+          <metrics statements="25" coveredstatements="25" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="14" count="8" type="stmt"/>
+          <line num="15" count="8" type="stmt"/>
+          <line num="17" count="8" type="stmt"/>
+          <line num="28" count="8" type="stmt"/>
+          <line num="34" count="8" type="stmt"/>
+          <line num="37" count="8" type="stmt"/>
+          <line num="45" count="8" type="stmt"/>
+          <line num="46" count="8" type="stmt"/>
+          <line num="47" count="8" type="stmt"/>
+          <line num="51" count="8" type="stmt"/>
+          <line num="53" count="8" type="stmt"/>
+          <line num="58" count="8" type="stmt"/>
+          <line num="59" count="8" type="stmt"/>
+          <line num="61" count="8" type="stmt"/>
+          <line num="63" count="8" type="stmt"/>
+          <line num="64" count="15" type="stmt"/>
+          <line num="71" count="7" type="stmt"/>
+          <line num="77" count="7" type="stmt"/>
+          <line num="78" count="7" type="stmt"/>
+          <line num="80" count="7" type="stmt"/>
+          <line num="91" count="7" type="stmt"/>
+          <line num="103" count="1" type="stmt"/>
+          <line num="104" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.build-shift-summary-pdf">
+        <metrics statements="30" coveredstatements="30" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/build-shift-summary-pdf/fixtures.ts">
+          <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="53" count="1" type="stmt"/>
+          <line num="68" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/build-shift-summary-pdf/index.ts">
+          <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="4" count="8" type="stmt"/>
+          <line num="6" count="8" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+          <line num="14" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="18" count="1" type="stmt"/>
+          <line num="19" count="1" type="stmt"/>
+          <line num="20" count="1" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+          <line num="25" count="1" type="stmt"/>
+          <line num="26" count="1" type="stmt"/>
+          <line num="27" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.concat-pdfs">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/concat-pdfs/index.ts">
+          <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="4" count="8" type="stmt"/>
+          <line num="6" count="8" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+          <line num="14" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.create-summary-pdf">
+        <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/create-summary-pdf/index.ts">
+          <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="4" count="8" type="stmt"/>
+          <line num="5" count="8" type="stmt"/>
+          <line num="18" count="8" type="stmt"/>
+          <line num="19" count="3" type="stmt"/>
+          <line num="22" count="3" type="stmt"/>
+          <line num="23" count="3" type="stmt"/>
+          <line num="24" count="3" type="stmt"/>
+          <line num="27" count="3" type="stmt"/>
+          <line num="28" count="3" type="stmt"/>
+          <line num="30" count="3" type="stmt"/>
+          <line num="35" count="3" type="stmt"/>
+          <line num="46" count="8" type="stmt"/>
+          <line num="47" count="1" type="stmt"/>
+          <line num="48" count="1" type="stmt"/>
+          <line num="50" count="1" type="stmt"/>
+          <line num="51" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.data">
+        <metrics statements="68" coveredstatements="68" conditionals="8" coveredconditionals="8" methods="8" coveredmethods="8"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/data/fixtures.ts">
+          <metrics statements="17" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="36" count="1" type="stmt"/>
+          <line num="66" count="1" type="stmt"/>
+          <line num="142" count="1" type="stmt"/>
+          <line num="149" count="1" type="stmt"/>
+          <line num="156" count="1" type="stmt"/>
+          <line num="163" count="1" type="stmt"/>
+          <line num="179" count="1" type="stmt"/>
+          <line num="228" count="1" type="stmt"/>
+          <line num="229" count="1" type="stmt"/>
+          <line num="231" count="1" type="stmt"/>
+          <line num="236" count="1" type="stmt"/>
+          <line num="242" count="1" type="stmt"/>
+          <line num="253" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/data/index.ts">
+          <metrics statements="51" coveredstatements="51" conditionals="8" coveredconditionals="8" methods="8" coveredmethods="8"/>
+          <line num="1" count="9" type="stmt"/>
+          <line num="3" count="9" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="10" count="2" type="stmt"/>
+          <line num="13" count="9" type="stmt"/>
+          <line num="14" count="7" type="stmt"/>
+          <line num="15" count="7" type="stmt"/>
+          <line num="16" count="7" type="stmt"/>
+          <line num="17" count="7" type="stmt"/>
+          <line num="18" count="7" type="stmt"/>
+          <line num="19" count="7" type="stmt"/>
+          <line num="21" count="7" type="stmt"/>
+          <line num="23" count="7" type="stmt"/>
+          <line num="32" count="7" type="stmt"/>
+          <line num="34" count="7" type="stmt"/>
+          <line num="39" count="7" type="stmt"/>
+          <line num="42" count="9" type="stmt"/>
+          <line num="43" count="2" type="stmt"/>
+          <line num="45" count="2" type="stmt"/>
+          <line num="55" count="2" type="stmt"/>
+          <line num="57" count="2" type="stmt"/>
+          <line num="62" count="2" type="stmt"/>
+          <line num="65" count="9" type="stmt"/>
+          <line num="66" count="3" type="stmt"/>
+          <line num="67" count="3" type="stmt"/>
+          <line num="71" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="72" count="1" type="stmt"/>
+          <line num="74" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="75" count="1" type="stmt"/>
+          <line num="78" count="1" type="stmt"/>
+          <line num="81" count="9" type="stmt"/>
+          <line num="82" count="3" type="stmt"/>
+          <line num="84" count="3" type="stmt"/>
+          <line num="89" count="3" type="stmt"/>
+          <line num="92" count="9" type="stmt"/>
+          <line num="93" count="6" type="stmt"/>
+          <line num="94" count="6" type="stmt"/>
+          <line num="98" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="99" count="1" type="stmt"/>
+          <line num="102" count="5" type="stmt"/>
+          <line num="105" count="9" type="stmt"/>
+          <line num="106" count="3" type="stmt"/>
+          <line num="107" count="3" type="stmt"/>
+          <line num="111" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="112" count="1" type="stmt"/>
+          <line num="115" count="2" type="stmt"/>
+          <line num="118" count="9" type="stmt"/>
+          <line num="119" count="3" type="stmt"/>
+          <line num="121" count="3" type="stmt"/>
+          <line num="126" count="3" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.download-files">
+        <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/download-files/index.ts">
+          <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="3" count="8" type="stmt"/>
+          <line num="5" count="8" type="stmt"/>
+          <line num="15" count="8" type="stmt"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="18" count="1" type="stmt"/>
+          <line num="19" count="1" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+          <line num="25" count="1" type="stmt"/>
+          <line num="26" count="2" type="stmt"/>
+          <line num="28" count="1" type="stmt"/>
+          <line num="31" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.fetch-applications">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/fetch-applications/index.ts">
+          <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="3" count="8" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.fetch-locations">
+        <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/fetch-locations/index.ts">
+          <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="4" count="8" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="7" count="2" type="cond" truecount="4" falsecount="0"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.get-location-report-links">
+        <metrics statements="17" coveredstatements="17" conditionals="15" coveredconditionals="15" methods="1" coveredmethods="1"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-location-report-links/index.ts">
+          <metrics statements="17" coveredstatements="17" conditionals="15" coveredconditionals="15" methods="1" coveredmethods="1"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="3" count="8" type="stmt"/>
+          <line num="4" count="5" type="stmt"/>
+          <line num="5" count="5" type="stmt"/>
+          <line num="7" count="5" type="stmt"/>
+          <line num="9" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="11" count="5" type="stmt"/>
+          <line num="18" count="5" type="stmt"/>
+          <line num="21" count="5" type="cond" truecount="5" falsecount="0"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="23" count="1" type="stmt"/>
+          <line num="30" count="4" type="stmt"/>
+          <line num="32" count="4" type="stmt"/>
+          <line num="33" count="4" type="stmt"/>
+          <line num="34" count="4" type="stmt"/>
+          <line num="38" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="40" count="4" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.get-pdf-buffer">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-pdf-buffer/index.ts">
+          <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="1" count="9" type="stmt"/>
+          <line num="2" count="9" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="12" count="9" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.get-references">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-references/index.ts">
+          <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="3" count="8" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="9" count="7" type="stmt"/>
+          <line num="13" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.get-shift-details">
+        <metrics statements="37" coveredstatements="37" conditionals="14" coveredconditionals="14" methods="6" coveredmethods="6"/>
+        <file name="fixture.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-shift-details/fixture.ts">
+          <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="38" count="1" type="stmt"/>
+          <line num="65" count="1" type="stmt"/>
+          <line num="86" count="1" type="stmt"/>
+          <line num="125" count="1" type="stmt"/>
+          <line num="221" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-shift-details/index.ts">
+          <metrics statements="30" coveredstatements="30" conditionals="14" coveredconditionals="14" methods="6" coveredmethods="6"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="3" count="8" type="stmt"/>
+          <line num="4" count="8" type="stmt"/>
+          <line num="6" count="8" type="stmt"/>
+          <line num="8" count="5" type="stmt"/>
+          <line num="9" count="4" type="stmt"/>
+          <line num="11" count="4" type="stmt"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="21" count="5" type="stmt"/>
+          <line num="22" count="5" type="stmt"/>
+          <line num="24" count="5" type="stmt"/>
+          <line num="25" count="5" type="stmt"/>
+          <line num="31" count="4" type="stmt"/>
+          <line num="32" count="4" type="stmt"/>
+          <line num="34" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="35" count="2" type="stmt"/>
+          <line num="38" count="2" type="stmt"/>
+          <line num="40" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="41" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="42" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="44" count="6" type="stmt"/>
+          <line num="46" count="7" type="cond" truecount="3" falsecount="0"/>
+          <line num="49" count="7" type="stmt"/>
+          <line num="55" count="2" type="stmt"/>
+          <line num="59" count="3" type="stmt"/>
+          <line num="65" count="5" type="stmt"/>
+          <line num="66" count="5" type="stmt"/>
+          <line num="67" count="5" type="stmt"/>
+          <line num="69" count="5" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.get-shift-report-links">
+        <metrics statements="30" coveredstatements="30" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-shift-report-links/fixtures.ts">
+          <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+          <line num="30" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-shift-report-links/index.ts">
+          <metrics statements="21" coveredstatements="21" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="3" count="8" type="stmt"/>
+          <line num="5" count="8" type="stmt"/>
+          <line num="6" count="4" type="stmt"/>
+          <line num="7" count="4" type="stmt"/>
+          <line num="8" count="4" type="stmt"/>
+          <line num="10" count="4" type="stmt"/>
+          <line num="12" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="14" count="4" type="stmt"/>
+          <line num="18" count="4" type="stmt"/>
+          <line num="19" count="4" type="stmt"/>
+          <line num="23" count="4" type="stmt"/>
+          <line num="25" count="4" type="cond" truecount="5" falsecount="0"/>
+          <line num="26" count="1" type="stmt"/>
+          <line num="27" count="1" type="stmt"/>
+          <line num="36" count="3" type="stmt"/>
+          <line num="38" count="3" type="stmt"/>
+          <line num="39" count="3" type="stmt"/>
+          <line num="40" count="3" type="stmt"/>
+          <line num="44" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="46" count="3" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.get-shift-summary-data">
+        <metrics statements="44" coveredstatements="44" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
+        <file name="fixtures.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-shift-summary-data/fixtures.ts">
+          <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+          <line num="39" count="1" type="stmt"/>
+          <line num="69" count="1" type="stmt"/>
+          <line num="145" count="1" type="stmt"/>
+          <line num="156" count="1" type="stmt"/>
+          <line num="205" count="1" type="stmt"/>
+          <line num="206" count="1" type="stmt"/>
+          <line num="208" count="1" type="stmt"/>
+          <line num="213" count="1" type="stmt"/>
+          <line num="219" count="1" type="stmt"/>
+          <line num="227" count="1" type="stmt"/>
+          <line num="238" count="1" type="stmt"/>
+        </file>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-shift-summary-data/index.ts">
+          <metrics statements="29" coveredstatements="29" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="4" count="8" type="stmt"/>
+          <line num="6" count="8" type="stmt"/>
+          <line num="16" count="8" type="stmt"/>
+          <line num="17" count="6" type="stmt"/>
+          <line num="19" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="20" count="1" type="stmt"/>
+          <line num="23" count="5" type="stmt"/>
+          <line num="24" count="5" type="stmt"/>
+          <line num="25" count="5" type="stmt"/>
+          <line num="27" count="5" type="stmt"/>
+          <line num="29" count="5" type="stmt"/>
+          <line num="31" count="5" type="stmt"/>
+          <line num="38" count="5" type="stmt"/>
+          <line num="44" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="45" count="1" type="stmt"/>
+          <line num="48" count="4" type="cond" truecount="4" falsecount="0"/>
+          <line num="49" count="2" type="stmt"/>
+          <line num="54" count="2" type="stmt"/>
+          <line num="55" count="2" type="stmt"/>
+          <line num="57" count="2" type="stmt"/>
+          <line num="58" count="2" type="stmt"/>
+          <line num="59" count="2" type="stmt"/>
+          <line num="60" count="2" type="stmt"/>
+          <line num="68" count="2" type="stmt"/>
+          <line num="76" count="2" type="stmt"/>
+          <line num="85" count="2" type="stmt"/>
+          <line num="87" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.get-summary-data">
+        <metrics statements="84" coveredstatements="84" conditionals="21" coveredconditionals="21" methods="11" coveredmethods="11"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-summary-data/index.ts">
+          <metrics statements="84" coveredstatements="84" conditionals="21" coveredconditionals="21" methods="11" coveredmethods="11"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="2" count="8" type="stmt"/>
+          <line num="12" count="8" type="stmt"/>
+          <line num="13" count="17" type="stmt"/>
+          <line num="15" count="17" type="cond" truecount="5" falsecount="0"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="19" count="16" type="stmt"/>
+          <line num="21" count="16" type="stmt"/>
+          <line num="22" count="16" type="stmt"/>
+          <line num="23" count="16" type="stmt"/>
+          <line num="25" count="16" type="stmt"/>
+          <line num="27" count="16" type="stmt"/>
+          <line num="28" count="14" type="stmt"/>
+          <line num="29" count="14" type="stmt"/>
+          <line num="30" count="14" type="stmt"/>
+          <line num="31" count="14" type="stmt"/>
+          <line num="32" count="14" type="stmt"/>
+          <line num="41" count="14" type="stmt"/>
+          <line num="42" count="14" type="stmt"/>
+          <line num="50" count="14" type="stmt"/>
+          <line num="58" count="14" type="stmt"/>
+          <line num="60" count="14" type="stmt"/>
+          <line num="62" count="14" type="stmt"/>
+          <line num="79" count="14" type="stmt"/>
+          <line num="80" count="14" type="stmt"/>
+          <line num="81" count="14" type="stmt"/>
+          <line num="83" count="14" type="stmt"/>
+          <line num="87" count="14" type="stmt"/>
+          <line num="90" count="14" type="stmt"/>
+          <line num="91" count="14" type="stmt"/>
+          <line num="92" count="14" type="stmt"/>
+          <line num="94" count="14" type="stmt"/>
+          <line num="99" count="14" type="stmt"/>
+          <line num="102" count="14" type="stmt"/>
+          <line num="103" count="14" type="stmt"/>
+          <line num="105" count="14" type="stmt"/>
+          <line num="110" count="14" type="cond" truecount="2" falsecount="0"/>
+          <line num="111" count="12" type="stmt"/>
+          <line num="112" count="12" type="stmt"/>
+          <line num="115" count="2" type="stmt"/>
+          <line num="121" count="2" type="stmt"/>
+          <line num="124" count="42" type="stmt"/>
+          <line num="125" count="42" type="stmt"/>
+          <line num="126" count="42" type="stmt"/>
+          <line num="128" count="42" type="stmt"/>
+          <line num="137" count="42" type="cond" truecount="2" falsecount="0"/>
+          <line num="138" count="42" type="cond" truecount="2" falsecount="0"/>
+          <line num="152" count="42" type="cond" truecount="2" falsecount="0"/>
+          <line num="153" count="42" type="stmt"/>
+          <line num="155" count="42" type="stmt"/>
+          <line num="160" count="42" type="stmt"/>
+          <line num="163" count="14" type="stmt"/>
+          <line num="164" count="14" type="stmt"/>
+          <line num="165" count="14" type="stmt"/>
+          <line num="167" count="14" type="stmt"/>
+          <line num="193" count="14" type="stmt"/>
+          <line num="194" count="14" type="stmt"/>
+          <line num="196" count="14" type="stmt"/>
+          <line num="201" count="14" type="stmt"/>
+          <line num="204" count="16" type="stmt"/>
+          <line num="205" count="16" type="stmt"/>
+          <line num="206" count="16" type="stmt"/>
+          <line num="210" count="16" type="cond" truecount="2" falsecount="0"/>
+          <line num="211" count="1" type="stmt"/>
+          <line num="213" count="15" type="cond" truecount="2" falsecount="0"/>
+          <line num="214" count="1" type="stmt"/>
+          <line num="217" count="14" type="stmt"/>
+          <line num="220" count="14" type="stmt"/>
+          <line num="221" count="14" type="stmt"/>
+          <line num="222" count="14" type="stmt"/>
+          <line num="224" count="14" type="stmt"/>
+          <line num="229" count="14" type="stmt"/>
+          <line num="232" count="14" type="stmt"/>
+          <line num="233" count="14" type="stmt"/>
+          <line num="235" count="14" type="stmt"/>
+          <line num="237" count="14" type="stmt"/>
+          <line num="238" count="14" type="stmt"/>
+          <line num="244" count="14" type="stmt"/>
+          <line num="249" count="14" type="stmt"/>
+          <line num="252" count="14" type="stmt"/>
+          <line num="253" count="14" type="stmt"/>
+          <line num="254" count="14" type="stmt"/>
+          <line num="256" count="14" type="stmt"/>
+          <line num="264" count="14" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.get-user-details">
+        <metrics statements="14" coveredstatements="14" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/get-user-details/index.ts">
+          <metrics statements="14" coveredstatements="14" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+          <line num="1" count="9" type="stmt"/>
+          <line num="3" count="9" type="stmt"/>
+          <line num="46" count="9" type="stmt"/>
+          <line num="51" count="6" type="stmt"/>
+          <line num="58" count="6" type="stmt"/>
+          <line num="60" count="5" type="stmt"/>
+          <line num="65" count="5" type="stmt"/>
+          <line num="69" count="5" type="stmt"/>
+          <line num="72" count="5" type="stmt"/>
+          <line num="81" count="1" type="stmt"/>
+          <line num="82" count="1" type="stmt"/>
+          <line num="87" count="6" type="stmt"/>
+          <line num="89" count="6" type="stmt"/>
+          <line num="93" count="5" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.pdf-make">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/pdf-make/index.ts">
+          <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="9" type="stmt"/>
+          <line num="2" count="9" type="stmt"/>
+          <line num="4" count="9" type="stmt"/>
+          <line num="5" count="9" type="stmt"/>
+          <line num="14" count="9" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.s3">
+        <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/s3/index.ts">
+          <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+          <line num="20" count="10" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="26" count="1" type="stmt"/>
+          <line num="34" count="10" type="stmt"/>
+          <line num="36" count="1" type="stmt"/>
+          <line num="38" count="1" type="stmt"/>
+          <line num="44" count="1" type="stmt"/>
+          <line num="47" count="10" type="stmt"/>
+          <line num="49" count="1" type="stmt"/>
+          <line num="51" count="1" type="stmt"/>
+          <line num="59" count="1" type="stmt"/>
+          <line num="64" count="1" type="stmt"/>
+          <line num="67" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.src.helpers.send-email">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <file name="index.ts" path="/Users/arivero/lh/serverless/services/activity-report-service/src/helpers/send-email/index.ts">
+          <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="1" count="8" type="stmt"/>
+          <line num="3" count="8" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="activity-report-service.test">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="fakeModule.js" path="/Users/arivero/lh/serverless/services/activity-report-service/test/fakeModule.js">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="7" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>

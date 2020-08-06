@@ -1,0 +1,10 @@
+{
+  "name": "@lighthouse/serverless-rest-api",
+  "private": true,
+  "version": "1.0.1",
+  "license": "UNLICENSED",
+  "scripts": {
+    "deploy": "sls deploy",
+    "start": "SLS_DEBUG=* sls offline start --stage dev"
+  }
+}
